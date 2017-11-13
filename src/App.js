@@ -1,21 +1,44 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Router from "./Routes";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actions from "./redux/actions";
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      status: "INIT"
+    };
+  }
+
+  componentDidMount() {}
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <main className="App">
+        <Router {...this.props} />
+      </main>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    account: state.account,
+    tmpData: state.tmpData,
+    filters: state.filters
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      callToLogin: actions.callToLogin
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
