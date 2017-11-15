@@ -1,4 +1,3 @@
-
 # Software Requirements Specification
 
 ### for **goKiddo**
