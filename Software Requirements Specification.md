@@ -46,7 +46,11 @@ We aim to create a simple, effective and comprehensive booking system that helps
 #### 1.2 Document Conventions
 
 #### 1.3 Intended Audience and Reading Suggestions
-The intended audience of the current document are the developers of this project, the third-parties associated with the production process, the potential investors and any technical reviewers tasked with assessing the state of the project (along with their grannies).
+The intended audience of the current document are:
+- the developers of this project
+- third-parties associated with the production process
+- potential investors
+- technical reviewers tasked with assessing the state of the project (along with their grannies).
 
 #### 1.4 	Product Scope
 The proposed software enables the parents to navigate their numerous options for kid activities using a responsive interface, offering multiple search filters, all from the comfort of a single page on their phone, tablet or personal computer. For service suppliers, we present an attractive way of supplying key information on the offered activities and the ability of self-promotion, in order to reach a wider audience.
@@ -56,7 +60,12 @@ The proposed software enables the parents to navigate their numerous options for
 ### 2. 	Overall Description
 
 #### 2.1 	Product Perspective
-We
+The application is a web-based system implementing the client-server model. It offers the following features:
+
+- Cross platform support: The application is compatible with any connected device capable of running JavaScript.
+- User account: The system allows the user to create an account and manage a digital wallet.
+- Search: The user can search for activities of their liking using various filters.
+- Booking system: The user can book activities using a digital currency associated with our digital wallet.
 
 #### 2.2 	Product Functions
 Our product promises to deliver the following functionality, sorted by user class
@@ -125,9 +134,11 @@ There is also a depency on a third-party online map service, to be specified in 
 ### 5. 	Other Nonfunctional Requirements
 
 #### 5.1     Performance Requirements
-We require that the transaction confirmation requires at most 0.5 seconds.
-We require that each query returns results in at most 1 second.
-We requre that the system can support up to 10.000 users.
+We require that:
+- each transaction confirmation requires at most 0.5 seconds.
+- each query returns results in at most 1 second.
+- the system can support up to 10.000 users.
+
 
 
 #### 5.2 	Safety Requirements
@@ -142,7 +153,9 @@ As the application deals with sensitive personal data, we ensure privacy protect
 
 #### 5.5 	Business Rules
 ##### 5.5.1 Digital wallet
-We only grant a digital wallet to registered users. Any user with a digital wallet can top up their points via credit card or PayPal. We set the exchange rate to be `1 euro = 10 coins` and we offer a `10%` coin bonus for purchases over 100 euros.
+We only grant a digital wallet to registered users.
+Any user with a digital wallet can top up their points via credit card or PayPal.
+We set the exchange rate to be `1 euro = 10 coins` and we offer a `10%` coin bonus for purchases over 100 euros.
 
 ##### 5.5.1 Ticket policy
 Every is uniquely identified by its ticketID. We present all service providers with the following refund policy options:
@@ -164,4 +177,4 @@ Our revenue model identifies three basic revenue streams:
 ### Appendix B: Analysis Models
 
 ### Appendix C: To Be Determined List
-- Write Appendix C
+- Determine Appendix C
