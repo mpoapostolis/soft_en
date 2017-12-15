@@ -2,12 +2,19 @@ import assoc from "ramda/src/assoc";
 import mergeAll from "ramda/src/mergeAll";
 import { combineReducers } from "redux";
 
-const initAccount = { loggedIn: "", error: false, auth: "" };
+const initAccount = {
+  access_token: "",
+  refresh_token: "",
+  expires_in: 0,
+  role: "Admin",
+  status: "ACTIVE",
+  error: false,
+};
+
 const account = (state = initAccount, { type, payload }) => {
   switch (type) {
     case "LOGIN":
-      state.auth = payload;
-      return assoc("loggedIn", true, state);
+      return payload;
 
     case "SET_ERROR":
       return assoc("error", payload, state);

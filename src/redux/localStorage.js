@@ -1,6 +1,6 @@
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem("windflamesState");
+    const serializedState = localStorage.getItem("myProjectState");
     if (serializedState === null) return undefined;
     return JSON.parse(serializedState);
   } catch (e) {
@@ -9,8 +9,9 @@ export const loadState = () => {
 };
 
 export const saveState = state => {
+  const { account } = state;
   try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("windflamesState", serializedState);
+    const serializedState = JSON.stringify({ account });
+    localStorage.setItem("myProjectState", serializedState);
   } catch (e) {}
 };

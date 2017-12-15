@@ -1,17 +1,15 @@
-export const login = payload => ({ type: "LOGIN", payload });
-
 export const callToLogin = ({ username, password }) => dispatch => {
-  const url = "/api/bo/login";
-  return fetch(
-    url
-    // {
-    // method: "GET",
-    // headers: {
-    //   "Content-Type": "application/x-www-form-urlencoded",
-    //   Authorization: "Basic " + base64.encode(`${username}:${password}`)
-    // }
-    // }
-  )
+  const url = "/api/auth/oauth/token";
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: "Basic YnJvd3Nlcjo=", // hashed Browser
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `scope=ui&username=${username}&password=${password}&grant_type=password`,
+  })
     .then(res => res.json())
-    .then(res => console.log(res));
+    .then(data => {
+      // get Token
+    });
 };

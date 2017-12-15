@@ -3,16 +3,8 @@ import Router from "./Routes";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "./redux/actions";
-import "./App.css";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: "INIT"
-    };
-  }
-
   componentDidMount() {}
 
   render() {
@@ -25,20 +17,11 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    account: state.account,
-    tmpData: state.tmpData,
-    filters: state.filters
-  };
+  return { ...state };
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      callToLogin: actions.callToLogin
-    },
-    dispatch
-  );
+  return bindActionCreators({ ...actions }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

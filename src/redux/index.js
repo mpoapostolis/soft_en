@@ -5,7 +5,9 @@ import { loadState, saveState } from "./localStorage";
 
 const persistedData = loadState();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, persistedData, composeEnhancers(applyMiddleware(ReduxThunk)));
+const ench =
+  process.env.NODE_ENV === "development" ? composeEnhancers(applyMiddleware(ReduxThunk)) : applyMiddleware(ReduxThunk);
+const store = createStore(reducers, persistedData, ench);
 
 store.subscribe(() => {
   saveState(store.getState());

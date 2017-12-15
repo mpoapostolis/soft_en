@@ -1,33 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import Header from '../components/Header'
-import Home from '../components/Home'
-import Login from "../components/Login";
-import * as styles from './css'
-
-const Href = ({ pathname }) => {
-  return <Redirect to={pathname} />;
-};
-const AuthWrapper = props => {
-  const Component = props.component;
-  const { loggedIn = true } = props.account;
-  const { container, headContainer, bodyContainer } = styles;
-  return loggedIn ? (
-    <main className={container}>
-      <div className={headContainer}>
-        <Header {...props} />
-      </div>
-      <div className={bodyContainer}>
-        <Component {...props} />
-      </div>
-    </main>
-  ) : (
-    <Href pathname={{ pathname: "/login" }} />
-  );
-};
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Login from "./Login";
+import Home from "./Home";
+import AuthWrapper, { Href } from "./Auth";
 
 const Routes = props => {
-  const { loggedIn } = props.account;
+  const { access_token } = props.account;
   return (
     <Router>
       <div>
@@ -39,7 +17,8 @@ const Routes = props => {
         <Route
           path="/login"
           render={routeProps =>
-            !loggedIn ? <Login {...props} {...routeProps} /> : <Href pathname={{ pathname: "/" }} />}
+            !access_token ? <Login {...props} {...routeProps} /> : <Href pathname={{ pathname: "/" }} />
+          }
         />
       </div>
     </Router>
