@@ -1,5 +1,5 @@
 import assoc from "ramda/src/assoc";
-import mergeAll from "ramda/src/mergeAll";
+// import mergeAll from "ramda/src/mergeAll";
 import { combineReducers } from "redux";
 
 const initAccount = {

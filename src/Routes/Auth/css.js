@@ -35,7 +35,7 @@ export const sidebar = css`
 `;
 
 export const content = css`
-  background-color: #2c3e50;
+  background-color: #e30c0c;
   grid-area: content;
   border: solid 1px black;
 `;

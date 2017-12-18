@@ -6,7 +6,7 @@ import * as styles from "./css.js";
 
 const AuthWrapper = props => {
   const Component = props.component;
-  const { access_token, role } = props.account;
+  const { access_token } = props.account;
   const { container, sidebar, header, content } = styles;
   const pathname = !access_token ? "/login" : "/";
   return true ? (
