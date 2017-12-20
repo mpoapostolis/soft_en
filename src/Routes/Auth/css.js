@@ -1,31 +1,27 @@
 import { css } from "emotion";
+import { queries } from "../../css.js";
+
 export const container = css`
-  min-height: 100vh;
   display: grid;
   grid-template-columns: 150px repeat(3, 1fr);
-  grid-template-rows: 75px repeat(3, 1fr);
+  grid-template-rows: 50px repeat(3, 1fr);
   grid-template-areas:
-    "sidebar header header header"
+    ". . . ."
     "sidebar content content content"
     "sidebar content content content"
     "sidebar content content content"
     "sidebar content content content";
 
-  @media (max-width: 750px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 100px 100px repeat(2, 1fr);
-    grid-template-areas:
-      "header header header"
+  ${queries.small`
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 75px 75px repeat(2, 1fr);
+      grid-template-areas:
+      ". . ."
       "sidebar sidebar sidebar "
       "content content content"
       "content content content";
-  }
-`;
-
-export const header = css`
-  background: #dddddd;
-  grid-area: header;
-  border: solid 1px black;
+    }
+    `};
 `;
 
 export const sidebar = css`
@@ -35,7 +31,6 @@ export const sidebar = css`
 `;
 
 export const content = css`
-  background-color: #e30c0c;
   grid-area: content;
   border: solid 1px black;
 `;

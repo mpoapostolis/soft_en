@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import TextField from "../../components/TextField";
+import TextField from "../../components/TextField";
 import * as styles from "./css.js";
 
 class Login extends Component {
@@ -14,12 +14,10 @@ class Login extends Component {
   selectTab = ({ currentTarget: { dataset: { tab } } }) => this.setState({ tab });
 
   render() {
-    const { container, box, info } = styles;
+    const { container, box } = styles;
     return (
       <div className={container}>
-        <div className={box}>
-          <div className={info}>test</div>
-        </div>
+        <div className={box} />
       </div>
     );
   }
