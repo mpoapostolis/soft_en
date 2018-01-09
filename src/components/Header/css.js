@@ -5,31 +5,29 @@ export const container = css`
   position: fixed;
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
+  justify-content: flex-end;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.15);
   height: 50px;
-  width: 99%;
+  width: 100%;
+  background: rgba(41, 107, 47, 0.22);
   ${queries.small`
-    height: 75px;
+    height:50px;
     `};
 `;
 
-export const avatar = css`
-  border-radius: 50%;
-  height: 90%;
-  cursor: pointer;
-  min-width: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: xx-large;
-  margin-left: 20px;
-  background: rgba(0, 0, 0, 0.26);
-  color: white;
-`;
-
 export const item = css`
-  border: solid 1px red;
+  margin: 5px;
 `;
 
-export const test = css``;
+export const langs = css`
+  cursor: pointer;
+  user-select: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  width: 100px;
+  height: 30px;
+  font-size: large;
+`;

@@ -1,18 +1,16 @@
 import React from "react";
-import Menu from "../../components/Menu";
 import { Redirect } from "react-router-dom";
 import * as styles from "./css.js";
+import Header from "../../components/Header";
 
 const AuthWrapper = props => {
   const Component = props.component;
   const { access_token } = props.account;
-  const { container, sidebar, content } = styles;
+  const { container, content } = styles;
   const pathname = !access_token ? "/login" : "/";
   return true ? (
     <div className={container}>
-      <div className={sidebar}>
-        <Menu {...props} />
-      </div>
+      <Header {...props} />
       <div className={content}>
         <Component {...props} />
       </div>

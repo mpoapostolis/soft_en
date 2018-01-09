@@ -3,7 +3,6 @@ import Router from "./Routes";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "./redux/actions";
-import Header from "./components/Header";
 
 class App extends Component {
   componentDidMount() {}
@@ -11,7 +10,6 @@ class App extends Component {
   render() {
     return (
       <main className="App">
-        <Header {...this.props} />
         <Router {...this.props} />
       </main>
     );

@@ -9,13 +9,15 @@ const initAccount = {
   role: "Admin",
   status: "ACTIVE",
   error: false,
+  lang: "en",
 };
 
 const account = (state = initAccount, { type, payload }) => {
   switch (type) {
     case "LOGIN":
       return payload;
-
+    case "CHANGE_LANGUAGE":
+      return assoc("lang", payload, state);
     case "SET_ERROR":
       return assoc("error", payload, state);
 

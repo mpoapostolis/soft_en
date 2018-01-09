@@ -1,3 +1,6 @@
+import { createAction } from "redux-actions";
+export const changeLang = createAction("CHANGE_LANGUAGE");
+
 export const callToLogin = ({ username, password }) => dispatch => {
   const url = "/api/auth/oauth/token";
   return fetch(url, {

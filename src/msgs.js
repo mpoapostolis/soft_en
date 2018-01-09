@@ -2,9 +2,10 @@ import curry from "ramda/src/curry";
 import pathOr from "ramda/src/pathOr";
 
 export const MSGS = {
-  name: {
-    
-    en: "Contest ID"
+  home: {
+    en: "HOME",
+    es: "CASA",
+    gr: "ΣΠΙΤΙ",
   },
 };
 

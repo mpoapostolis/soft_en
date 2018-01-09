@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Login from "./Login";
 import Home from "./Home";
-import AuthWrapper, { Href } from "./Auth";
+import AuthWrapper from "./Auth";
 
 const Routes = props => {
-  const { access_token } = props.account;
+  const { access_token = false } = props.account; // eslint-disable-line
   return (
     <Router>
       <div>
@@ -13,12 +12,6 @@ const Routes = props => {
           exact
           path="/"
           render={routeProps => <AuthWrapper {...props} {...routeProps} component={Home} path="/" />}
-        />
-        <Route
-          path="/login"
-          render={routeProps =>
-            !access_token ? <Login {...props} {...routeProps} /> : <Href pathname={{ pathname: "/" }} />
-          }
         />
       </div>
     </Router>
