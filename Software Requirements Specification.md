@@ -7,9 +7,9 @@
 <!-- TOC depthFrom:3 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
 - [1. Introduction](#1-introduction)
-	- [1.1 Purpose](#11-purpose)
+	- [1.1	Purpose](#11-purpose)
 	- [1.2 Document Conventions](#12-document-conventions)
-	- [1.3 Intended Audience and Reading Suggestions](#13-intended-audience-and-reading-suggestions)
+	- [1.3	Intended Audience and Reading Suggestions](#13-intended-audience-and-reading-suggestions)
 	- [1.4 	Product Scope](#14-product-scope)
 	- [1.5 	References](#15-references)
 - [2. 	Overall Description](#2-overall-description)
@@ -24,8 +24,21 @@
 	- [3.1 	User Interfaces](#31-user-interfaces)
 	- [3.2 	Hardware Interfaces](#32-hardware-interfaces)
 	- [3.3 	Software Interfaces](#33-software-interfaces)
+		- [3.3.1 Auth service](#331-auth-service)
+		- [3.3.2 Database](#332-database)
+		- [3.3.3 Media service](#333-media-service)
+		- [3.3.4 Main service](#334-main-service)
+		- [3.3.5 API gateway](#335-api-gateway)
 	- [3.4 	Communications Interfaces](#34-communications-interfaces)
-	- [4. 	System Features](#4-system-features)
+- [4. 	System Features](#4-system-features)
+	- [4.1 User authentication](#41-user-authentication)
+		- [4.1.1 Description](#411-description)
+		- [4.1.2 Stimulus/Response sequence](#412-stimulusresponse-sequence)
+	- [4.2 Activity search](#42-activity-search)
+	- [4.3 Activity booking](#43-activity-booking)
+	- [4.4 Venue registration](#44-venue-registration)
+	- [4.5 Activity registration](#45-activity-registration)
+	- [4.6 System administration](#46-system-administration)
 - [5. 	Other Nonfunctional Requirements](#5-other-nonfunctional-requirements)
 	- [5.1     Performance Requirements](#51-performance-requirements)
 	- [5.2 	Safety Requirements](#52-safety-requirements)
@@ -255,6 +268,8 @@ its advantages. The specific implementation we chose is `PostgreSQL`, along with
 its `PostGIS` extension, that offers geospatial functionality.
 
 An initial version of the database schema is presented below:
+
+![](SRS_images/schema.png)
 
 ##### 3.3.3 Media service
 As described in the exercise requirements, we must implement a separate services
