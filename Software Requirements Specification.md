@@ -314,11 +314,11 @@ The stimulus/Response sequencing for the authorization is thoroughly explained i
 
 For public resources, such as browsing activities, where no privileged data is requested, the sequence is executed as follows:
 
-![](SRS_images/uml/Sequence Diagrams/public resource.png)
+![](SRS_images/Sequence Diagrams/public resource.png)
 
 For private resources, such as booking activities for parents or registering venues for owners, where privileged data is requested, the sequence is executed as follows:
 
-![](SRS_images/uml/Sequence Diagrams/private resource.png)
+![](SRS_images/Sequence Diagrams/private resource.png)
 
 #### 4.2	Activity search
 
@@ -370,7 +370,7 @@ There, they are given the following:
 ##### 4.3.2 Stimulus/Response sequence
 The search/booking sequence is executed as follows:
 
-![](SRS_images/uml/Sequence Diagrams/Booking activity.png)
+![](SRS_images/Sequence Diagrams/Booking activity.png)
 
 #### 4.4	Currency management
 
@@ -389,7 +389,7 @@ More information on the digital wallet, in paragraph 5.5.1
 #### 4.4.2 Stimulus/Response sequence
 The sequence is briefly explained in the following diagram:
 
-![](SRS_images/uml/Sequence Diagrams/Currency Management.png)
+![](SRS_images/Sequence Diagrams/Currency Management.png)
 
 #### 4.5	Venue and activity registration
 
@@ -434,7 +434,7 @@ Upon completion, they are directed back to the dashboard.
 #### 4.5.3 Stimulus/Response sequence
 The stimulus/response sequence applied when registering a venue and creating activities on that venue, is briefly explained in the diagram below:
 
-![](SRS_images/uml/Sequence Diagrams/Activity Venue.png)
+![](SRS_images/Sequence Diagrams/Activity Venue.png)
 
 #### 4.6	System administration
 
@@ -455,7 +455,7 @@ The admin is provided with the following options:
 #### 4.6.2	Stimulus/Response sequence
 The system administration sequence is executed as follows:
 
-![](SRS_images/uml/Sequence Diagrams/Admin.png)
+![](SRS_images/Sequence Diagrams/Admin.png)
 
 ### 5. 	Other Nonfunctional Requirements
 
