@@ -9,7 +9,8 @@ const initAccount = {
   role: "Admin",
   status: "ACTIVE",
   error: false,
-  lang: "en",
+  lang: "En",
+  coords: {},
 };
 
 const account = (state = initAccount, { type, payload }) => {
@@ -20,6 +21,8 @@ const account = (state = initAccount, { type, payload }) => {
       return assoc("lang", payload, state);
     case "SET_ERROR":
       return assoc("error", payload, state);
+    case "SET_COORDS":
+      return assoc("coords", payload, state);
 
     default:
       return state;

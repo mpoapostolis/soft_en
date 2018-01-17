@@ -1,5 +1,6 @@
 import { createAction } from "redux-actions";
 export const changeLang = createAction("CHANGE_LANGUAGE");
+export const setCoords = createAction("SET_COORDS");
 
 export const callToLogin = ({ username, password }) => dispatch => {
   const url = "/api/auth/oauth/token";

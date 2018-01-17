@@ -5,5 +5,12 @@ export const container = css`
 `;
 
 export const item = css`
-  font-size: medium;
+  font-family: "Indie Flower", cursive;
+  display: flex !important;
+  justify-content: space-between !important;
+  font-size: medium !important;
+`;
+
+export const img = css`
+  height: 20px;
 `;

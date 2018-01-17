@@ -4,7 +4,7 @@ import { MenuItem, MenuList } from "material-ui/Menu";
 import Paper from "material-ui/Paper";
 import * as styles from "./css";
 
-const langs = ["en", "gr", "es"];
+const langs = ["En", "Gr", "Es"];
 
 function PopOver(props) {
   const {
@@ -17,7 +17,7 @@ function PopOver(props) {
     handleRequestClose,
     changeLang,
   } = props;
-  const { container, item } = styles;
+  const { container, item, img } = styles;
   return (
     <div className={container}>
       <Popover
@@ -42,8 +42,8 @@ function PopOver(props) {
                   changeLang(lang);
                   handleRequestClose();
                 }}>
-                <img alt=":)" src={`/images/${lang}.png`} />
-                <label>{lang}</label>
+                <img className={img} alt=":)" src={`/images/${lang}.png`} />
+                <label className={item}>{lang}</label>
               </MenuItem>
             ))}
           </MenuList>
