@@ -12,7 +12,7 @@ We are **Team Rocket** and here are our member details:
 | Μποστάνης Απόστολος		| 3111579	 | mpoapostolis@gmail.com	|
 | Μαρούσης Νικόλαος		    | 3111025	 | n.marousis@gmail.com 	|
 | Γεωργακόπουλος Ιωάννης	| 3111512	 | john.k.georg@gmail.com	|
-| Virgilio Tello Garcia	    | 3117622	 |	-						|
+| Virgilio Tello Garcia	    | 3117622	 | virgilio.tello@gmail.com	|
 
 
 ### vm link 191.232.180.111
