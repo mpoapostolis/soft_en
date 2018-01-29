@@ -30,9 +30,9 @@ Navigate to `http://localhost:4000` or `https://localhost:4001`.
 Starting a single service by name (along with its dependencies). Omit the `-d`
 option to attach to container (aka view shell output).
 
-If no <service name> is supplied, then **all** services are started.
+If no service_name is supplied, then **all** services are started.
 ```
-docker-compose up -d <service name>
+docker-compose up -d service_name
 ```
 
 Print the status report of all containers.
@@ -42,14 +42,14 @@ docker-compose ps
 
 Stopping a service by name.
 
-If no <service name> is supplied, all services are stopped.
+If no service_name is supplied, all services are stopped.
 ```
-docker-compose stop <service name>
+docker-compose stop service_name
 ```
 
 Re-build a **stopped** service.
 ```
-docker-compose build <service name>
+docker-compose build service_name
 ```
 
 For details about the deployment configuration, take a look at the file named
