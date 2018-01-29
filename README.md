@@ -25,3 +25,33 @@ docker-compose up -d
 ```
 
 Navigate to `http://localhost:4000` or `https://localhost:4001`.
+
+### Useful stuff.
+Starting a single service by name (along with its dependencies). Omit the `-d`
+option to attach to container (aka view shell output).
+
+If no <service name> is supplied, then **all** services are started.
+```
+docker-compose up -d <service name>
+```
+
+Print the status report of all containers.
+```
+docker-compose ps
+```
+
+Stopping a service by name.
+
+If no <service name> is supplied, all services are stopped.
+```
+docker-compose stop <service name>
+```
+
+Re-build a **stopped** service.
+```
+docker-compose build <service name>
+```
+
+For details about the deployment configuration, take a look at the file named
+`docker-compose.yml`. You can check out its language reference
+[here](https://docs.docker.com/compose/compose-file/compose-file-v2/).
