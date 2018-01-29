@@ -1,0 +1,59 @@
+version: "2"
+
+services:
+
+    db:
+        image: mdillon/postgis
+        restart: on-failure
+        environment:
+            POSTGRES_USER: hipster
+            POSTGRES_PASSWORD: notsostrong
+            POSTGRES_DB: GoKiddo
+        volumes:
+            - ./db/init/define.sql:/docker-entrypoint-initdb.d/z_define.sql
+
+    adminer:
+        image: adminer
+        restart: on-failure
+        depends_on:
+            - db
+        ports:
+            - 8080:8080
+
+    nginx:
+        build: ./nginx
+        restart: on-failure
+        # environment:
+        ports:
+            - 4000:80
+            - 4001:443
+        volumes:
+            - ./app/build:/usr/share/nginx/www
+            - ./images:/usr/share/nginx/opt/images
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./nginx/ssl:/etc/nginx/ssl:ro
+        depends_on:
+            - auth
+            - media
+            - app
+
+    auth:
+        build: ./auth
+        restart: on-failure
+
+    media:
+        build: ./media
+        restart: on-failure
+        volumes:
+            - ./images:/app/images
+
+    app:
+        build: ./app
+        restart: on-failure
+        # volumes:
+            # - ./app/build:/app/build
+        # ports:
+        depends_on:
+            - db
+            - auth
+            - media

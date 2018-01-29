@@ -12,7 +12,16 @@ We are **Team Rocket** and here are our member details:
 | Μποστάνης Απόστολος		| 3111579	 | mpoapostolis@gmail.com	|
 | Μαρούσης Νικόλαος		    | 3111025	 | n.marousis@gmail.com 	|
 | Γεωργακόπουλος Ιωάννης	| 3111512	 | john.k.georg@gmail.com	|
-| Virgilio Tello Garcia	    | 3117622	 |							|
+| Virgilio Tello Garcia	    | 3117622	 |	-						|
 
 
 ### vm link 191.232.180.111
+
+### Usage
+Pull then run:
+```
+cd /app && npm run build
+docker-compose up -d
+```
+
+Navigate to `http://localhost:4000` or `https://localhost:4001`.

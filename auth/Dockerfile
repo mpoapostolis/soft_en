@@ -1,0 +1,12 @@
+FROM node:carbon
+
+WORKDIR /app
+
+COPY ./app.js /app
+COPY ./package.json /app
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["npm","start"]
