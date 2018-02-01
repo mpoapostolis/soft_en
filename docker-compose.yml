@@ -21,7 +21,7 @@ services:
             - 8080:8080
 
     nginx:
-        build: ./nginx
+        image: nginx:latest
         restart: on-failure
         # environment:
         ports:
@@ -33,19 +33,28 @@ services:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./nginx/ssl:/etc/nginx/ssl:ro
         depends_on:
-            - auth
-            - media
-            - app
+            - api
 
     auth:
         build: ./auth
         restart: on-failure
+        depends_on:
+            - db
+        ports:
+            - 3000:3000
+
 
     media:
         build: ./media
         restart: on-failure
         volumes:
             - ./images:/app/images
+
+    api:
+        build: ./api
+        restart: on-failure
+        depends_on:
+            - db
 
     app:
         build: ./app
