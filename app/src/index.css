@@ -1,7 +1,12 @@
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
+  background: black;
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100%;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px black inset;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
 }
