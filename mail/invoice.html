@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <meta charset="utf8">
+    <title>GoKiddo receipt</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Sackers Gothic Std';
+            font-weight: 500;
+            font-size: 15px;
+            background: rgb(241, 241, 241);
+            -webkit-print-color-adjust: exact;
+            box-sizing: border-box;
+        }
+
+        .page {
+            position: relative;
+            height: 297mm;
+            width: 210mm;
+            display: block;
+            background: white;
+            page-break-after: auto;
+            margin: 50px;
+            overflow: hidden;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            padding: 5px;
+            font-size: 24px;
+            background-color: #999;
+            color: #fff;
+        }
+
+        table {
+            margin: 5mm;
+            width: 200mm
+        }
+
+        th,
+        td {
+            padding: 5px;
+            border: 1px solid #999;
+            font-size: 3.5mm;
+        }
+
+        th {
+            background: #ccc;
+        }
+
+        td:nth-child(odd) {
+            background: #eee;
+        }
+
+        td a {
+            color: #000;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <h1>This is the best invoice in the world</h1>
+        <p>Registered to {{ CustomerName }}</p>
+        <table>
+            <thread>
+                <th>Ticket Number</th>
+                <th>Activity Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Final Price</th>
+            </thread>
+            <tbody>
+                {{#tickets}}
+                <tr>
+                    <td>{{ ticketNo }}</td>
+                    <td>{{ activityName }}</td>
+                    <td>{{ price }}</td>
+                    <td>{{ quantity }}</td>
+                    <td>{{ total }}</td>
+                </tr>
+                {{/tickets}}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
