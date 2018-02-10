@@ -9,8 +9,10 @@ services:
             POSTGRES_USER: hipster
             POSTGRES_PASSWORD: notsostrong
             POSTGRES_DB: GoKiddo
-        volumes:
-            - ./db/init/define.sql:/docker-entrypoint-initdb.d/z_define.sql
+        # volumes:
+        #     - ./db/init/define.sql:/docker-entrypoint-initdb.d/z_define.sql
+        # ports:
+        #     - 5432:5432
 
     adminer:
         image: adminer
@@ -29,20 +31,11 @@ services:
             - 4001:443
         volumes:
             - ./app/build:/usr/share/nginx/www
-            - ./images:/usr/share/nginx/opt/images
+            - ./images:/usr/share/nginx/images
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
             - ./nginx/ssl:/etc/nginx/ssl:ro
         depends_on:
             - api
-
-    auth:
-        build: ./auth
-        restart: on-failure
-        depends_on:
-            - db
-        ports:
-            - 3000:3000
-
 
     media:
         build: ./media
@@ -64,5 +57,4 @@ services:
         # ports:
         depends_on:
             - db
-            - auth
             - media
