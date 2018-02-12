@@ -48,13 +48,13 @@ services:
         restart: on-failure
         depends_on:
             - db
+            - media
 
     app:
         build: ./app
         restart: on-failure
         # volumes:
             # - ./app/build:/app/build
-        # ports:
         depends_on:
             - db
             - media

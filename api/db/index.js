@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const config = require('./config.json')
+
 const User = require('./models/user')
 const Parent = require('./models/parent')
 const Owner = require('./models/owner')
@@ -28,17 +29,17 @@ const tag = Tag(sequelize)
 const review = Review(sequelize)
 
 // Define associations.
-owner.belongsTo(user, {foreignKey: 'OwnerID'})
-parent.belongsTo(user, {foreignKey: 'ParentID'})
-review.belongsTo(books, {foreignKey: 'BookingID'})
+owner.belongsTo(user, {foreignKey: 'OwnerID', targetKey: 'UserID'})
+parent.belongsTo(user, {foreignKey: 'ParentID', targetKey: 'UserID'})
+review.belongsTo(books, {foreignKey: 'BookingID', targetKey: 'BookingID'})
 
-owner.hasMany(activity, {foreignKey: 'OwnerID'})
-activity.hasMany(listing, {foreignKey: 'ActivityID'})
+owner.hasMany(activity, {foreignKey: 'OwnerID', targetKey: 'OwnerID'})
+activity.hasMany(listing, {foreignKey: 'ActivityID', targetKey: 'ActivityID'})
 
-listing.hasMany(books, {foreignKey: 'ListingID'})
-parent.hasMany(books, {foreignKey: 'ParentID'})
+listing.hasMany(books, {foreignKey: 'ListingID', targetKey: 'ListingID'})
+parent.hasMany(books, {foreignKey: 'ParentID', targetKey: 'ParentID'})
 
-activity.hasMany(tag, {foreignKey: 'ActivityID'})
+activity.hasMany(tag, {foreignKey: 'ActivityID', targetKey: 'ActivityID'})
 
 module.exports = {
     sequelize,

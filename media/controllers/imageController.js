@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     },
     filename: (req,file,cb) => {
         crypto.pseudoRandomBytes(6, (err,raw) => {
-            var name = req.body.activityID + '_' + raw.toString('hex') + '.' +
+            var name = raw.toString('hex') + '.' +
                    mime.getExtension(file.mimetype)
             cb(err, err ? undefined : name)
         })
@@ -70,7 +70,8 @@ function process(destination, filename ,caption) {
 // A controller that accepts up to 8 images, converts them according to spec and
 // returns an array of filenames as a response.
 function imageController(app) {
-    app.post('/images', upload.array('images',8), (req,res) => {
+    app.post('/images', upload.array('image',8), (req,res) => {
+        console.log('Received request')
         ops = []
         for(var i=0, k=req.files.length; i<k; i++) {
             ops.push(process(req.files[i].destination,
@@ -78,7 +79,8 @@ function imageController(app) {
                              req.body.activityName))
         }
         Promise.all(ops).then( (filenames) => {
-            res.send(filenames)
+            console.log(filenames)
+            res.json(filenames)
         })
     })
 }
