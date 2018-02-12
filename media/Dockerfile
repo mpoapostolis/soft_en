@@ -1,10 +1,12 @@
 FROM node:carbon
 
-WORKDIR /app
+# Optimized npm install as a cached layer.
+COPY package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /app && cp -a /tmp/node_modules /app/
 
 COPY . /app
-
-RUN npm install
+WORKDIR /app
 
 EXPOSE 3000
 
