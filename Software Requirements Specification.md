@@ -6,8 +6,6 @@
 
 <!-- TOC depthFrom:3 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
-- [for **goKiddo**](#for-gokiddo)
-	- [7/1/18 - Version 0.4 prepared by **TeamRocket**](#7118-version-04-prepared-by-teamrocket)
 - [1.	 Introduction](#1-introduction)
 	- [1.1	Purpose](#11-purpose)
 	- [1.2 	Document Conventions](#12-document-conventions)
