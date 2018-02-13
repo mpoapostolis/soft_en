@@ -334,7 +334,7 @@ iteration.
 | - | - | - | - |
 | GET | `/api/activity` | `urlencoded`<br><br>date, lat, long, distance, max_price, min_price, tag, search | The endpoint for searching for activities. The `search` field contains the search string and the rest are the filters to be applied to the results. |
 | GET | `/images/:file` | - | Get a static image, named `file`. |
-| GET | `/api/activity/:id` | - | Get the details of the activity with `id` id. |
+| GET | `/api/activity/:id` | - | Get details for the activity `id`, along with all active and available listings. |
 | POST | `/api/register` | `body:text/json` <br><br> Email, Password, Role, {Parent,Owner} details | Register a new user with the supplied Email, Password and Role. |
 | POST | `/api/login` | `body:text/json` <br><br> Email, Password | Attempt to login to our service.</br></br>Upon success, the call returns a JWT access token. |
 
@@ -343,21 +343,23 @@ iteration.
 | - | - | - | - |
 | GET | `/api/wallet` | `body:text/json` <br><br> AccessToken, Page, Offset | Get an overview of the parent digital wallet.</br></br>Get paginated results of the purchase history. |
 | POST | `/api/wallet` | `body:text/json` <br><br> AccessToken, Card, Expiry, Security | Top up digital wallet.</br></br>In the scope of this implementation, this call is guaranteed to succeed. |
-| POST | `/api/activity/:id` | `body:text/json` <br><br> AccessToken, Date, Quantity | Attempt to book `quantity` number of tickets for event `id` for the `date` date. |
-| POST | `/activity/:id/rate` | `body:text/json` <br><br> AccessToken, Score, Complaints | After the activity is finished, receive an email linking to the review page of the activity.</br></br>The parent must be logged in, as the review page access will be validated against their ticket purchase. |
+| POST | `/api/booking/:id` | `body:text/json` <br><br> AccessToken, Quantity | Attempt to book `Quantity` number of tickets for the listing with `ListingID = id`. <br><br> The transaction is atomic and takes into account the user available funds and the available tickets. |
+| POST | `/api/rating/:id` | `body:text/json` <br><br> AccessToken, Score, Complaints | After the activity is finished, receive an email linking to the review page of the activity associated with the booking with `BookingID = id`.</br></br>The parent must be logged in, as the review page access will be validated against their ticket purchase. |
 
 ##### 3.4.3	Owner Protected Endpoints
 | Method | Endpoint | Parameters | Description |
 | - | - | - | - |
-| POST | `/api/activity` | `body:text/json` <br><br> AccessToken, Name, AgeGroups, Description, Pictures, Coordinates, Tags, Listings | Register a new activity |
-| PUT, DELETE | `/api/activity/:id` | `body:text/json` <br><br> AccessToken, Name, AgeGroups, Description, Pictures, Coordinates, Tags, Listings | Alter, delete an existing activity. For simplicity, it is impossible to delete or alter an activity with active listings. |
+| POST | `/api/activity` | `body:text/json` <br><br> AccessToken, Name, AgeGroups, Description, Pictures, Coordinates, Tags | Create a new activity. <br><br> All submitted images must be sent as files with the name `image`. |
+| PUT, DELETE | `/api/activity/:id` | `body:text/json` <br><br> AccessToken, Name, AgeGroups, Description, Pictures, Coordinates, Tags | Alter, delete an existing activity. For simplicity, it is impossible to delete or alter an activity with active listings. |
+| POST | `/api/activity/:id/listings` | `body:text/json` <br><br> AccessToken, Listings | Create listings (tuples of Date, Duration, Quantity and Price) for the activity with `ActivityID = id` |
+| PUT, DELETE | `/api/activity/:id/listings` | `body:text/json` <br><br> AccessToken, Listings | Alter or delete the submitted listings. |
 | GET | `/api/statistics` | `body:text/json` <br><br> AccessToken | Get a statistical overview of ticket sales by month and by activity. |
 | GET | `/api/wallet` | `body:text/json` <br><br> AccessToken | Get a detailed overview of the account balance. |
 
 ##### 3.4.3	Admin Protected Endpoints
 | Method | Endpoint | Parameters | Description |
 | - | - | - | - |
-| GET, PUT, DELETE | * | `body:text/json` <br><br> AccessToken | The admin has universal access to create, edit and delete entities. |
+| GET, PUT, DELETE | `/api/admin/*` | `body:text/json` <br><br> AccessToken | The admin has universal access to create, edit and delete entities. |
 
 ### 4. 	System Features
 This section includes the requirements that specify the fundamental actions of the software system.
