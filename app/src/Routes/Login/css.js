@@ -58,7 +58,11 @@ export const btn = css`
   width: 80px;
   height: 40px;
   border-radius: 4px;
+<<<<<<< HEAD
   box-shadow: 2px 4px 10px 2px rgba(163, 163, 163, 0.4);
+=======
+  box-shadow: 2px 2px 5px 2px rgba(163, 163, 163, 0.25);
+>>>>>>> login screen
   cursor: pointer;
   transition: 0.125s;
   &:hover {
