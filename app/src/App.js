@@ -8,11 +8,16 @@ class App extends Component {
   componentDidMount() {}
 
   render() {
-    return <Router {...this.props} />;
+    return (
+      <div>
+        <Router {...this.props} />
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => ({ ...state });
-const mapDispatchToProps = dispatch => bindActionCreators({ ...actions }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ ...actions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

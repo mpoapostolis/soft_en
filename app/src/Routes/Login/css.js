@@ -10,14 +10,16 @@ export const container = css`
 `;
 
 export const loginBox = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  width: 30vw;
-  height: 50vh;
-  border: solid 1px #2e2d2d;
-  background: black;
+  width: 390px;
+  height: 440px;
+  padding: 30px;
+  background: white;
+  box-shadow: 0px 2px 5px 2px rgba(163, 163, 163, 0.5);
+  img {
+    width: 75px;
+  }
+
   ${mq.large(css`
     width: 50vw;
   `)};
@@ -27,69 +29,45 @@ export const loginBox = css`
   `)};
   ${mq.small(css`
     width: 100vw;
+    height: 95vh;
   `)};
 `;
 
-export const logReg = css`
-  border: sold 1px white;
-  width: 100%;
-  height: 60px;
-  cursor: pointer;
-  display: flex;
-  color: white;
-`;
-
-export const choice = css`
-  display: flex;
-  height: 100%;
-  width: 100%;
+export const item = css`
+  margin: 10px;
   font-weight: 500;
-  font-size: xx-large;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.15);
-  &.active {
-    background: black;
+  &.label {
+    margin-bottom: 50px;
   }
-`;
-
-export const textCont = css`
-  width: 80%;
-  height: 70px;
-  color: white;
-`;
-
-export const passwordClass = css`
-  display: flex;
-  width: 80%;
-  color: white;
+  &.btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  p {
+    margin: 0;
+  }
 `;
 
 export const btn = css`
-  width: 80%;
-  background: #009be2;
   border: none;
+  background: #4285f4;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 550;
   color: white;
-  height: 45px;
-  font-weight: 600;
-  font-size: large;
+  width: 80px;
+  height: 40px;
   border-radius: 4px;
+  box-shadow: 2px 4px 10px 2px rgba(163, 163, 163, 0.4);
   cursor: pointer;
-  outline: none;
-  transition: all 0.25s;
+  transition: 0.125s;
   &:hover {
-    background: #00aaf7;
+    filter: brightness(110%);
   }
 `;
-export const errorClass = css`
-  color: rgb(255, 45, 45);
-  width: 80%;
-  margin-top: 1em;
-  text-align: center;
-  font-weight: 600;
-`;
 
-export const input = css`
-  font-size: large;
-  color: white;
+export const label = css`
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
 `;

@@ -1,31 +1,22 @@
 import React, { Component } from "react";
 import TextField from "../../components/TextField";
 import * as styles from "./css";
+import Button from "material-ui";
 
 class Login extends Component {
   state = {
     username: "",
-    password: "",
-    hide: true,
-    tab: "login"
+    password: ""
   };
-
-  handlePassChange = ({ target }) =>
-    this.setState(s => ({ password: target.value }));
-
-  handleSaveInput = ({ target }) =>
-    this.setState(s => ({ username: target.value }));
 
   handleEnter = evt => (evt.key === "Enter" ? this.handleSubmit() : null);
 
   handleSubmit = () => {
     const { callToLogin, history: { push } } = this.props;
     const { username, password } = this.state;
-    callToLogin({ username, password }, push);
-  };
+    console.log("asdsd");
 
-  changeType = ({ currentTarget: { dataset: { tab } } }) => {
-    this.setState({ tab });
+    // callToLogin({ username, password }, push);
   };
 
   handleSaveInput = ({
@@ -35,80 +26,44 @@ class Login extends Component {
     this.setState({ [info]: value });
   };
 
-  renderTab() {
-    const { textCont, input, passwordClass } = styles;
-    const { username, tab, password, hide } = this.state;
-    const url = hide ? "/images/show.png" : "/images/hide.png";
-    return tab === "login"
-      ? [
-          <div key={0} className={textCont}>
-            <TextField
-              data-info={`username`}
-              value={username}
-              onChange={this.handleSaveInput}
-              label="Username"
-              klass={input}
-            />
-          </div>,
-          <div key={1} className={passwordClass}>
-            <TextField
-              data-info={`password`}
-              value={password}
-              onKeyPress={this.handleEnter}
-              onChange={this.handlePassChange}
-              label="Password"
-              type={hide ? "password" : "text"}
-              url={url}
-              klass={input}
-            />
-          </div>
-        ]
-      : [
-          [...Array(5)].map((e, i) => (
-            <div key={i} className={textCont}>
-              <TextField
-                key={i}
-                data-info={`info${i}`}
-                value={this.state[`info${i}`]}
-                onChange={this.handleSaveInput}
-                label={`info${i}`}
-                klass={input}
-              />
-            </div>
-          ))
-        ];
-  }
-
   render() {
     const { errorMsg = `Please check your username and password` } = this.props;
-    const { container, loginBox, btn, errorClass, logReg, choice } = styles;
-    const { tab } = this.state;
+    const { container, item, loginBox, label, btn } = styles;
+    const { username, password } = this.state;
+    console.log(this.state);
+
     return (
       <div className={container}>
         <div className={loginBox}>
-          <div className={logReg}>
-            <div
-              data-tab="login"
-              onClick={this.changeType}
-              className={`${choice} ${tab === "login" ? "active" : ""}`}
-            >
-              Login
-            </div>
-            <div
-              data-tab="register"
-              onClick={this.changeType}
-              className={`${choice} ${tab === "register" ? "active" : ""}`}
-            >
-              Register
-            </div>
+          <div className={item}>
+            <img src="/images/logo.svg" />
           </div>
-          {this.renderTab()}
-          <button className={btn}>{tab.toUpperCase()}</button>
-          {errorMsg ? (
-            <div className={errorClass}>{errorMsg}</div>
-          ) : (
-            <div className={errorClass} />
-          )}
+          <div className={`${item} label`}>
+            <label className={label}>{`Sign in`}</label>
+            <p>to continue to goKiddo</p>
+          </div>
+          <div className={item}>
+            <TextField
+              autoFocus
+              onChange={this.handleSaveInput}
+              data-info={"username"}
+              value={username}
+              label="username"
+            />
+          </div>
+          <div className={item}>
+            <TextField
+              onChange={this.handleSaveInput}
+              data-info={"password"}
+              onKeyPress={this.handleEnter}
+              value={password}
+              label="password"
+              type="password"
+            />
+          </div>
+          <div className={`${item} btn`}>
+            <button className={btn}>LOGIN</button>
+          </div>
         </div>
       </div>
     );

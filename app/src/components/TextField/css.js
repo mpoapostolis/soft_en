@@ -8,13 +8,13 @@ export const input = css`
   color: rgba(0, 0, 0, 0.8);
   padding-bottom: 0.2em;
   background: transparent;
-  border-bottom: solid 0.08em rgba(255, 255, 255, 0.2);
+  border-bottom: solid 0.08em rgba(66, 133, 244, .55);
   width: 100%;
   &:hover {
-    border-bottom: solid 0.08em rgba(255, 255, 255, 0.8);
+    border-bottom: solid 0.08em rgba(66, 133, 244, .8);
   }
   &:focus {
-    border-bottom: solid 0.08em #ffffff;
+    border-bottom: solid 0.1em rgb(66, 133, 244);
     outline: none;
   }
   &.error {
@@ -37,7 +37,7 @@ export const inputCont = css`
     pointer-events: none;
     font-size: medium;
     position: absolute;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(0, 0, 0, 0.45);
     transition: all 0.15s;
     &.notEmpty {
       transform: translate(-0px, -25px);

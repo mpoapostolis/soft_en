@@ -7,7 +7,7 @@ function TextField(props) {
   return (
     <div className={inputCont}>
       <label className={`inputLabel ${value ? "notEmpty" : ""} `}>{label}</label>
-      <input autoComplete="off" className={`${input} ${klass} ${error ? "error" : ""}`} {...props} />
+      <input autoComplete="off" autoFocus={true} className={`${input} ${klass} ${error ? "error" : ""}`} {...props} />
       {url ? <img className={hide} onClick={changeType} src={url} /> : null}
     </div>
   );
