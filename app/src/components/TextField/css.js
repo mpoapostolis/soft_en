@@ -1,4 +1,4 @@
-import { css } from "emotion";
+import {css} from 'emotion';
 
 export const input = css`
   border: none;
@@ -8,10 +8,10 @@ export const input = css`
   color: rgba(0, 0, 0, 0.8);
   padding-bottom: 0.2em;
   background: transparent;
-  border-bottom: solid 0.08em rgba(66, 133, 244, .55);
+  border-bottom: solid 0.08em rgba(66, 133, 244, 0.55);
   width: 100%;
   &:hover {
-    border-bottom: solid 0.08em rgba(66, 133, 244, .8);
+    border-bottom: solid 0.08em rgba(66, 133, 244, 0.8);
   }
   &:focus {
     border-bottom: solid 0.1em rgb(66, 133, 244);
@@ -39,6 +39,9 @@ export const inputCont = css`
     position: absolute;
     color: rgba(0, 0, 0, 0.45);
     transition: all 0.15s;
+    &.error {
+      color: red;
+    }
     &.notEmpty {
       transform: translate(-0px, -25px);
       font-size: xx-small;

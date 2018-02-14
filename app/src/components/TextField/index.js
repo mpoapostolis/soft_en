@@ -1,16 +1,75 @@
-import * as styles from "./css";
+import React, {Component} from 'react';
+import * as styles from './css';
 
-import React from "react";
-function TextField(props) {
-  const { label, value, error, klass, url,changeType } = props;
-  const { inputCont, input, hide } = styles;
-  return (
-    <div className={inputCont}>
-      <label className={`inputLabel ${value ? "notEmpty" : ""} `}>{label}</label>
-      <input autoComplete="off" autoFocus={true} className={`${input} ${klass} ${error ? "error" : ""}`} {...props} />
-      {url ? <img className={hide} onClick={changeType} src={url} /> : null}
-    </div>
-  );
+class TextField extends Component {
+  state = {
+    value: '',
+    errorClass: '',
+  };
+
+  isValid = ({currentTarget}) => {
+    let isValid;
+    const {saveinput} = this.props;
+    const value = currentTarget.value;
+    const _opts = currentTarget.getAttribute('options');
+    const validator = currentTarget.getAttribute('validator');
+    const field = currentTarget.getAttribute('data-field');
+    const options = _opts ? _opts.split(',') : [];
+    switch (validator) {
+      case 'email':
+        const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+        isValid = Boolean(value.match(pattern));
+        break;
+      case 'no-empty':
+        isValid = value.length > 0;
+        break;
+      case 'select':
+        isValid = Boolean(options.find(e => e === value));
+        break;
+      default:
+        isValid = true;
+        break;
+    }
+    console.log(field);
+
+    if (!isValid) this.setState({value: '', errorClass: 'error'});
+    else {
+      this.setState({errorClass: ''});
+      saveinput({[field]: value});
+    }
+  };
+
+  handleInput = ({currentTarget}) =>
+    this.setState({value: currentTarget.value});
+
+  render() {
+    const {options, label, klass, field} = this.props;
+    const {inputCont, input} = styles;
+    const _id = options ? Date.now() : undefined;
+    const {value, errorClass} = this.state;
+    const labelExtraClass = value ? 'notEmpty' : '';
+
+    return (
+      <div className={inputCont}>
+        <label className={`inputLabel ${labelExtraClass} ${errorClass}`}>
+          {label}
+        </label>
+        <input
+          data-field={field}
+          onBlur={this.isValid}
+          value={value}
+          onChange={this.handleInput}
+          list={_id}
+          className={`${input} ${klass} ${errorClass}`}
+        />
+        {options && (
+          <datalist id={_id}>
+            {options.map((opt, key) => <option key={key} value={opt} />)}
+          </datalist>
+        )}
+      </div>
+    );
+  }
 }
 
 export default TextField;

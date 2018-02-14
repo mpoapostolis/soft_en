@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import { mq } from "../../css.js";
+import {css} from 'emotion';
+import {mq} from '../../css.js';
 
 export const container = css`
   width: 100vw;
@@ -11,8 +11,8 @@ export const container = css`
 
 export const loginBox = css`
   align-items: center;
-  width: 390px;
-  height: 440px;
+  width: 450px;
+  height: 500px;
   padding: 30px;
   background: white;
   box-shadow: 0px 2px 5px 2px rgba(163, 163, 163, 0.5);
@@ -58,11 +58,7 @@ export const btn = css`
   width: 80px;
   height: 40px;
   border-radius: 4px;
-<<<<<<< HEAD
   box-shadow: 2px 4px 10px 2px rgba(163, 163, 163, 0.4);
-=======
-  box-shadow: 2px 2px 5px 2px rgba(163, 163, 163, 0.25);
->>>>>>> login screen
   cursor: pointer;
   transition: 0.125s;
   &:hover {

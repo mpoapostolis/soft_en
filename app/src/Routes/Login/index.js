@@ -1,42 +1,33 @@
-import React, { Component } from "react";
-import TextField from "../../components/TextField";
-import * as styles from "./css";
-import Button from "material-ui";
+import React, {Component} from 'react';
+import TextField from '../../components/TextField';
+import * as styles from './css';
 
 class Login extends Component {
   state = {
-    username: "",
-    password: ""
+    username: '',
+    password: '',
   };
 
-  handleEnter = evt => (evt.key === "Enter" ? this.handleSubmit() : null);
+  handleEnter = evt => (evt.key === 'Enter' ? this.handleSubmit() : null);
 
   handleSubmit = () => {
-    const { callToLogin, history: { push } } = this.props;
-    const { username, password } = this.state;
-    console.log("asdsd");
+    const {callToLogin, history: {push}} = this.props;
+    const {username, password} = this.state;
+    console.log(username, password);
 
     // callToLogin({ username, password }, push);
   };
 
-  handleSaveInput = ({
-    currentTarget: { dataset: { info } },
-    target: { value }
-  }) => {
-    this.setState({ [info]: value });
-  };
+  handleSaveState = obj => this.setState(obj);
 
   render() {
-    const { errorMsg = `Please check your username and password` } = this.props;
-    const { container, item, loginBox, label, btn } = styles;
-    const { username, password } = this.state;
-    console.log(this.state);
+    const {container, item, loginBox, label, btn} = styles;
 
     return (
       <div className={container}>
         <div className={loginBox}>
           <div className={item}>
-            <img src="/images/logo.svg" />
+            <img src="/images/logo.svg" alt=":)" />
           </div>
           <div className={`${item} label`}>
             <label className={label}>{`Sign in`}</label>
@@ -45,18 +36,16 @@ class Login extends Component {
           <div className={item}>
             <TextField
               autoFocus
-              onChange={this.handleSaveInput}
-              data-info={"username"}
-              value={username}
+              saveinput={this.handleSaveState}
+              field={'username'}
               label="username"
             />
           </div>
           <div className={item}>
             <TextField
-              onChange={this.handleSaveInput}
-              data-info={"password"}
+              saveinput={this.handleSaveState}
+              field={'password'}
               onKeyPress={this.handleEnter}
-              value={password}
               label="password"
               type="password"
             />
