@@ -11,11 +11,12 @@ function ownerController(app,db) {
         // TODO Check if owner.
         // TODO Check for unique name.
         // TODO Implement coordinates and tags.
+        let point = { type: 'Point', coordinates: [req.body.long, req.body.lat]}
         db.activity.create({
             Name: req.body.Name,
             AgeGroups: req.body.AgeGroups,
             Description: req.body.Description,
-            Coordinates: req.body.Coordinates,
+            Coordinates: point,
             OwnerID: req.headers.UserID,
             Pictures: 'Processing'
         }).then( (act) => {
