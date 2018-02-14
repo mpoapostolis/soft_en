@@ -8,15 +8,15 @@ function Listing(db) {
             primaryKey: true
         },
         ActivityID: {
+            type: Sequelize.UUID,
+            allowNull: false
+        },
+        EventDate: {
+            type: Sequelize.DATE,
+            allowNull: false
+        },
+        Duration: {
             type: Sequelize.INTEGER,
-            allowNull: false
-        },
-        StarDate: {
-            type: Sequelize.DATE,
-            allowNull: false
-        },
-        EndDAte: {
-            type: Sequelize.DATE,
             allowNull: false
         },
         Remaining: {

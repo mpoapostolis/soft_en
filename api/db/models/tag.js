@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 function Tag(db) {
     return db.define('tag', {
         ActivityID: {
-            type: Sequelize.INTEGER
+            type: Sequelize.UUID
         },
         Tag: {
             type: Sequelize.STRING,

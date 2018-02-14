@@ -3,9 +3,10 @@ const Sequelize = require('sequelize')
 function Activity(db) {
     return db.define('activity', {
         ActivityID: {
-            type: Sequelize.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
+            type: Sequelize.UUID,
+            primaryKey: true,
+            allowNull: false,
+            defaultValue: Sequelize.UUIDV4
         },
         OwnerID: {
             type: Sequelize.INTEGER,
@@ -16,11 +17,11 @@ function Activity(db) {
             allowNull: false
         },
         AgeGroups: {
-            type: Sequelize.INTEGER,
-            allowNull: false
+            type: Sequelize.STRING,
+            allowNull: true
         },
         Description: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false
         },
         Pictures: {
@@ -28,7 +29,7 @@ function Activity(db) {
             allowNull: false
         },
         Coordinates: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.GEOGRAPHY('POINT', '4326'),
             allowNull: false
         }
     })
