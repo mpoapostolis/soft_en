@@ -7,11 +7,6 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const secret = fs.readFileSync('./keys/jwtRS256.key')
 
-// TODO Implement and export auth middleware(s).
-// auth.isParent
-// auth.isOwner
-// auth.isAdmin
-
 function authController(app,db) {
 
     // A helper function that checks the validity of a submitted token.
@@ -43,6 +38,7 @@ function authController(app,db) {
         })
     }
 
+    // TODO Update according to schema.
     function registerOwner(req,res,user) {
         db.owner.create({
             OwnerID: user.get('UserID'),

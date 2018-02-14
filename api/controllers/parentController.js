@@ -1,6 +1,7 @@
 function parentController(app, db) {
 
   app.post('/wallet', app.loggedIn, (req, res) => {
+      // TODO Top up should be a transaction.
     db.parent.findById(req.header.UserID).then((p) => {
       p.Balance += req.body.Amount
       p.save().then(() => {
@@ -10,6 +11,7 @@ function parentController(app, db) {
   })
 
   app.get('/wallet', app.loggedIn, (req, res) => {
+      // TODO Respond according to spec.
     console.log(req.headers.UserID)
     db.parent.findById(req.headers.UserID, {
       include: [

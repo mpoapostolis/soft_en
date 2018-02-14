@@ -5,6 +5,25 @@ const FormData = require('form-data')
 
 function ownerController(app,db) {
 
+    app.get('/owner/wallet', app.loggedIn, (req,res) => {
+        // TODO Implement owner wallet according to spec.
+        // UserID in req.headers.UserID
+        res.send('TODO')
+    })
+
+    app.get('/statistics', app.loggedIn, (req,res) => {
+        // TODO Implement owner statistics according to spec.
+        // UserID in req.headers.UserID
+        res.send('TODO')
+    })
+
+    app.get('/statistics/:activityID', app.loggedIn, (req,res) => {
+        // TODO Implement owner statistics according to spec.
+        // UserID in req.headers.UserID
+        // activityID in req.params.activityID
+        res.send('TODO')
+    })
+
     // Register a new activity as an owner.
     app.post('/activity', app.loggedIn, upload.array('image',8), (req,res) => {
 
