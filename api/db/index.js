@@ -34,10 +34,17 @@ parent.belongsTo(user, {foreignKey: 'ParentID', targetKey: 'UserID'})
 review.belongsTo(books, {foreignKey: 'BookingID', targetKey: 'BookingID'})
 
 owner.hasMany(activity, {foreignKey: 'OwnerID', targetKey: 'OwnerID'})
+activity.belongsTo(owner, {foreignKey: 'OwnerID', targetKey: 'OwnerID'})
+
 activity.hasMany(listing, {foreignKey: 'ActivityID', targetKey: 'ActivityID'})
+listing.belongsTo(activity, {foreignKey: 'ActivityID', targetKey: 'ActivityID'})
 
 listing.hasMany(books, {foreignKey: 'ListingID', targetKey: 'ListingID'})
+books.belongsTo(listing, {foreignKey: 'ListingID', targetKey: 'ListingID'})
+
 parent.hasMany(books, {foreignKey: 'ParentID', targetKey: 'ParentID'})
+books.belongsTo(parent, {foreignKey: 'ParentID', targetKey: 'ParentID'})
+
 
 activity.hasMany(tag, {foreignKey: 'ActivityID', targetKey: 'ActivityID'})
 
