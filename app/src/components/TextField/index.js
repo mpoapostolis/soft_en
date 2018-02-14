@@ -12,6 +12,7 @@ class TextField extends Component {
     const {saveinput} = this.props;
     const value = currentTarget.value;
     const _opts = currentTarget.getAttribute('options');
+    const samepass = currentTarget.getAttribute('samepass');
     const validator = currentTarget.getAttribute('validator');
     const field = currentTarget.getAttribute('data-field');
     const options = _opts ? _opts.split(',') : [];
@@ -23,6 +24,10 @@ class TextField extends Component {
       case 'no-empty':
         isValid = value.length > 0;
         break;
+      case 'password':
+        isValid = samepass && value.length > 0;
+        break;
+
       case 'select':
         isValid = Boolean(options.find(e => e === value));
         break;
@@ -30,7 +35,6 @@ class TextField extends Component {
         isValid = true;
         break;
     }
-    console.log(field);
 
     if (!isValid) this.setState({value: '', errorClass: 'error'});
     else {
@@ -43,18 +47,28 @@ class TextField extends Component {
     this.setState({value: currentTarget.value});
 
   render() {
-    const {options, label, klass, field} = this.props;
+    const {
+      options,
+      label,
+      klass,
+      errMsg,
+      field,
+      validator,
+      samepass,
+    } = this.props;
     const {inputCont, input} = styles;
     const _id = options ? Date.now() : undefined;
     const {value, errorClass} = this.state;
     const labelExtraClass = value ? 'notEmpty' : '';
-
     return (
       <div className={inputCont}>
         <label className={`inputLabel ${labelExtraClass} ${errorClass}`}>
-          {label}
+          {errorClass ? errMsg : label}
         </label>
         <input
+          samepass={samepass}
+          options={options}
+          validator={validator}
           data-field={field}
           onBlur={this.isValid}
           value={value}

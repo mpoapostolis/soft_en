@@ -11,8 +11,8 @@ export const container = css`
 
 export const loginBox = css`
   align-items: center;
-  width: 450px;
-  height: 500px;
+  width: 390px;
+  height: 440px;
   padding: 30px;
   background: white;
   box-shadow: 0px 2px 5px 2px rgba(163, 163, 163, 0.5);

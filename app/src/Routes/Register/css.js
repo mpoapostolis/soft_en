@@ -19,10 +19,10 @@ export const item = css`
 
 export const loginBox = css`
   align-items: center;
-  width: 500px;
+  width: 450px;
   height: 550px;
   padding: 15px 0 15px 0;
-  background: rgb(245, 245, 245);
+  background: white;
   box-shadow: 0px 2px 2px 2px rgba(163, 163, 163, 0.5);
   ${mq.large(css`
     width: 50vw;

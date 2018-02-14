@@ -6,9 +6,13 @@ class Register extends Component {
   state = {};
 
   schema = () => {
-    const {type} = this.state;
+    const {type, password1, password2} = this.state;
+    const samePass = password1 && password2 && password1 === password2;
+    console.log(samePass);
+    const noSamePassMsg = 'Password does not match the confirm password';
     const schema = [
       {
+        errMsg: 'select one of from the list',
         type: 'select',
         validator: 'select',
         dataField: 'type',
@@ -16,50 +20,60 @@ class Register extends Component {
         options: ['owner', 'parrent'],
       },
       {
+        errMsg: 'email format must be xx@xxx.xxx',
         type: 'email',
         validator: 'email',
         dataField: 'email',
         label: 'Email',
       },
       {
+        errMsg: 'this field cannot be empty',
         type: '',
         validator: 'no-empty',
         dataField: 'address',
         label: 'Address',
       },
       {
+        samePass,
+        errMsg: !samePass ? noSamePassMsg : 'this field cannot be empty',
         type: 'password',
         validator: 'no-empty',
         dataField: 'password1',
         label: 'Password',
       },
       {
+        samePass,
+        errMsg: !samePass ? noSamePassMsg : 'this field cannot be empty',
         type: 'password',
-        validator: 'no-empty',
+        validator: 'password',
         dataField: 'password2',
         label: 'Repeat Password',
       },
     ];
     const extraOwnerInfo = [
       {
+        errMsg: 'this field cannot be empty',
         type: '',
         validator: 'no-empty',
         dataField: 'iban',
         label: 'IBAN',
       },
       {
+        errMsg: 'this field cannot be empty',
         type: '',
         validator: 'no-empty',
         dataField: 'bic',
         label: 'BIC',
       },
       {
+        errMsg: 'this field cannot be empty',
         type: '',
         validator: 'no-empty',
         dataField: 'swift',
         label: 'SWIFT',
       },
       {
+        errMsg: 'this field cannot be empty',
         type: '',
         validator: 'no-empty',
         dataField: 'taxNumber',
@@ -92,8 +106,8 @@ class Register extends Component {
       footer,
     } = styles;
     const fields = this.schema();
-    console.log(this.state);
-    
+    const {password1, password2} = this.state;
+
     return (
       <div className={container}>
         <div className={loginBox}>
@@ -109,6 +123,8 @@ class Register extends Component {
               {fields.map((obj, i) => (
                 <div className={item} key={i}>
                   <TextField
+                    samepass={obj.samePass}
+                    errMsg={obj.errMsg}
                     options={obj.options}
                     type={obj.type}
                     validator={obj.validator}
