@@ -18,6 +18,7 @@ export const input = css`
     outline: none;
   }
   &.error {
+    color: red;
     border-bottom: solid 0.08em #ff0000;
   }
 `;

@@ -3,29 +3,30 @@ import * as styles from './css';
 
 class TextField extends Component {
   state = {
-    value: '',
     errorClass: '',
   };
 
   isValid = ({currentTarget}) => {
     let isValid;
-    const {saveinput} = this.props;
+    const {
+      saveField,
+      type,
+      validator,
+      field,
+      list,
+      samepass,
+      changeParrentState,
+    } = this.props;
     const value = currentTarget.value;
-    const _opts = currentTarget.getAttribute('options');
-    const samepass = currentTarget.getAttribute('samepass');
-    const validator = currentTarget.getAttribute('validator');
-    const field = currentTarget.getAttribute('data-field');
-    const options = _opts ? _opts.split(',') : [];
+    const options = list || [];
     switch (validator) {
       case 'email':
         const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         isValid = Boolean(value.match(pattern));
         break;
+
       case 'no-empty':
         isValid = value.length > 0;
-        break;
-      case 'password':
-        isValid = samepass && value.length > 0;
         break;
 
       case 'select':
@@ -36,49 +37,40 @@ class TextField extends Component {
         break;
     }
 
-    if (!isValid) this.setState({value: '', errorClass: 'error'});
-    else {
-      this.setState({errorClass: ''});
-      saveinput({[field]: value});
-    }
+    if (!isValid) this.setState({errorClass: 'error'});
+    else this.setState({errorClass: ''});
   };
 
-  handleInput = ({currentTarget}) =>
-    this.setState({value: currentTarget.value});
+  saveState = ({currentTarget}) => {
+    const {changeParrentState, field} = this.props;
+    const value = currentTarget.value;
+    changeParrentState({[field]: value});
+  };
 
   render() {
-    const {
-      options,
-      label,
-      klass,
-      errMsg,
-      field,
-      validator,
-      samepass,
-    } = this.props;
+    const {errmsg, type, list, label, value, field, samepass} = this.props;
     const {inputCont, input} = styles;
-    const _id = options ? Date.now() : undefined;
-    const {value, errorClass} = this.state;
+    const _id = list ? Date.now() : undefined;
+    const {errorClass} = this.state;
     const labelExtraClass = value ? 'notEmpty' : '';
+    const notSamePass = !samepass && field.match(/password/) ? 'error' : '';
     return (
       <div className={inputCont}>
-        <label className={`inputLabel ${labelExtraClass} ${errorClass}`}>
-          {errorClass ? errMsg : label}
+        <label
+          className={`inputLabel ${labelExtraClass} ${errorClass} ${notSamePass}`}>
+          {errorClass ? errmsg : label}
         </label>
         <input
-          samepass={samepass}
-          options={options}
-          validator={validator}
-          data-field={field}
+          className={`${input} ${errorClass}`}
           onBlur={this.isValid}
+          onChange={this.saveState}
+          type={type}
+          list={list}
           value={value}
-          onChange={this.handleInput}
-          list={_id}
-          className={`${input} ${klass} ${errorClass}`}
         />
-        {options && (
-          <datalist id={_id}>
-            {options.map((opt, key) => <option key={key} value={opt} />)}
+        {list && (
+          <datalist id={list}>
+            {list.map((opt, key) => <option key={key} value={opt} />)}
           </datalist>
         )}
       </div>
