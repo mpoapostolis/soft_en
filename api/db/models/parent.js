@@ -20,11 +20,17 @@ function Parent(db) {
         },
         Balance: {
           type: Sequelize.INTEGER,
-          allowNull: false
+          allowNull: false,
+          validate: {
+              min: 0
+          }
         },
         BonusPoints: {
           type: Sequelize.INTEGER,
-          allowNull: false
+          allowNull: false,
+          validate: {
+              min: 0
+          }
         }
     })
 }

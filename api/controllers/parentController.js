@@ -1,6 +1,15 @@
 function parentController(app, db) {
 
+    app.post('/booking/:listingID', app.loggedIn, (req,res) => {
+        // TODO Implement the booking of an activity listing according to spec.
+        // UserID in req.headers.UserID
+        // listingID in req.params.listingID
+        res.send('TODO')
+    })
+
     app.post('/wallet', app.loggedIn, (req, res) => {
+        // TODO Implement error responses.
+
         // Initiate transaction.
         db.sequelize.transaction((t) => {
             // Lock parent table row.
@@ -20,8 +29,8 @@ function parentController(app, db) {
                 // And commit transaction.
                 return p.save({
                     transaction: t
-                }).then(() => {
-                    res.send("Successful balance top up.")
+                }).then((p) => {
+                    res.send({ "Balance": p.Balance })
                 })
             })
         })
@@ -49,7 +58,7 @@ function parentController(app, db) {
                     include: {
                         model: db.activity,
                         as: 'activity',
-                        attributes: ["Name"]
+                        attributes: ["Name", "Price"]
                     }
                 }]
             }).then( (r) => {

@@ -15,18 +15,7 @@ function Listing(db) {
             type: Sequelize.DATE,
             allowNull: false
         },
-        Duration: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        },
         Remaining: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            validate: {
-                min: 0
-            }
-        },
-        Price: {
             type: Sequelize.INTEGER,
             allowNull: false,
             validate: {

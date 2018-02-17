@@ -24,6 +24,13 @@ function ownerController(app,db) {
         res.send('TODO')
     })
 
+    app.post('/activity/:activityID', app.loggedIn, (req,res) =>{
+        // TODO Implement listing creation according to spec.
+        // UserID in req.headers.UserID
+        // activityID in req.params.activityID
+        res.send('TODO')
+    })
+
     // Register a new activity as an owner.
     app.post('/activity', app.loggedIn, upload.array('image',8), (req,res) => {
 
@@ -35,6 +42,8 @@ function ownerController(app,db) {
             Name: req.body.Name,
             AgeGroups: req.body.AgeGroups,
             Description: req.body.Description,
+            Price: req.body.Price,
+            Duration: req.body.Duration,
             Coordinates: point,
             OwnerID: req.headers.UserID,
             Pictures: 'Processing'

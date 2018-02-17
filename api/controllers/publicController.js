@@ -5,11 +5,11 @@ function publicController(app, db) {
         // Query parameters found in req.query.
     })
 
-
     app.get('/activity/:id', (req, res) => {
         // TODO Optimize response according to spec.
         db.activity.findById(req.params.id, {
             include: [{
+                // Add options for listing pagination.
                 model: db.listing
             }]
         }).then((result) => {
