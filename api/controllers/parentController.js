@@ -1,10 +1,75 @@
 function parentController(app, db) {
 
-    app.post('/booking/:listingID', app.loggedIn, (req,res) => {
-        // TODO Implement the booking of an activity listing according to spec.
-        // UserID in req.headers.UserID
-        // listingID in req.params.listingID
-        res.send('TODO')
+    // TODO Ping the mail service for a confirmation email.
+    app.post('/booking/:listingID', app.loggedIn, app.isParent, (req,res) => {
+        var data = { Quantity: parseInt(req.body.Quantity) || 0 }
+
+        // Begin transaction
+        db.sequelize.transaction( (t) => {
+            // Get parent details.
+            return db.parent.findById(
+                req.headers.UserID, {
+                    transaction: t,
+                    lock: t.LOCK.UPDATE
+                }
+            )
+            .then( (parent) => {
+                // Get activity listing details.
+                return db.listing.findById(
+                    req.params.listingID,{
+                        transaction: t,
+                        lock: t.LOCK.UPDATE
+                    }
+                ).then( (listing) => {
+                    // Get activity details.
+                    return db.activity.findById(
+                        listing.ActivityID,{
+                            transaction: t,
+                            lock: t.LOCK.UPDATE
+                        }
+                    ).then( (activity) => {
+                        data.Price = activity.Price
+                        data.Cost = data.Quantity*data.Price
+
+                        let cost = data.Quantity*data.Price
+
+                        // Check if the tickets can be bought.
+                        if( (data.Quantity>0) &&
+                            (cost<=parent.Balance) &&
+                            (data.Quantity<=listing.Remaining)
+                        ) {
+                            // If so update balances and commit transaction.
+                            parent.Balance -= cost
+                            listing.Remaining -= data.Quantity
+                            return parent.save({transaction: t}).then( () => {
+                                return listing.save({transaction: t})
+                            })
+                        }
+                        else {
+                            // If the tickets cannot be bought, throw an Error
+                            // to initiate the transaction rollback.
+                            throw new Error()
+                        }
+                    })
+                })
+            })
+        })
+        // If the transaction was successful, create a booking object.
+        .then( (done) => {
+            console.log(data)
+            db.books.create({
+                ListingID: req.params.listingID,
+                ParentID: req.headers.UserID,
+                Quantity: data.Quantity
+            }).then((booking) => {
+                res.send(booking)
+            } )
+        })
+        // Else rollback has already happened, return a simple message
+        .catch( (err) => {
+            res.send(err)
+        })
+
     })
 
     app.post('/wallet', app.loggedIn, (req, res) => {
