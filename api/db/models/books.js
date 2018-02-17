@@ -9,10 +9,7 @@ function Books(db) {
         },
         ParentID: {
             type: Sequelize.INTEGER,
-            allowNull: false,
-            validate: {
-                isEmail: true
-            }
+            allowNull: false
         },
         ListingID: {
             type: Sequelize.INTEGER,
