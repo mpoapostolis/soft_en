@@ -25,6 +25,33 @@ function authController(app,db) {
         })
     }
 
+    app.isParent = function(req,res,next) {
+        if(req.headers.Role === 'Parent') {
+            next()
+        }
+        else {
+            res.send('Not a parent')
+        }
+    }
+
+    app.isOwner = function(req,res,next) {
+        if(req.headers.Role === 'Owner') {
+            next()
+        }
+        else {
+            res.send('Not an owner')
+        }
+    }
+
+    app.isAdmin = function(req,res,next) {
+        if(req.headers.Role === 'Admin') {
+            next()
+        }
+        else {
+            res.send('Not an admin')
+        }
+    }
+
     function registerParent(req,res,user) {
         db.parent.create({
             ParentID: user.get('UserID'),
