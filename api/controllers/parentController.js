@@ -1,13 +1,29 @@
 function parentController(app, db) {
 
   app.post('/wallet', app.loggedIn, (req, res) => {
-      // TODO Top up should be a transaction.
-    db.parent.findById(req.header.UserID).then((p) => {
-      p.Balance += req.body.Amount
-      p.save().then(() => {
-        res.send("Succesfull.")
+      // Initiate transaction.
+      db.sequelize.transaction( (t) => {
+          // Lock parent table row.
+          return db.parent.findById(
+              req.headers.UserID,
+              {
+                  transaction: t,
+                  lock: t.LOCK.UPDATE
+              }
+          ).then((p) => {
+              // Ensure top up amount is a valid number.
+              let topup = parseInt(req.body.Amount) || 0
+              topup = ( topup > 0 ) ? topup : 0
+
+              // Top up account balance.
+              p.Balance += topup
+
+              // And commit transaction.
+              return p.save({ transaction: t }).then(() => {
+                  res.send("Successful balance top up.")
+              })
+          })
       })
-    })
   })
 
   app.get('/wallet', app.loggedIn, (req, res) => {
