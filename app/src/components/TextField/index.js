@@ -1,69 +1,72 @@
-import React, {Component} from 'react';
-import * as styles from './css';
+import React, { Component } from "react";
+import * as styles from "./css";
 
 class TextField extends Component {
   state = {
-    errorClass: '',
+    errorClass: "",
+    value: ""
   };
 
-  isValid = ({currentTarget}) => {
+  isValid = ({ currentTarget }) => {
     let isValid;
     const {
-      saveField,
+      setTmpData,
       type,
       validator,
       field,
       list,
-      samepass,
       changeParrentState,
+      allField: { password1 }
     } = this.props;
     const value = currentTarget.value;
     const options = list || [];
     switch (validator) {
-      case 'email':
+      case "email":
         const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
         isValid = Boolean(value.match(pattern));
         break;
 
-      case 'no-empty':
+      case "no-empty":
         isValid = value.length > 0;
         break;
 
-      case 'select':
+      case "password":
+        if (value && !password1) isValid = false;
+        else if (password1 && value && password1 !== value) isValid = false;
+        else isValid = true;
+        break;
+
+      case "select":
         isValid = Boolean(options.find(e => e === value));
         break;
       default:
         isValid = true;
         break;
     }
-
-    if (!isValid) this.setState({errorClass: 'error'});
-    else this.setState({errorClass: ''});
+    setTmpData({ [field]: value });
+    if (!isValid) this.setState({ errorClass: "error" });
+    else this.setState({ errorClass: "" });
   };
 
-  saveState = ({currentTarget}) => {
-    const {changeParrentState, field} = this.props;
-    const value = currentTarget.value;
-    changeParrentState({[field]: value});
-  };
+  handleChange = ({ currentTarget }) =>
+    this.setState({ value: currentTarget.value });
 
   render() {
-    const {errmsg, type, list, label, value, field, samepass} = this.props;
-    const {inputCont, input} = styles;
+    const { errmsg, type, list, label, field } = this.props;
+    const { inputCont, input } = styles;
     const _id = list ? Date.now() : undefined;
-    const {errorClass} = this.state;
-    const labelExtraClass = value ? 'notEmpty' : '';
-    const notSamePass = !samepass && field.match(/password/) ? 'error' : '';
+    const { errorClass, value } = this.state;
+    const labelExtraClass = value ? "notEmpty" : "";
+
     return (
       <div className={inputCont}>
-        <label
-          className={`inputLabel ${labelExtraClass} ${errorClass} ${notSamePass}`}>
+        <label className={`inputLabel ${labelExtraClass} ${errorClass}`}>
           {errorClass ? errmsg : label}
         </label>
         <input
           className={`${input} ${errorClass}`}
+          onChange={this.handleChange}
           onBlur={this.isValid}
-          onChange={this.saveState}
           type={type}
           list={list}
           value={value}

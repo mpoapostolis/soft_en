@@ -1,16 +1,16 @@
-import assoc from 'ramda/src/assoc';
-import merge from 'ramda/src/merge';
-import {combineReducers} from 'redux';
+import assoc from "ramda/src/assoc";
+import merge from "ramda/src/merge";
+import { combineReducers } from "redux";
 
 const tmpDataInit = {};
 
-const tmpData = (state = tmpDataInit, {type, payload}) => {
+const tmpData = (state = tmpDataInit, { type, payload }) => {
   switch (type) {
-    case 'LOGIN':
+    case "LOGIN":
       return payload;
-    case 'SET_TMP_DATA':
+    case "SET_TMP_DATA":
       return merge(state, payload);
-    case 'CLEAR_TMP':
+    case "CLEAR_TMP":
       return {};
     default:
       return state;
@@ -18,23 +18,23 @@ const tmpData = (state = tmpDataInit, {type, payload}) => {
 };
 
 const initAccount = {
-  access_token: '',
-  refresh_token: '',
+  access_token: "",
+  refresh_token: "",
   expires_in: 0,
-  role: 'Admin',
-  status: 'ACTIVE',
+  role: "Admin",
+  status: "ACTIVE",
   error: false,
-  lang: 'En',
+  lang: "En"
 };
 
-const account = (state = initAccount, {type, payload}) => {
+const account = (state = initAccount, { type, payload }) => {
   switch (type) {
-    case 'LOGIN':
+    case "LOGIN":
       return payload;
-    case 'CHANGE_LANGUAGE':
-      return assoc('lang', payload, state);
-    case 'SET_ERROR':
-      return assoc('error', payload, state);
+    case "CHANGE_LANGUAGE":
+      return assoc("lang", payload, state);
+    case "SET_ERROR":
+      return assoc("error", payload, state);
     default:
       return state;
   }
@@ -42,11 +42,11 @@ const account = (state = initAccount, {type, payload}) => {
 
 const appReducer = combineReducers({
   account,
-  tmpData,
+  tmpData
 });
 
 const rootReducer = (state, action) => {
-  if (action.type === 'LOGOUT') {
+  if (action.type === "LOGOUT") {
     state = undefined;
   }
 

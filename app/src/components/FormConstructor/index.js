@@ -1,35 +1,24 @@
-import React, {Component} from 'react';
-import TextField from '../TextField';
-import * as styles from './css';
+import React, { Component } from "react";
+import TextField from "../TextField";
+import * as styles from "./css";
 
 class FormConstructor extends Component {
   constructor(props) {
     super(props);
     const state = {};
-    props.schema.map(obj => {
-      state[obj.field] = '';
-    });
     this.state = state;
   }
+
   componentWillUnmount() {
     this.props.clearTmp;
   }
 
-  handleEnter = evt => (evt.key === 'Enter' ? this.handleSubmit() : null);
+  handleEnter = evt => (evt.key === "Enter" ? this.handleSubmit() : null);
 
   handleSubmit = () => {
-    const {callToLogin, history: {push}} = this.props;
-    const {username, password} = this.state;
+    const { callToLogin, history: { push } } = this.props;
+    const { username, password } = this.state;
     console.log(username, password);
-  };
-
-  changeParrentState = obj => this.setState(obj);
-
-  samePass = () => {
-    const {password1, password2} = this.state;
-    const bothFilled =
-      password1 && password2 && password1.length <= password2.length;
-    return bothFilled ? password1 === password2 : true;
   };
 
   render() {
@@ -41,12 +30,17 @@ class FormConstructor extends Component {
       label,
       btn,
       loginBody,
-      footer,
+      footer
     } = styles;
 
-    const {schema, setTmpData} = this.props;
-    const {firstMsg, secondMsg, btnMsg} = this.props;
-    const samepass = this.samePass();
+    const {
+      schema,
+      setTmpData,
+      firstMsg,
+      secondMsg,
+      btnMsg,
+      tmpData
+    } = this.props;
 
     return (
       <div className={container}>
@@ -64,10 +58,8 @@ class FormConstructor extends Component {
                 <div className={item} key={i}>
                   <TextField
                     {...obj}
-                    samepass={samepass}
-                    value={this.state[obj.field]}
-                    changeParrentState={this.changeParrentState}
-                    saveField={setTmpData}
+                    allField={tmpData}
+                    setTmpData={setTmpData}
                   />
                 </div>
               ))}
