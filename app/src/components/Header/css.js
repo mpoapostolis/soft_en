@@ -3,8 +3,9 @@ import { css } from "emotion";
 export const container = css`
   position: fixed;
   width: 100%;
-  height: 50px;
+  height: 56px;
+  background: white;
   display: flex;
   align-items: center;
-  border:solid 1px red;
+  box-shadow: 0px 11px 4px -10px rgba(0, 0, 0, 0.18);
 `;

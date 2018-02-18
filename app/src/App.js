@@ -25,7 +25,13 @@ class App extends Component {
     return (
       <div>
         <Header {...this.props} />
-        <Router {...this.props} />
+        <main
+          className={css`
+            padding-top: 70px;
+          `}
+        >
+          <Router {...this.props} />
+        </main>
       </div>
     );
   }

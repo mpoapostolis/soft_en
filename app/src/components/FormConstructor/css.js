@@ -3,7 +3,7 @@ import { mq } from "../../css.js";
 
 export const container = css`
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 80px);
   display: flex;
   justify-content: center;
   align-items: center;
