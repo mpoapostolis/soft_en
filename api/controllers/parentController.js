@@ -28,28 +28,40 @@ function parentController(app, db) {
                             lock: t.LOCK.UPDATE
                         }
                     ).then( (activity) => {
-                        data.Price = activity.Price
-                        data.Cost = data.Quantity*data.Price
 
-                        let cost = data.Quantity*data.Price
+                        return db.owner.findById(
+                            activity.OwnerID, {
+                                transaction: t,
+                                lock: t.LOCK.UPDATE
+                            }
+                        ).then( (owner) => {
+                            data.Price = activity.Price
+                            data.Cost = data.Quantity*data.Price
 
-                        // Check if the tickets can be bought.
-                        if( (data.Quantity>0) &&
-                            (cost<=parent.Balance) &&
-                            (data.Quantity<=listing.Remaining)
-                        ) {
-                            // If so update balances and commit transaction.
-                            parent.Balance -= cost
-                            listing.Remaining -= data.Quantity
-                            return parent.save({transaction: t}).then( () => {
-                                return listing.save({transaction: t})
-                            })
-                        }
-                        else {
-                            // If the tickets cannot be bought, throw an Error
-                            // to initiate the transaction rollback.
-                            throw new Error()
-                        }
+                            let cost = data.Quantity*data.Price
+
+                            // Check if the tickets can be bought.
+                            if( (data.Quantity>0) &&
+                                (cost<=parent.Balance) &&
+                                (data.Quantity<=listing.Remaining)
+                            ) {
+                                // If so update balances and commit transaction.
+                                owner.Balance += cost/10
+                                parent.Balance -= cost
+                                listing.Remaining -= data.Quantity
+                                return parent.save({transaction: t}).then(() => {
+                                    return listing.save({transaction: t}).then(()=>{
+                                        return owner.save({transaction: t})
+                                    })
+                                })
+                            }
+                            else {
+                                // If the tickets cannot be bought, throw an Error
+                                // to initiate the transaction rollback.
+                                throw new Error()
+                            }
+                        })
+
                     })
                 })
             })
