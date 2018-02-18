@@ -6,8 +6,6 @@ const tmpDataInit = {};
 
 const tmpData = (state = tmpDataInit, { type, payload }) => {
   switch (type) {
-    case "LOGIN":
-      return payload;
     case "SET_TMP_DATA":
       return merge(state, payload);
     case "CLEAR_TMP":
@@ -20,6 +18,7 @@ const tmpData = (state = tmpDataInit, { type, payload }) => {
 const initAccount = {
   access_token: "",
   refresh_token: "",
+  coords: {},
   expires_in: 0,
   role: "Admin",
   status: "ACTIVE",
@@ -33,6 +32,10 @@ const account = (state = initAccount, { type, payload }) => {
       return payload;
     case "CHANGE_LANGUAGE":
       return assoc("lang", payload, state);
+
+      case "UPDATE_COORDS":
+      return assoc("coords", payload, state);
+
     case "SET_ERROR":
       return assoc("error", payload, state);
     default:

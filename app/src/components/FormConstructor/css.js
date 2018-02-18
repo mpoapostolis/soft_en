@@ -1,5 +1,5 @@
-import {css} from 'emotion';
-import {mq} from '../../css.js';
+import { css } from "emotion";
+import { mq } from "../../css.js";
 
 export const container = css`
   width: 100vw;
@@ -50,6 +50,10 @@ export const loginBody = css`
   width: calc(100%-60px);
   padding: 0 30px 0 30px;
   overflow-y: auto;
+  &.shadow {
+    box-shadow: inset 0px 11px 4px -10px rgba(0, 0, 0, 0.18),
+      inset 0px -11px 4px -10px rgba(0, 0, 0, 0.18);
+  }
   &::-webkit-scrollbar {
     width: 5px;
     border-left: solid 1px rgba(0, 0, 0, 0.1);

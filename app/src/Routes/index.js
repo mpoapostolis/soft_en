@@ -10,9 +10,19 @@ const Routes = props => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" render={routeProps => <AuthWrapper component={Home} {...routeProps} {...props} />} />
-        <Route path="/login" render={routeProps => <Login {...routeProps} {...props} />} />
-        <Route path="/register" render={routeProps => <Register {...routeProps} {...props} />} />
+        <Route
+          exact
+          path="/"
+          render={routeProps => <Home {...routeProps} {...props} />}
+        />
+        <Route
+          path="/login"
+          render={routeProps => <Login {...routeProps} {...props} />}
+        />
+        <Route
+          path="/register"
+          render={routeProps => <Register {...routeProps} {...props} />}
+        />
       </Switch>
     </Router>
   );

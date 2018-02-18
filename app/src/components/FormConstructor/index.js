@@ -41,7 +41,7 @@ class FormConstructor extends Component {
       btnMsg,
       tmpData
     } = this.props;
-
+    const shadowClass = schema.length > 4 ? "shadow" : "";
     return (
       <div className={container}>
         <div className={loginBox}>
@@ -53,7 +53,7 @@ class FormConstructor extends Component {
             </div>
           </div>
           <div>
-            <div className={loginBody}>
+            <div className={`${loginBody} ${shadowClass}`}>
               {schema.map((obj, i) => (
                 <div className={item} key={i}>
                   <TextField
