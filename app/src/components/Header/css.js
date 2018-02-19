@@ -4,6 +4,8 @@ export const container = css`
   position: fixed;
   width: 100%;
   height: 56px;
+  top: 0;
+  left: 0;
   background: white;
   display: flex;
   align-items: center;
@@ -12,6 +14,7 @@ export const container = css`
 `;
 
 export const logo = css`
+  cursor: pointer;
   width: 125px;
   margin-left: 25px;
 `;
@@ -19,12 +22,23 @@ export const logo = css`
 export const info = css`
   margin-right: 25px;
   display: flex;
-  border: solid 1px red;
   width: 250px;
-  justify-content: space-around;
+  justify-content: flex-end;
+`;
+
+export const account = css`
+  height: 100%;
+  width: 250px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  margin-right: 25px;
 `;
 
 export const redirect = css`
   cursor: pointer;
+  margin: 10px;
   user-select: none;
 `;

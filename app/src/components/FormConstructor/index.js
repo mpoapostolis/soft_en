@@ -46,7 +46,7 @@ class FormConstructor extends Component {
       <div className={container}>
         <div className={loginBox}>
           <div className={header}>
-            <img src="/images/logo.svg" alt=":)" />
+            <img src="/images/logo.png" alt=":)" />
             <div className={`${item} label`}>
               <label className={label}>{firstMsg}</label>
               <p>{secondMsg}</p>

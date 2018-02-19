@@ -1,8 +1,7 @@
 body {
   font-family: "Source Sans Pro", sans-serif;
   background: url("/images/bg.svg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
   margin: 0;
   padding: 0;
   height: 100vh;;

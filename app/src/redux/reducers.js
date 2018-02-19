@@ -23,7 +23,8 @@ const initAccount = {
   role: "Admin",
   status: "ACTIVE",
   error: false,
-  lang: "En"
+  lang: "En",
+  address: ""
 };
 
 const account = (state = initAccount, { type, payload }) => {
@@ -33,8 +34,10 @@ const account = (state = initAccount, { type, payload }) => {
     case "CHANGE_LANGUAGE":
       return assoc("lang", payload, state);
 
-      case "UPDATE_COORDS":
+    case "UPDATE_COORDS":
       return assoc("coords", payload, state);
+    case "UPDATE_ADDRESS":
+      return assoc("address", payload, state);
 
     case "SET_ERROR":
       return assoc("error", payload, state);

@@ -12,11 +12,24 @@ class App extends Component {
     }
   }
 
+  codeLatLng = (latitude, longitude) => {
+    const { updateAdress } = this.props;
+    const geocoder = new window.google.maps.Geocoder();
+    const latlng = new window.google.maps.LatLng(latitude, longitude);
+    geocoder.geocode({ latLng: latlng }, function(results, status) {
+      if (status == window.google.maps.GeocoderStatus.OK && results[1]) {
+        const address = results[1].formatted_address;
+        updateAdress(address);
+      } else console.error("error");
+    });
+  };
+
   getPosition = position => {
     const { updateCoords } = this.props;
     const longitude = position.coords.longitude;
     const latitude = position.coords.latitude;
     updateCoords({ latitude, longitude });
+    this.codeLatLng(latitude, longitude);
   };
 
   render() {

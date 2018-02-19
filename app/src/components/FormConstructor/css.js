@@ -7,6 +7,10 @@ export const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 70px;
+  ${mq.small(css`
+    padding-top: 100px;
+  `)};
 `;
 
 export const item = css`
@@ -41,7 +45,7 @@ export const header = css`
   width: calc(100%-60px);
   padding: 15px 30px 15px 30px;
   img {
-    width: 75px;
+    width: 120px;
   }
 `;
 
@@ -51,8 +55,6 @@ export const loginBody = css`
   padding: 0 30px 0 30px;
   overflow-y: auto;
   &.shadow {
-    box-shadow: inset 0px 11px 4px -10px rgba(0, 0, 0, 0.18),
-      inset 0px -11px 4px -10px rgba(0, 0, 0, 0.18);
   }
   &::-webkit-scrollbar {
     width: 5px;
