@@ -5,6 +5,60 @@ const FormData = require('form-data')
 
 function ownerController(app,db) {
 
+    app.get('/owner/calendar', app.loggedIn, app.isOwner, (req,res) => {
+        db.activity.findAll({
+            where: {
+                OwnerID: req.headers.UserID
+            }
+        })
+        .then( (activities) => {
+
+            let acts = activities.map( (a) => { return a.ActivityID })
+
+            db.listing.findAll({
+                where: {
+                    ActivityID: {
+                        [db.sequelize.Op.in]: acts
+                    }
+                },
+                attributes:[
+                    [db.sequelize.col("Name"),"ActivityName"],
+                    "EventDate",
+                    [db.sequelize.col("Price"),"Price"],
+                    [
+                        db.sequelize.fn(
+                            'coalesce',
+                            db.sequelize.fn('SUM',db.sequelize.col("Quantity")),
+                            0
+                        ),
+                        "ticketsSold"
+                    ]
+                ],
+                raw:true,
+                group: [
+                    db.sequelize.col('"listing"."ListingID"'),
+                    db.sequelize.col('"activity"."ActivityID"')
+                ],
+                includeIgnoreAttributes: false,
+                include: [
+                    {
+                        model: db.books
+                    },
+                    {
+                        model: db.activity
+                    }
+                ]
+            })
+            .then( (r) => {
+                res.send(r)
+            })
+            .catch((err) => {
+                console.error(err.error)
+                res.send('ERR')
+            })
+        })
+    })
+
     // Get owner wallet details.
     app.get('/owner/wallet', app.loggedIn, app.isOwner, (req,res) => {
         db.owner.findById(
@@ -151,11 +205,28 @@ function ownerController(app,db) {
         })
     })
 
-    app.post('/activity/:activityID', app.loggedIn, (req,res) =>{
-        // TODO Implement listing creation according to spec.
-        // UserID in req.headers.UserID
-        // activityID in req.params.activityID
-        res.send('TODO')
+    // TODO Contemplate strict validations for listing overlap.
+    app.post('/activity/:activityID', app.loggedIn, app.isOwner, (req,res) => {
+
+        let list = JSON.parse(req.body.Listings)
+
+        // Transform received data to database specs.
+        let inserted = list.filter((x) => { return x.EventDate >= Date.now() })
+                           .map((x) => {
+                               x.ActivityID = req.params.activityID
+                               x.EventDate = new Date(x.EventDate)
+                               return x
+                           })
+
+        // Perform bulk insertion.
+        db.listing.bulkCreate(inserted)
+        .then(() => {
+            res.send('Listings saved')
+        })
+        .catch((err) => {
+            console.error(err)
+            res.send('Ooops')
+        })
     })
 
     // Register a new activity as an owner.

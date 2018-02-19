@@ -1,5 +1,34 @@
 function parentController(app, db) {
 
+    app.get('/parent/calendar', app.loggedIn, app.isParent, (req,res) => {
+        db.books.findAll({
+            where: {
+                ParentID: req.headers.UserID
+            },
+            attributes: [
+                [db.sequelize.col('Quantity'),"Quantity"],
+                [db.sequelize.col('EventDate'),"EventDate"],
+                [db.sequelize.col('Name'),"ActivityName"],
+                [db.sequelize.col('Price'),"Price"]
+            ],
+            includeIgnoreAttributes: false,
+            include: [{
+                model: db.listing,
+                includeIgnoreAttributes: false,
+                include: {
+                    model: db.activity
+                }
+            }]
+        })
+        .then((r) => {
+            res.send(r)
+        })
+        .catch((err) => {
+            console.error(err)
+            res.send('ERR')
+        })
+    })
+
     // TODO Ping the mail service for a confirmation email.
     app.post('/booking/:listingID', app.loggedIn, app.isParent, (req,res) => {
         var data = { Quantity: parseInt(req.body.Quantity) || 0 }
