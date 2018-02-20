@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import TextField from "../TextField";
-import * as styles from "./css";
+import React, {Component} from 'react';
+import TextField from '../TextField';
+import * as styles from './css';
 
 class FormConstructor extends Component {
   constructor(props) {
@@ -10,14 +10,14 @@ class FormConstructor extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearTmp;
+    this.props.clearTmp();
   }
 
-  handleEnter = evt => (evt.key === "Enter" ? this.handleSubmit() : null);
+  handleEnter = evt => (evt.key === 'Enter' ? this.handleSubmit() : null);
 
   handleSubmit = () => {
-    const { callToLogin, history: { push } } = this.props;
-    const { username, password } = this.state;
+    const {callToLogin, history: {push}} = this.props;
+    const {username, password} = this.state;
     console.log(username, password);
   };
 
@@ -30,7 +30,7 @@ class FormConstructor extends Component {
       label,
       btn,
       loginBody,
-      footer
+      footer,
     } = styles;
 
     const {
@@ -39,9 +39,9 @@ class FormConstructor extends Component {
       firstMsg,
       secondMsg,
       btnMsg,
-      tmpData
+      tmpData,
     } = this.props;
-    const shadowClass = schema.length > 4 ? "shadow" : "";
+    const shadowClass = schema.length > 4 ? 'shadow' : '';
     return (
       <div className={container}>
         <div className={loginBox}>

@@ -1,4 +1,4 @@
-import { css } from "emotion";
+import {css} from 'emotion';
 
 export const container = css`
   position: fixed;
@@ -11,6 +11,7 @@ export const container = css`
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 11px 4px -10px rgba(0, 0, 0, 0.18);
+  z-index: 100;
 `;
 
 export const logo = css`

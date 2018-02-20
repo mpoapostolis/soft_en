@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Router from "./Routes";
-import Header from "./components/Header";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as actions from "./redux/actions";
+import React, {Component} from 'react';
+import Router from './Routes';
+import Header from './components/Header';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actions from './redux/actions';
 
 class App extends Component {
   componentDidMount() {
@@ -12,24 +12,25 @@ class App extends Component {
     }
   }
 
-  codeLatLng = (latitude, longitude) => {
-    const { updateAdress } = this.props;
+  getPosition = position => {
+    const {updateCoords} = this.props;
+    const lng = position.coords.longitude;
+    const lat = position.coords.latitude;
+
+    updateCoords({lat, lng});
+    this.codeLatLng(lat, lng);
+  };
+
+  codeLatLng = (lat, lng) => {
+    const {updateAdress} = this.props;
     const geocoder = new window.google.maps.Geocoder();
-    const latlng = new window.google.maps.LatLng(latitude, longitude);
-    geocoder.geocode({ latLng: latlng }, function(results, status) {
+    const latlng = new window.google.maps.LatLng(lat, lng);
+    geocoder.geocode({latLng: latlng}, function(results, status) {
       if (status == window.google.maps.GeocoderStatus.OK && results[1]) {
         const address = results[1].formatted_address;
         updateAdress(address);
-      } else console.error("error");
+      } else console.error('error');
     });
-  };
-
-  getPosition = position => {
-    const { updateCoords } = this.props;
-    const longitude = position.coords.longitude;
-    const latitude = position.coords.latitude;
-    updateCoords({ latitude, longitude });
-    this.codeLatLng(latitude, longitude);
   };
 
   render() {
@@ -37,8 +38,8 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({ ...state });
+const mapStateToProps = state => ({...state});
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...actions }, dispatch);
+  bindActionCreators({...actions}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

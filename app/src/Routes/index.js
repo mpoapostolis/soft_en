@@ -4,6 +4,7 @@ import Home from "./Home";
 import Private from "./Private";
 import Login from "./Login";
 import Register from "./Register";
+import Search from "./Search";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 import { css } from "emotion";
@@ -28,6 +29,11 @@ const Routes = props => {
             path="/register"
             render={routeProps => <Register {...routeProps} {...props} />}
           />
+          <Route
+            path="/search"
+            render={routeProps => <Search {...routeProps} {...props} />}
+          />
+
         </Switch>
       </main>
     </Router>
