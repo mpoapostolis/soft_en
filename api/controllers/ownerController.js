@@ -50,12 +50,15 @@ function ownerController(app,db) {
                 ]
             })
             .then( (r) => {
-                res.send(r)
+                res.status(200).send(r)
             })
             .catch((err) => {
                 console.error(err.error)
-                res.send('ERR')
+                res.status(404).send('No listings found')
             })
+        })
+        .catch( (err) => {
+            res.status(404) send('No activities found')
         })
     })
 
@@ -73,10 +76,10 @@ function ownerController(app,db) {
             }
         )
         .then( (o) => {
-            res.send(o)
+            res.status(200).send(o)
         })
         .catch( (err) => {
-            res.send('No such owner.')
+            res.status(404).send('No such owner.')
         })
     })
 
@@ -173,12 +176,12 @@ function ownerController(app,db) {
             getStatistics(db,acts)
             .then( (l) => {
                 // and send them to the client.
-                res.send(l)
+                res.status(200).send(l)
             })
         })
         .catch( (err) => {
             console.error(err)
-            res.send('No activities found!')
+            res.status(404).send('No activities found!')
         })
     })
 
@@ -191,17 +194,17 @@ function ownerController(app,db) {
                 getStatistics(db,[a.ActivityID])
                 .then( (l) => {
                     // and send them to the client.
-                    res.send(l)
+                    res.status(200).send(l)
                 })
             }
             else {
                 // Else, respond to the raskal owner accordingly.
-                res.send('Not the owner of the activity')
+                res.status(403).send('Not the owner of the activity')
             }
         })
         .catch((err) => {
             console.error(err)
-            res.send('No such activity')
+            res.status(404).send('No such activity')
         })
     })
 
@@ -221,11 +224,11 @@ function ownerController(app,db) {
         // Perform bulk insertion.
         db.listing.bulkCreate(inserted)
         .then(() => {
-            res.send('Listings saved')
+            res.status(201).send('Listings saved')
         })
         .catch((err) => {
             console.error(err)
-            res.send('Ooops')
+            res.status(400).send('Listings not saved')
         })
     })
 
@@ -266,7 +269,7 @@ function ownerController(app,db) {
             }, (err,result) => {
                 if (err) {
                     console.error(err)
-                    res.send('Error')
+                    res.status(400).send('Pictures not saved')
                 } else {
                     // Parse response body, an array of image names.
                     var body = '';
@@ -280,7 +283,7 @@ function ownerController(app,db) {
                         body = JSON.parse(body);
                         act.Pictures = body.join(',')
                         act.save().then( () => {
-                            res.send('Pictures saved')
+                            res.status(201).send('Pictures saved')
                         })
                     })
                 }
