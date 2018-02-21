@@ -13,12 +13,16 @@ const authController = require('./controllers/authController')
 const parentController = require('./controllers/parentController')
 const ownerController = require('./controllers/ownerController')
 const publicController = require('./controllers/publicController')
+const adminController = require('./controllers/adminController')
+
 
 // ... and register them.
 authController(app,db)
 parentController(app,db)
 ownerController(app,db)
 publicController(app,db)
+adminController(app,db)
+
 
 // Start the server and synchronize the database model.
 app.listen(3000, () => { db.sequelize.sync() } )
