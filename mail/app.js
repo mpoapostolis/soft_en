@@ -2,7 +2,7 @@ const transporter = require('./controllers/mailController')
 const converter = require('./controllers/pdfController')
 
 // DUMMY DATA
-const data = {
+const dummy_data = {
     "CustomerName": 'Kostas Karamanlis',
     "Email": "straw.leaves@gmail.com",
     "Date": "2018-04-01",
@@ -40,10 +40,15 @@ app.post('/receipt', (req,res) => {
 
     console.log(req.headers)
 
+    console.log(req.body)
+
+    data = Object.assign({},req.body)
+
     converter(data).toStream((err,stream) => {
         let message = {
             from: 'GoKiddo <straw.leaves@gmail.com>',
-            to: data.Email || '<straw.leaves@gmail.com>',
+            to: '<straw.leaves@gmail.com>',
+            // to: data.Email || '<straw.leaves@gmail.com>',
             subject: 'Your receipt',
             text: data.text || 'wut',
             html: data.html || '<p>LOL</p>',

@@ -67,8 +67,13 @@ function parentController(app, db) {
                                 lock: t.LOCK.UPDATE
                             }
                         ).then( (owner) => {
+
+                            // Store some data for the receipt
                             data.Price = activity.Price
+                            data.ActivityName = activity.Name
                             data.Cost = data.Quantity*data.Price
+                            data.CustomerName = parent.Name
+                            data.EventDate = listing.EventDate
 
                             let cost = data.Quantity*data.Price
 
@@ -108,6 +113,22 @@ function parentController(app, db) {
             }).then((booking) => {
 
                 let _options = Object.assign({},mailOptions)
+
+                _options.body = {
+                    "CustomerName": data.CustomerName,
+                    "Date": (new Date).toDateString(),
+                    "tickets": [
+                        {
+                            ticketNo: booking.BookingID,
+                            activityName: data.ActivityName,
+                            EventDate: data.EventDate,
+                            price: data.Price,
+                            quantity: data.Quantity,
+                            total: data.Cost
+                        }
+                    ]
+                }
+
                 rp(_options)
                 .then( (resp) => {
                     res.status(201).send(booking)
