@@ -13,12 +13,12 @@ services:
         #     - ./db/init/define.sql:/docker-entrypoint-initdb.d/z_define.sql
         # ports:
         #     - 5432:5432
+        depends_on:
+            - adminer
 
     adminer:
         image: adminer
         restart: on-failure
-        depends_on:
-            - db
         ports:
             - 8080:8080
 

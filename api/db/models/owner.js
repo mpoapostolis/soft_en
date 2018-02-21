@@ -18,10 +18,6 @@ function Owner(db) {
           type: Sequelize.STRING,
           allowNull: false
         },
-        Coordinates: {
-          type: Sequelize.STRING,
-          allowNull: false
-        },
         IBAN: {
           type: Sequelize.STRING,
           allowNull: false

@@ -20,6 +20,18 @@ function Activity(db) {
             type: Sequelize.STRING,
             allowNull: true
         },
+        Price: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            validate: {
+                min: 0,
+                max: 10000
+            }
+        },
+        Duration: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
         Description: {
             type: Sequelize.TEXT,
             allowNull: false
