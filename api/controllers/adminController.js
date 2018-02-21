@@ -92,4 +92,4 @@ function adminController(app,db) {
 
 }
 
-module.exports adminController
+module.exports = adminController
