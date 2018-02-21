@@ -1,6 +1,6 @@
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem("myProjectState");
+    const serializedState = localStorage.getItem("myProjectState"); // change_name
     if (serializedState === null) return undefined;
     return JSON.parse(serializedState);
   } catch (e) {

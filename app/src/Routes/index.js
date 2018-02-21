@@ -1,31 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
+import Private from "./Private";
 import Login from "./Login";
-import Register from "./Register";
-import AuthWrapper from "./Auth";
+import AuthWrapper from "../components/AuthWrapper";
 
 const Routes = props => {
-  const { access_token = false } = props.account; // eslint-disable-line
   return (
     <Router>
-      <div>
-        <Route
-          exact
-          path="/"
-          render={routeProps => <AuthWrapper {...props} {...routeProps} component={Home} path="/" />}
-        />
-        <Route
-          exact
-          path="/login"
-          render={routeProps => <AuthWrapper {...props} {...routeProps} component={Login} path="/login" />}
-        />
-        <Route
-          exact
-          path="/register"
-          render={routeProps => <AuthWrapper {...props} {...routeProps} component={Register} path="/register" />}
-        />
-      </div>
+      <Switch>
+        <Route exact path="/" render={routeProps => <AuthWrapper component={Home} {...routeProps} {...props} />} />
+        <Route path="/login" render={routeProps => <Login {...routeProps} {...props} />} />
+      </Switch>
     </Router>
   );
 };

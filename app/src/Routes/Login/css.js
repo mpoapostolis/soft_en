@@ -1,70 +1,95 @@
 import { css } from "emotion";
-import { queries } from "../../css.js";
+import { mq } from "../../css.js";
 
 export const container = css`
-  height: calc(100vh - 52px);
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(255, 255, 255, 0.15), rgba(165, 187, 203, 0.75));
 `;
 
-export const boxContainer = css`
-  border: solid 1px rgba(0, 0, 0, 0.15);
-  width: 40%;
-  height: 40%;
+export const loginBox = css`
   display: flex;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.08);
+  justify-content: space-between;
   align-items: center;
-  ${queries.small`
-    width:100%;
-    height: calc(100vh - 35px);
-    `};
+  width: 30vw;
+  height: 50vh;
+  border: solid 1px #2e2d2d;
+  background: black;
+  ${mq.large(css`
+    width: 50vw;
+  `)};
+
+  ${mq.medium(css`
+    width: 75vw;
+  `)};
+  ${mq.small(css`
+    width: 100vw;
+  `)};
 `;
 
-export const header = css`
-  flex: 1;
+export const logReg = css`
+  border: sold 1px white;
   width: 100%;
-  font-family: "Sedgwick Ave Display", cursive;
-  font-size: xx-large;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 7vh;
-  font-weight: 600;
-  background: rgba(0, 0, 0, 0.08);
-  color: rgba(152, 68, 0, 0.75);
-`;
-
-export const infosCont = css`
-  flex: 4;
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  ${"" /* justify-content: space-around; */};
-`;
-
-export const btnCont = css`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 80%;
-  margin: 20px;
-`;
-export const btn = css`
-  width: 100%;
-  border: none;
-  border-radius: 5px;
   height: 60px;
-  background: rgba(0, 0, 0, 0.18);
-  &:active {
-    outline: none;
+  cursor: pointer;
+  display: flex;
+  color: white;
+`;
+
+export const choice = css`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  font-weight: 500;
+  font-size: xx-large;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  &.active {
+    background: black;
   }
 `;
 
-export const item = css`
-  border: solid 1px red;
+export const textCont = css`
+  width: 80%;
+  height: 70px;
+  color: white;
+`;
+
+export const passwordClass = css`
+  display: flex;
+  width: 80%;
+  color: white;
+`;
+
+export const btn = css`
+  width: 80%;
+  background: #009be2;
+  border: none;
+  color: white;
+  height: 45px;
+  font-weight: 600;
+  font-size: large;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.25s;
+  &:hover {
+    background: #00aaf7;
+  }
+`;
+export const errorClass = css`
+  color: rgb(255, 45, 45);
+  width: 80%;
+  margin-top: 1em;
+  text-align: center;
+  font-weight: 600;
+`;
+
+export const input = css`
+  font-size: large;
+  color: white;
 `;
