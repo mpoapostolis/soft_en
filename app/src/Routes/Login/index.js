@@ -1,52 +1,114 @@
 import React, { Component } from "react";
-import * as styles from "./css";
 import TextField from "../../components/TextField";
-import Button from "material-ui/Button";
-// import { getMsg } from "../../msgs";
+import * as styles from "./css";
 
 class Login extends Component {
   state = {
     username: "",
     password: "",
+    hide: true,
+    tab: "login"
   };
 
-  handleChange = ({ currentTarget }) => {
-    const { value } = currentTarget;
-    const key = currentTarget.getAttributeNode("dtype").value;
-    this.setState(state => {
-      state[key] = value;
-      return state;
-    });
+  handlePassChange = ({ target }) =>
+    this.setState(s => ({ password: target.value }));
+
+  handleSaveInput = ({ target }) =>
+    this.setState(s => ({ username: target.value }));
+
+  handleEnter = evt => (evt.key === "Enter" ? this.handleSubmit() : null);
+
+  handleSubmit = () => {
+    const { callToLogin, history: { push } } = this.props;
+    const { username, password } = this.state;
+    callToLogin({ username, password }, push);
   };
+
+  changeType = ({ currentTarget: { dataset: { tab } } }) => {
+    this.setState({ tab });
+  };
+
+  handleSaveInput = ({
+    currentTarget: { dataset: { info } },
+    target: { value }
+  }) => {
+    this.setState({ [info]: value });
+  };
+
+  renderTab() {
+    const { textCont, input, passwordClass } = styles;
+    const { username, tab, password, hide } = this.state;
+    const url = hide ? "/images/show.png" : "/images/hide.png";
+    return tab === "login"
+      ? [
+          <div key={0} className={textCont}>
+            <TextField
+              data-info={`username`}
+              value={username}
+              onChange={this.handleSaveInput}
+              label="Username"
+              klass={input}
+            />
+          </div>,
+          <div key={1} className={passwordClass}>
+            <TextField
+              data-info={`password`}
+              value={password}
+              onKeyPress={this.handleEnter}
+              onChange={this.handlePassChange}
+              label="Password"
+              type={hide ? "password" : "text"}
+              url={url}
+              klass={input}
+            />
+          </div>
+        ]
+      : [
+          [...Array(5)].map((e, i) => (
+            <div key={i} className={textCont}>
+              <TextField
+                key={i}
+                data-info={`info${i}`}
+                value={this.state[`info${i}`]}
+                onChange={this.handleSaveInput}
+                label={`info${i}`}
+                klass={input}
+              />
+            </div>
+          ))
+        ];
+  }
 
   render() {
-    // const { account: { lang } } = this.props;
-    const { infosCont, container, item, boxContainer, header, btn, btnCont } = styles;
-    const { username, password } = this.state;
+    const { errorMsg = `Please check your username and password` } = this.props;
+    const { container, loginBox, btn, errorClass, logReg, choice } = styles;
+    const { tab } = this.state;
     return (
       <div className={container}>
-        <div className={boxContainer}>
-          <div className={header}>Login</div>
-          <div className={infosCont}>
-            <TextField
-              className={item}
-              value={username}
-              dtype="username"
-              label="UserName"
-              onChange={this.handleChange}
-            />
-            <TextField
-              className={item}
-              value={password}
-              dtype="password"
-              type="password"
-              label="Password"
-              onChange={this.handleChange}
-            />
+        <div className={loginBox}>
+          <div className={logReg}>
+            <div
+              data-tab="login"
+              onClick={this.changeType}
+              className={`${choice} ${tab === "login" ? "active" : ""}`}
+            >
+              Login
+            </div>
+            <div
+              data-tab="register"
+              onClick={this.changeType}
+              className={`${choice} ${tab === "register" ? "active" : ""}`}
+            >
+              Register
+            </div>
           </div>
-          <div className={btnCont}>
-            <button className={btn}>submit</button>
-          </div>
+          {this.renderTab()}
+          <button className={btn}>{tab.toUpperCase()}</button>
+          {errorMsg ? (
+            <div className={errorClass}>{errorMsg}</div>
+          ) : (
+            <div className={errorClass} />
+          )}
         </div>
       </div>
     );
