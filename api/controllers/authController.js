@@ -15,7 +15,8 @@ function authController(app,db) {
         let token = req.headers.authorization.replace('Bearer ','')
         jwt.verify(token, secret, (err,decoded) => {
             if (err) {
-                res.send('Invalid token')
+                console.error(err)
+                res.status(401).send('Invalid token')
             }
             else {
                 req.headers.Role = decoded.Role
@@ -30,7 +31,7 @@ function authController(app,db) {
             next()
         }
         else {
-            res.send('Not a parent')
+            res.status(401).send('Not a parent')
         }
     }
 
@@ -39,7 +40,7 @@ function authController(app,db) {
             next()
         }
         else {
-            res.send('Not an owner')
+            res.status(401).send('Not an owner')
         }
     }
 
@@ -48,7 +49,7 @@ function authController(app,db) {
             next()
         }
         else {
-            res.send('Not an admin')
+            res.status(401).send('Not an admin')
         }
     }
 
@@ -60,8 +61,13 @@ function authController(app,db) {
             Phone: req.body.Phone,
             Balance: 0,
             BonusPoints: 0
-        }).then( (parent) => {
-            res.send('Welcome to our service, ' + parent.get('Name'))
+        })
+        .then( (parent) => {
+            res.status(201).send('Welcome to our service, ' + parent.get('Name'))
+        })
+        .catch( (err) => {
+            console.error(err)
+            res.status(400).send('Parent not saved')
         })
     }
 
@@ -77,8 +83,13 @@ function authController(app,db) {
             SWIFT: req.body.SWIFT,
             BIC: req.body.BIC,
             Balance: 0
-        }).then( (owner) => {
-            res.send('Welcome to our service, ' + owner.get('CompanyName'))
+        })
+        .then( (owner) => {
+            res.status(201).send('Welcome to our service, ' + owner.get('CompanyName'))
+        })
+        .catch( (err) => {
+            console.error(err)
+            res.status(400).send('Owner not saved')
         })
     }
 
@@ -92,12 +103,17 @@ function authController(app,db) {
                 // TODO Refuse Admin registration from web client.
                 Role: req.body.Role,
                 Status: 'Active'
-            }).then( (user) => {
+            })
+            .then( (user) => {
                 if (req.body.Role === 'Parent') {
                     registerParent(req,res,user)
                 } else {
                     registerOwner(req,res,user)
                 }
+            })
+            .catch( (err) => {
+                console.error(err)
+                res.status(400).send('User not created')
             })
         })
     })
@@ -109,7 +125,7 @@ function authController(app,db) {
                    let sentPass = req.body.Password
                    if(!us) {
                        // TODO Send appropriate response code to client.
-                       res.send('User not found')
+                       res.status(404).send('User not found')
                    }
                    // If we have a user, verify that the passwords match.
                    else bcrypt.compare(req.body.Password, us.Password)
@@ -120,19 +136,21 @@ function authController(app,db) {
                                           secret,
                                           (err,token) => {
                                               if (err) {
-                                                  res.send('oops')
+                                                  res.status(500).send('Error creating token.')
                                               }
                                               else {
-                                                  res.send(token)
+                                                  res.status(200).send(token)
                                               }
                                           }
                                       )
                                   }
-                                  else res.send('Wrong Password')
+                                  else {
+                                      res.status(401).send('Wrong Password')
+                                  }
                               })
                })
                .catch( (err) => {
-                   res.send('ERR!')
+                   res.status(404).send('Not found')
                })
     })
 }
