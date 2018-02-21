@@ -105,7 +105,6 @@ function parentController(app, db) {
         })
         // If the transaction was successful, create a booking object.
         .then( (done) => {
-            console.log(data)
             db.books.create({
                 ListingID: req.params.listingID,
                 ParentID: req.headers.UserID,

@@ -2,6 +2,7 @@ const multer = require('multer')
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 const FormData = require('form-data')
+const mediaOptions = require('../config/mediaService.json')
 
 function ownerController(app,db) {
 
@@ -223,8 +224,12 @@ function ownerController(app,db) {
 
         // Perform bulk insertion.
         db.listing.bulkCreate(inserted)
-        .then(() => {
-            res.status(201).send('Listings saved')
+        .then((insertions) => {
+            if (insertions) {
+                res.status(201).send('Listings saved')
+            } else {
+                res.status(400).send('No isertions')
+            }
         })
         .catch((err) => {
             console.error(err)
@@ -240,7 +245,8 @@ function ownerController(app,db) {
         let point = { type: 'Point', coordinates: [req.body.long, req.body.lat]}
         db.activity.create({
             Name: req.body.Name,
-            AgeGroups: req.body.AgeGroups,
+            MinAge: req.body.MinAge,
+            MaxAge: req.body.MaxAge,
             Description: req.body.Description,
             Price: req.body.Price,
             Duration: req.body.Duration,
@@ -256,25 +262,26 @@ function ownerController(app,db) {
             form.append('activityName',req.body.Name)
 
             // Append all images to the data form.
-            req.files.map( (f) => form.append('image',
-                                              f.buffer,
-                                              {filename: f.originalname }))
+            req.files.map(
+                (f) => form.append(
+                    'image',
+                    f.buffer,
+                    {filename: f.originalname }
+                )
+            )
 
             // Submit them to the media service.
             // TODO Use config file for server location.
-            form.submit({
-                host: 'media',
-                port: 3000,
-                path: '/images'
-            }, (err,result) => {
+            form.submit(mediaOptions, (err,result) => {
                 if (err) {
                     console.error(err)
-                    res.status(400).send('Pictures not saved')
+                    res.status(500).send('Pictures not saved')
                 } else {
                     // Parse response body, an array of image names.
                     var body = '';
                     result.setEncoding('utf8');
 
+                    // Manually parse body response.
                     result.on('data', function(chunk) {
                         body += chunk;
                     });

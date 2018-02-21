@@ -33,14 +33,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.post('/receipt', (req,res) => {
-    // data = {}
-    // Object.assign(data,req.body)
-
-    console.log('GOT REQUEST')
-
-    console.log(req.headers)
-
-    console.log(req.body)
 
     data = Object.assign({},req.body)
 
@@ -48,7 +40,7 @@ app.post('/receipt', (req,res) => {
         let message = {
             from: 'GoKiddo <straw.leaves@gmail.com>',
             to: '<straw.leaves@gmail.com>',
-            // to: data.Email || '<straw.leaves@gmail.com>',
+            // to: `${data.CustomerName} <${data.Email}>`,
             subject: 'Your receipt',
             text: data.text || 'wut',
             html: data.html || '<p>LOL</p>',

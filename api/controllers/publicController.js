@@ -25,18 +25,26 @@ function publicController(app, db) {
         var clauses = []
 
         // If a location is supplied, construct the respective geoquery
-        if(req.query.Lat && req.query.Long) {
+        if (req.query.Lat && req.query.Long) {
             // If a distance in KM is supplied, use it, else default to 5 KM.
             req.query.Distance = parseInt(req.query.Distance) || 5
             clauses.push(geoQuery(req.query.Lat,req.query.Long,req.query.Distance))
         }
 
-        if(parseInt(req.query.MaxPrice)) {
+        if (parseInt(req.query.MaxPrice)) {
             clauses.push({ Price: { [db.sequelize.Op.lte]: parseInt(req.query.MaxPrice) } })
         }
 
-        if(parseInt(req.query.MinPrice)) {
+        if (parseInt(req.query.MinPrice)) {
             clauses.push({ Price: { [db.sequelize.Op.gte]: parseInt(req.query.MinPrice) } })
+        }
+
+        if (parseInt(req.query.MaxAge)) {
+            clauses.push({ MinAge: { [db.sequelize.Op.lte]: parseInt(req.query.MaxAge) } })
+        }
+
+        if (parseInt(req.query.MinAge)) {
+            clauses.push({ MaxAge: { [db.sequelize.Op.gte]: parseInt(req.query.MinAge) } })
         }
 
         // If a search query is supplied, check if the contained words match any
@@ -61,7 +69,7 @@ function publicController(app, db) {
         Object.assign(query,{ where: db.sequelize.and.apply(this,clauses) })
 
         // Optional pagination with a fixed page size of 20 results.
-        if(req.query.Page) {
+        if (req.query.Page) {
             let Page = Math.max(parseInt(req.query.Page),0)
             Object.assign(query,{ offset: (Page-1)*pageSize, limit: pageSize })
         }

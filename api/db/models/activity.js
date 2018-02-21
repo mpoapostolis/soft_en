@@ -16,9 +16,21 @@ function Activity(db) {
             type: Sequelize.STRING,
             allowNull: false
         },
-        AgeGroups: {
-            type: Sequelize.STRING,
-            allowNull: true
+        MinAge: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            validate: {
+                min: 0,
+                max: 18
+            }
+        },
+        MaxAge: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            validate: {
+                min: 0,
+                max: 18
+            }
         },
         Price: {
             type: Sequelize.INTEGER,
