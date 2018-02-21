@@ -3,9 +3,6 @@ import {mq} from '../../css.js';
 
 export const container = css`
   width: 100vw;
-  font-family: 'Source Sans Pro', sans-serif;
-  background: url('/images/bg.svg');
-  background-size: cover;
   height: calc(100vh - 80px);
   display: flex;
   justify-content: center;

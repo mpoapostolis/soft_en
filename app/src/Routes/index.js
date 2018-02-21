@@ -7,8 +7,6 @@ import Register from "./Register";
 import Search from "./Search";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
-import { css } from "emotion";
-import { mq } from "../css";
 
 const Routes = props => {
   return (

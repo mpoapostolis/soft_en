@@ -1,6 +1,9 @@
 import {css} from 'emotion';
 
 export const map = css`
-  width: 100%;
-  height: 80vh;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
 `;

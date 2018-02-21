@@ -10,7 +10,7 @@ export const container = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 11px 4px -10px rgba(0, 0, 0, 0.18);
+  box-shadow: 0px 11px 4px -10px rgba(0, 0, 0, 0.4);
   z-index: 100;
 `;
 
@@ -42,4 +42,8 @@ export const redirect = css`
   cursor: pointer;
   margin: 10px;
   user-select: none;
+  transition: all 0.15s;
+  &:hover {
+    border-bottom: solid 4px white;
+  }
 `;

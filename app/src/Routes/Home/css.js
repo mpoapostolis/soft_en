@@ -1,5 +1,5 @@
-import { css } from "emotion";
-import { mq } from "../../css.js";
+import {css} from 'emotion';
+import {mq} from '../../css.js';
 
 export const container = css`
   width: 100%;
@@ -11,8 +11,8 @@ export const container = css`
 
 export const mainCont = css`
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
   height: 500px;
+  background: rgba(20, 0, 240, 0.10);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -45,7 +45,7 @@ export const logo = css`
 
 export const item = css`
   color: #000000bf;
-  font-weight:600;
+  font-weight: 600;
   border: 1px solid grey;
   text-align: center;
   width: 100%;
@@ -59,6 +59,6 @@ export const item = css`
   `)};
 `;
 
-export const btn= css`
+export const btn = css`
   color: #000000bf !important;
-`
+`;
