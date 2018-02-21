@@ -1,0 +1,5 @@
+{
+    "uri": "http://mail:3000/receipt",
+    "method": "POST",
+    "json": true
+}

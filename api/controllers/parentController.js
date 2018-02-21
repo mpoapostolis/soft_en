@@ -1,3 +1,6 @@
+const rp = require('request-promise');
+const mailOptions = require('../config/mailService.json')
+
 function parentController(app, db) {
 
     app.get('/parent/calendar', app.loggedIn, app.isParent, (req,res) => {
@@ -103,12 +106,21 @@ function parentController(app, db) {
                 ParentID: req.headers.UserID,
                 Quantity: data.Quantity
             }).then((booking) => {
-                res.status(201).send(booking)
+
+                let _options = Object.assign({},mailOptions)
+                rp(_options)
+                .then( (resp) => {
+                    res.status(201).send(booking)
+                })
+                .catch( (err) => {
+                    res.status(400).send('Error sending mail')
+                })
+
             } )
         })
         // Else rollback has already happened, return a simple message
         .catch( (err) => {
-            res.status(400)send('Error creating the book: ' + err)
+            res.status(400).send('Error creating the book: ' + err)
         })
 
     })
@@ -138,7 +150,7 @@ function parentController(app, db) {
                 }).then((p) => {
                     res.status(202).send({ "Balance": p.Balance })
                 }).catch((err) => {
-                    res.status(400)send('Error at the transaction: ' + err)
+                    res.status(400).send('Error at the transaction: ' + err)
                 })
             })
         })
@@ -174,7 +186,7 @@ function parentController(app, db) {
                 Object.assign(response,{ "bookings": r })
                 res.status(200).send(response)
             }).catch((err) => {
-                res.status(404)send('Bookings not found: ' + err)
+                res.status(404).send('Bookings not found: ' + err)
             })
         })
     })

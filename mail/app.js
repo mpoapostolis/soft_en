@@ -36,6 +36,10 @@ app.post('/receipt', (req,res) => {
     // data = {}
     // Object.assign(data,req.body)
 
+    console.log('GOT REQUEST')
+
+    console.log(req.headers)
+
     converter(data).toStream((err,stream) => {
         let message = {
             from: 'GoKiddo <straw.leaves@gmail.com>',
@@ -53,10 +57,10 @@ app.post('/receipt', (req,res) => {
         }
         transporter.sendMail(message,(err,info) => {
             if(err) {
-                res.send('ERR')
+                res.status(500).send('ERR')
             }
             else {
-                res.send('Mail sent')
+                res.status(200).send('Mail sent')
             }
         })
     })

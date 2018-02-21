@@ -104,9 +104,10 @@ function publicController(app, db) {
         db.activity.findAll(query)
         .then((r)=>{
             res.status(200).send(r)
-        }).catch((err) => {
+        })
+        .catch((err) => {
             res.status(404).send('Fail at query: ' + err)
-        }
+        })
     })
 
     app.get('/activity/:id', (req, res) => {
