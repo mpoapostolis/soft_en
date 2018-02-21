@@ -287,6 +287,24 @@ function ownerController(app,db) {
             })
         })
     })
+
+    app.get('/owner/user/', app.loggedIn, app.isOwner, (req,res) => {
+        db.user.findAll()
+        .then( (users) => {
+            res.status(200).send(users)
+        }).catch((err) => {
+            res.status(404).send('Any user found: ' + err)
+        }
+    })
+
+    app.get('/owner/user/:UserID', app.loggedIn, app.isOwner, (req,res) => {
+        db.user.findById(req.params.UserID)
+        .then( (user) => {
+            res.status(200).send(users)
+        }).catch((err) => {
+            res.status(404).send('User not found: ' + req.params.UserID + " || " + err)
+        }
+    })
 }
 
 module.exports = ownerController

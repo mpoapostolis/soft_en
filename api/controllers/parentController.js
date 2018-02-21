@@ -178,6 +178,24 @@ function parentController(app, db) {
             })
         })
     })
+
+    app.get('/parent/user/', app.loggedIn, app.isParent, (req,res) => {
+        db.user.findAll()
+        .then( (users) => {
+            res.status(200).send(users)
+        }).catch((err) => {
+            res.status(404).send('Any user found: ' + err)
+        }
+    })
+
+    app.get('/parent/user/:UserID', app.loggedIn, app.isPArent, (req,res) => {
+        db.user.findById(req.params.UserID)
+        .then( (user) => {
+            res.status(200).send(users)
+        }).catch((err) => {
+            res.status(404).send('User not found: ' + req.params.UserID + " || " + err)
+        }
+    })
 }
 
 module.exports = parentController
