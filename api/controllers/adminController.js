@@ -5,7 +5,7 @@ function adminController(app,db) {
         .then( (users) => {
             res.status(200).send(users)
         }).catch((err) => {
-            res.status(404)send('Users not found: ' + err)
+            res.status(404).send('Users not found: ' + err)
         })
     })
 
@@ -14,7 +14,7 @@ function adminController(app,db) {
         .then( (user) => {
             res.send(user)
         }).catch((err) => {
-            res.status(404)send('User not found: ' + req.params.UserID + " || " + err)
+            res.status(404).send('User not found: ' + req.params.UserID + " || " + err)
         })
     })
 
@@ -23,7 +23,7 @@ function adminController(app,db) {
         .then( (activities) => {
             res.status(200).send(activities)
         }).catch((err) => {
-            res.status(404)send('Activities not found: ' + err)
+            res.status(404).send('Activities not found: ' + err)
         })
     })
 
@@ -32,7 +32,7 @@ function adminController(app,db) {
         .then( (activity) => {
             res.status(200).send(activity)
         }).catch((err) => {
-            res.status(404)send('Activity not found: ' + req.params.ActivityID + " || " + err)
+            res.status(404).send('Activity not found: ' + req.params.ActivityID + " || " + err)
         })
     })
 
@@ -41,7 +41,7 @@ function adminController(app,db) {
         .then( (books) => {
             res.status(200).send(books)
         }).catch((err) => {
-            res.status(404)send('Books not found: ' + err)
+            res.status(404).send('Books not found: ' + err)
         })
     })
 
@@ -50,7 +50,7 @@ function adminController(app,db) {
         .then( (book) => {
             res.send(book)
         }).catch((err) => {
-            res.status(404)send('Book not found: ' + req.params.BookID + " || " + err)
+            res.status(404).send('Book not found: ' + req.params.BookID + " || " + err)
         })
     })
 
@@ -59,7 +59,7 @@ function adminController(app,db) {
         .then( (listings) => {
             res.status(200).send(listings)
         }).catch((err) => {
-            res.status(404)send('Listings not found: ' + err)
+            res.status(404).send('Listings not found: ' + err)
         })
     })
 
@@ -68,7 +68,7 @@ function adminController(app,db) {
         .then( (listing) => {
             res.send(listing)
         }).catch((err) => {
-            res.status(404)send('Listing not found: ' + req.params.ListingID + " || " + err)
+            res.status(404).send('Listing not found: ' + req.params.ListingID + " || " + err)
         })
     })
 
@@ -77,7 +77,7 @@ function adminController(app,db) {
         .then( (reviews) => {
             res.status(200).send(reviews)
         }).catch((err) => {
-            res.status(404)send('Reviews not found: ' + err)
+            res.status(404).send('Reviews not found: ' + err)
         })
     })
 
@@ -86,7 +86,7 @@ function adminController(app,db) {
         .then( (review) => {
             res.send(review)
         }).catch((err) => {
-            res.status(404)send('Review not found: ' + req.params.ReviewID + " || " + err)
+            res.status(404).send('Review not found: ' + req.params.ReviewID + " || " + err)
         })
     })
 

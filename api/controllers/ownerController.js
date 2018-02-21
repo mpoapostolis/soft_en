@@ -58,7 +58,7 @@ function ownerController(app,db) {
             })
         })
         .catch( (err) => {
-            res.status(404) send('No activities found')
+            res.status(404).send('No activities found')
         })
     })
 
