@@ -4,6 +4,8 @@ const converter = require('./controllers/pdfController')
 // DUMMY DATA
 const data = {
     "CustomerName": 'Kostas Karamanlis',
+    "Email": "straw.leaves@gmail.com",
+    "Date": "2018-04-01",
     "tickets": [
         {
             ticketNo: 324323,
