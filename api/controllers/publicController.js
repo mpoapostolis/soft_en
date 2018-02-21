@@ -74,8 +74,7 @@ function publicController(app, db) {
                     model: db.owner
                 }, {
                     model: db.listing
-                },
-                {
+                }, {
                     model: db.tag
                 }
             ]

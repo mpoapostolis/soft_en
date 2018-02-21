@@ -1,18 +1,7 @@
-// Use at least Nodemailer v4.1.0
-const nodemailer = require('nodemailer');
-const fs = require('fs');
-const pdf = require('html-pdf');
-const html = fs.readFileSync('./invoice.html', 'utf8');
+const transporter = require('./controllers/mailController')
+const converter = require('./controllers/pdfController')
 
-const options = {
-    'height': '396mm',
-    'width': '280mm',
-    'zoomFactor': "0.75"
-}
-
-const handlebars = require('handlebars')
-const template = handlebars.compile(html)
-
+// DUMMY DATA
 const data = {
     "CustomerName": 'Kostas Karamanlis',
     "tickets": [
@@ -33,55 +22,42 @@ const data = {
     ]
 }
 
-const result = template(data)
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+const PORT = 3000
 
-// Generate SMTP service account from ethereal.email
-nodemailer.createTestAccount((err, account) => {
-    if (err) {
-        console.error('Failed to create a testing account. ' + err.message);
-        return process.exit(1);
-    }
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
 
-    console.log('Credentials obtained, sending message...');
+app.post('/receipt', (req,res) => {
+    // data = {}
+    // Object.assign(data,req.body)
 
-    // Create a SMTP transporter object
-    const transporter = nodemailer.createTransport({
-        host: account.smtp.host,
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: {
-            user: account.user,
-            pass: account.pass
-        }
-    });
-
-
-    pdf.create(result,options).toStream(function(err, stream){
-
-        // Message object
+    converter(data).toStream((err,stream) => {
         let message = {
-            from: 'GoKiddo <sender@example.com>',
-            to: 'Someone <someone@example.com>',
-            subject: 'Your receipt ✔',
-            text: 'Hello to myself!',
-            html: '<p><b>Thanks</b> to myself!</p>',
+            from: 'GoKiddo <straw.leaves@gmail.com>',
+            to: data.Email || '<straw.leaves@gmail.com>',
+            subject: 'Your receipt',
+            text: data.text || 'wut',
+            html: data.html || '<p>LOL</p>',
             attachments: [
-                {   // stream as an attachment
+                {
                     filename: 'receipt.pdf',
                     content: stream,
                     contentType: 'application/pdf'
                 }
             ]
-        };
-
-        transporter.sendMail(message, (err, info) => {
-            if (err) {
-                console.log('Error occurred. ' + err.message);
-                return process.exit(1);
+        }
+        transporter.sendMail(message,(err,info) => {
+            if(err) {
+                res.send('ERR')
             }
-            console.log('Message sent: %s', info.messageId);
-            // Preview only available when sending through an Ethereal account
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-        });
-    });
-});
+            else {
+                res.send('Mail sent')
+            }
+        })
+    })
+})
+
+app.listen(PORT)
