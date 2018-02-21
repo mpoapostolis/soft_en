@@ -71,7 +71,7 @@
 			padding: 0;
 			color: #777777;
       position: relative;
-      height: 297mm;
+      height: 277mm;
       width: 210mm;
       display: block;
       background: white;
@@ -183,7 +183,7 @@
 			border-spacing: 5px 20px;
 		}
 		section table .no {
-			width: 50px;
+			width: 150px;
 		}
 		section table .desc {
 			width: 55%;
@@ -331,7 +331,7 @@
 		</div>
 	</header>
 
-	<section>
+	<section style="height: 240mm">
 		<div class="details clearfix">
 			<div class="client left">
 				<p>INVOICE TO:</p>
@@ -358,7 +358,7 @@
             {{#tickets}}
 						<tr>
 							<td class="no">{{ ticketNo }}</td>
-							<td class="desc">{{ activityName }}</td>
+							<td class="desc">{{ activityName }}<br>{{ EventDate }}</td>
 							<td class="qty">{{ quantity }}</td>
 							<td class="unit">{{ price }}</td>
 							<td class="total">{{ total }}</td>
@@ -393,7 +393,7 @@
 		</div>
 	</section>
 
-	<footer>
+	<footer style="margin: 0 !important;">
 		<div class="container">
 			<div class="end">GoKiddo &copy; 2018</div>
 		</div>
