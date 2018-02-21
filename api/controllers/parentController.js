@@ -188,7 +188,7 @@ function parentController(app, db) {
         }
     })
 
-    app.get('/parent/user/:UserID', app.loggedIn, app.isPArent, (req,res) => {
+    app.get('/parent/user/:UserID', app.loggedIn, app.isParent, (req,res) => {
         db.user.findById(req.params.UserID)
         .then( (user) => {
             res.status(200).send(users)
