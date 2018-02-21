@@ -21,11 +21,11 @@ function parentController(app, db) {
             }]
         })
         .then((r) => {
-            res.send(r)
+            res.status(200).send(r)
         })
         .catch((err) => {
             console.error(err)
-            res.send('ERR')
+            res.status(404).send('Not books found.')
         })
     })
 
@@ -103,12 +103,12 @@ function parentController(app, db) {
                 ParentID: req.headers.UserID,
                 Quantity: data.Quantity
             }).then((booking) => {
-                res.send(booking)
+                res.status(201).send(booking)
             } )
         })
         // Else rollback has already happened, return a simple message
         .catch( (err) => {
-            res.send(err)
+            res.status(400)send('Error creating the book: ' + err)
         })
 
     })
@@ -136,7 +136,9 @@ function parentController(app, db) {
                 return p.save({
                     transaction: t
                 }).then((p) => {
-                    res.send({ "Balance": p.Balance })
+                    res.status(202).send({ "Balance": p.Balance })
+                }).catch((err) => {
+                    res.status(400)send('Error at the transaction: ' + err)
                 })
             })
         })
@@ -170,7 +172,9 @@ function parentController(app, db) {
             }).then( (r) => {
                 // TODO Restructure response according to spec.
                 Object.assign(response,{ "bookings": r })
-                res.send(response)
+                res.status(200).send(response)
+            }).catch((err) => {
+                res.status(404)send('Bookings not found: ' + err)
             })
         })
     })

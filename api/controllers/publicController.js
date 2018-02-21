@@ -103,8 +103,10 @@ function publicController(app, db) {
 
         db.activity.findAll(query)
         .then((r)=>{
-            res.send(r)
-        })
+            res.status(200).send(r)
+        }).catch((err) => {
+            res.status(404).send('Fail at query: ' + err)
+        }
     })
 
     app.get('/activity/:id', (req, res) => {
@@ -140,10 +142,10 @@ function publicController(app, db) {
                 attributes: { exclude: ["ActivityID"]}
             }).then( (result) => {
                 Object.assign(response,{ "Listings": result })
-                res.send(response)
+                res.status(200).send(response)
             })
         }).catch( (err) => {
-            res.send('No activity with uuid: ' + req.params.id)
+            res.status(404).send('No activity with uuid: ' + req.params.id)
         })
     })
 }
