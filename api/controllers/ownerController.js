@@ -240,19 +240,29 @@ function ownerController(app,db) {
     // Register a new activity as an owner.
     app.post('/activity', app.loggedIn, app.isOwner, upload.array('image',8), (req,res) => {
 
-        // TODO Implement tags.
         let point = { type: 'Point', coordinates: [req.body.long, req.body.lat]}
-        db.activity.create({
-            Name: req.body.Name,
-            MinAge: req.body.MinAge,
-            MaxAge: req.body.MaxAge,
-            Description: req.body.Description,
-            Price: req.body.Price,
-            Duration: req.body.Duration,
-            Coordinates: point,
-            OwnerID: req.headers.UserID,
-            Pictures: 'Processing'
-        }).then( (act) => {
+        let _tags = req.body.Tag || []
+        console.log(_tags)
+        db.activity.create(
+            {
+                Name: req.body.Name,
+                MinAge: req.body.MinAge,
+                MaxAge: req.body.MaxAge,
+                Description: req.body.Description,
+                Price: req.body.Price,
+                Duration: req.body.Duration,
+                Coordinates: point,
+                OwnerID: req.headers.UserID,
+                Pictures: 'Processing',
+                tags: _tags.map( (x) => { return { "Tag": x } })
+            },
+            {
+                include: [{
+                    model: db.tag
+                }]
+            }
+        )
+        .then( (act) => {
             // Upon creation of basic details, forward pictures to the media
             // service.
             let form = new FormData()
@@ -293,6 +303,11 @@ function ownerController(app,db) {
                     })
                 }
             })
+        })
+        .catch( (err) => {
+            // TODO Handle partial insertion when an invalid tag is submitted.
+            console.error(err)
+            res.status(400).send('Bad Request')
         })
     })
 }

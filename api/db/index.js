@@ -45,7 +45,6 @@ books.belongsTo(listing, {foreignKey: 'ListingID', targetKey: 'ListingID'})
 parent.hasMany(books, {foreignKey: 'ParentID', targetKey: 'ParentID'})
 books.belongsTo(parent, {foreignKey: 'ParentID', targetKey: 'ParentID'})
 
-
 activity.hasMany(tag, {foreignKey: 'ActivityID', targetKey: 'ActivityID'})
 
 module.exports = {

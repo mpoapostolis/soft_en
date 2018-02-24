@@ -47,6 +47,8 @@ function publicController(app, db) {
             clauses.push({ MaxAge: { [db.sequelize.Op.gte]: parseInt(req.query.MinAge) } })
         }
 
+        // TODO Add tag support.
+
         // If a search query is supplied, check if the contained words match any
         // activity name or its associated tags. :)
         if (req.query.search) {
@@ -77,15 +79,23 @@ function publicController(app, db) {
         }
 
         Object.assign(query,{
-            attributes: [["Name","ActivityName"],"Price","Pictures"],
-            includeIgnoreAttributes: false,
+            attributes: [
+                ["Name","ActivityName"],
+                "ActivityID",
+                "Price",
+                "Pictures",
+                [db.sequelize.col('CompanyName'),"CompanyName"]
+            ],
             include: [
                 {
-                    model: db.owner
+                    model: db.owner,
+                    attributes: []
                 }, {
-                    model: db.listing
+                    model: db.listing,
+                    attributes: []
                 }, {
-                    model: db.tag
+                    model: db.tag,
+                    attributes: [[db.sequelize.col('Tag'),'Tag']]
                 }
             ]
         })
@@ -112,11 +122,19 @@ function publicController(app, db) {
         }
 
         db.activity.findAll(query)
-        .then((r)=>{
-            res.status(200).send(r)
+        .then((r) => {
+            // Make sure the response matches the doc specification.
+            let response = r.map( (a) => {
+                let _tags = a.dataValues.tags
+                _tags = _tags.map( (t) => { return t.Tag })
+                a.dataValues.tags = _tags
+                return a.dataValues
+            })
+            res.status(200).send(response)
         })
         .catch((err) => {
-            res.status(404).send('Fail at query: ' + err)
+            console.error(err)
+            res.status(404).send('Fail at query')
         })
     })
 
@@ -133,10 +151,16 @@ function publicController(app, db) {
                 {
                     model: db.owner,
                     attributes: ["CompanyName","Address"]
+                },
+                {
+                    model: db.tag,
+                    attributes: [[db.sequelize.col('Tag'),'Tag']]
                 }
             ]
         }).then( (result) => {
             Object.assign(response, result.dataValues)
+            response.tags = response.tags.map( (t) => { return t.Tag } )
+
             db.listing.findAll({
                 where: {
                     ActivityID: req.params.id,

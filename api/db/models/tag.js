@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize')
+const tags = require('../../config/tagValues.json')
 
 function Tag(db) {
     return db.define('tag', {
@@ -7,7 +8,10 @@ function Tag(db) {
         },
         Tag: {
             type: Sequelize.STRING,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isIn: [tags]
+            }
         }
     })
 }
