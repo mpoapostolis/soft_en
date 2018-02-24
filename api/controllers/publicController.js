@@ -47,7 +47,16 @@ function publicController(app, db) {
             clauses.push({ MaxAge: { [db.sequelize.Op.gte]: parseInt(req.query.MinAge) } })
         }
 
-        // TODO Add tag support.
+        // TODO Contemplate tag validation before search.
+        if (req.query.Tag) {
+            let _tags = req.query.Tag.split(';')
+            clauses.push(
+                db.sequelize.where(
+                    db.sequelize.col('Tag'),
+                    { [db.sequelize.Op.in]: _tags }
+                )
+            )
+        }
 
         // If a search query is supplied, check if the contained words match any
         // activity name or its associated tags. :)

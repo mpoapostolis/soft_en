@@ -3,6 +3,7 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 const FormData = require('form-data')
 const mediaOptions = require('../config/mediaService.json')
+const tags = require('../config/tagValues.json')
 
 function ownerController(app,db) {
 
@@ -241,8 +242,11 @@ function ownerController(app,db) {
     app.post('/activity', app.loggedIn, app.isOwner, upload.array('image',8), (req,res) => {
 
         let point = { type: 'Point', coordinates: [req.body.long, req.body.lat]}
-        let _tags = req.body.Tag || []
-        console.log(_tags)
+        let _tags = (req.body.Tag || [])
+
+        // For now, ignore duplicate or unaccepted tags.
+        _tags = [...new Set(_tags)].filter(x => new Set(tags).has(x));
+
         db.activity.create(
             {
                 Name: req.body.Name,
@@ -305,7 +309,6 @@ function ownerController(app,db) {
             })
         })
         .catch( (err) => {
-            // TODO Handle partial insertion when an invalid tag is submitted.
             console.error(err)
             res.status(400).send('Bad Request')
         })

@@ -14,7 +14,7 @@ The request **query** contains:
 | Date | The desired activity date |
 | Max_price | Maximum desired price **in points** |
 | Min_price | Minimum desired price **in points** |
-| Tag | Desired activity tag |
+| Tag | Desired activity tags, delimited by `;`. |
 | Long | Location longitude for geoqueries |
 | Lat | Location latitude for geoqueries |
 | Distance | Geoquery maximum distance **in kilometers** from the supplied `Long`,`Lat` |
