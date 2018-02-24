@@ -55,6 +55,7 @@ function publicController(app, db) {
             // REGEXP <3
             let words = req.query.search.trim()
                                         .replace(/[^a-zA-Z0-9 ]/g,'')
+                                        .replace(/  +/g,' ')
                                         .split(' ')
                                         .join('|')
 

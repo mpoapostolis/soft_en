@@ -23,6 +23,14 @@ ownerController(app,db)
 publicController(app,db)
 adminController(app,db)
 
-
 // Start the server and synchronize the database model.
-app.listen(3000, () => { db.sequelize.sync() } )
+const server = app.listen(3000, () => {
+    db.sequelize.sync( { logging: false } )
+    .then( () => {
+        console.log('Database synchronized, everything OK')
+    })
+    .catch( (err) => {
+        // TODO Find a more elegant way to deal with db connection errors.
+        console.error(err)
+    })
+})
