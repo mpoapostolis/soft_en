@@ -240,7 +240,6 @@ function ownerController(app,db) {
     // Register a new activity as an owner.
     app.post('/activity', app.loggedIn, app.isOwner, upload.array('image',8), (req,res) => {
 
-        // TODO Check for unique name.
         // TODO Implement tags.
         let point = { type: 'Point', coordinates: [req.body.long, req.body.lat]}
         db.activity.create({
@@ -271,7 +270,6 @@ function ownerController(app,db) {
             )
 
             // Submit them to the media service.
-            // TODO Use config file for server location.
             form.submit(mediaOptions, (err,result) => {
                 if (err) {
                     console.error(err)

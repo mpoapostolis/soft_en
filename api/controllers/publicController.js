@@ -51,8 +51,10 @@ function publicController(app, db) {
         // activity name or its associated tags. :)
         if (req.query.search) {
             // REGEXP <3
-            // TODO Sanitize to keep only letters
-            let words = req.query.search.split(' ').join('|')
+            let words = req.query.search.trim()
+                                        .replace(/[^a-zA-Z0-9 ]/g,'')
+                                        .split(' ')
+                                        .join('|')
 
             clauses.push(
                 db.sequelize.or.apply(this,[
@@ -119,7 +121,6 @@ function publicController(app, db) {
     })
 
     app.get('/activity/:id', (req, res) => {
-        // TODO Optimize response according to spec.
         var response = {}
         db.activity.findById(req.params.id, {
             attributes: [

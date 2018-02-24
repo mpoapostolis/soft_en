@@ -32,7 +32,6 @@ function parentController(app, db) {
         })
     })
 
-    // TODO Ping the mail service for a confirmation email.
     app.post('/booking/:listingID', app.loggedIn, app.isParent, (req,res) => {
         var data = { Quantity: parseInt(req.body.Quantity) || 0 }
 
@@ -146,34 +145,46 @@ function parentController(app, db) {
     })
 
     app.post('/wallet', app.loggedIn, (req, res) => {
-        // TODO Implement error responses.
 
-        // Initiate transaction.
-        db.sequelize.transaction((t) => {
-            // Lock parent table row.
-            return db.parent.findById(
-                req.headers.UserID, {
-                    transaction: t,
-                    lock: t.LOCK.UPDATE
-                }
-            ).then((p) => {
-                // Ensure top up amount is a valid number.
-                let amount = parseInt(req.body.Amount) || 0
-                amount = (amount > 0) ? amount : 0
+        let amount = parseInt(req.body.Amount)
 
-                // Top up account balance.
-                p.Balance += amount
+        if (amount > 0) {
+            // Initiate transaction.
+            db.sequelize.transaction((t) => {
+                // Lock parent table row.
+                return db.parent.findById(
+                    req.headers.UserID, {
+                        transaction: t,
+                        lock: t.LOCK.UPDATE
+                    }
+                )
+                .then((p) => {
+                    // Top up account balance.
+                    p.Balance += amount
+                    p.BonusPoints += Math.trunc(amount/10)
 
-                // And commit transaction.
-                return p.save({
-                    transaction: t
-                }).then((p) => {
-                    res.status(202).send({ "Balance": p.Balance })
-                }).catch((err) => {
-                    res.status(400).send('Error at the transaction: ' + err)
+                    // And commit transaction.
+                    return p.save({
+                        transaction: t
+                    })
+                    .then((p) => {
+                        res.status(202).send({
+                            "Balance": p.Balance,
+                            "BonusPoints": p.BonusPoints
+                        })
+                    })
+                    .catch((err) => {
+                        res.status(400).send('Error at the transaction: ' + err)
+                    })
+                })
+                .catch((err) => {
+                    res.status(404).send('User not found!')
                 })
             })
-        })
+        }
+        else {
+            res.status(400).send('Invalid top up amount!')
+        }
     })
 
     app.get('/wallet', app.loggedIn, (req,res) => {
@@ -185,27 +196,29 @@ function parentController(app, db) {
         ).then((r) => {
             Object.assign(response,r.dataValues)
 
-            // TODO Add options for result pagination.
             db.books.findAll({
                 where: {
                     ParentID: req.headers.UserID
                 },
-                attributes: ["Quantity"],
+                attributes: [
+                    "Quantity",
+                    [db.sequelize.col('Price'),"Price"],
+                    [db.sequelize.col('EventDate'),"EventDate"],
+                    [db.sequelize.col('Name'),"ActivityName"]
+                ],
+                includeIgnoreAttributes: false,
                 include: [{
                     model: db.listing,
-                    as: 'listing',
-                    attributes: ["EventDate"],
-                    include: {
-                        model: db.activity,
-                        as: 'activity',
-                        attributes: ["Name", "Price"]
-                    }
+                    includeIgnoreAttributes: false,
+                    include: [{
+                        model: db.activity
+                    }]
                 }]
             }).then( (r) => {
-                // TODO Restructure response according to spec.
                 Object.assign(response,{ "bookings": r })
                 res.status(200).send(response)
             }).catch((err) => {
+                console.error(err)
                 res.status(404).send('Bookings not found: ' + err)
             })
         })

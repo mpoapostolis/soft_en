@@ -1,13 +1,6 @@
 // Global image specifications.
 // TODO configure for multiple image sizes.
-// TODO Store info in a config.json file.
-const height = 450
-const width = 600
-
-const bgColor = 0x0000ffff
-const bgWidth = 400
-const bgHeight = 90
-const margin = 10
+const spec = require('../config/imageSpec.json')
 
 const destinationDirectory = 'images/'
 
@@ -18,6 +11,7 @@ const mime = require('mime')
 
 // Custom storage method, for storing images along with activityID and files
 // extension.
+// TODO Fix image naming.
 const storage = multer.diskStorage({
     destination: (req,res,cb) => {
         cb(null, destinationDirectory)
@@ -42,7 +36,7 @@ function captionBackground(color,width,height) {
 }
 
 // TODO Add a caption background size calculator, based on caption word length.
-const blueBackground = captionBackground(bgColor,bgWidth,bgHeight)
+const blueBackground = captionBackground(spec.bgColor,spec.bgWidth,spec.bgHeight)
 
 // Image processing function, it returns a promise with the generated file name.
 function process(destination, filename ,caption) {
@@ -55,10 +49,10 @@ function process(destination, filename ,caption) {
                        })
         })
         .then( ([image,font]) => {
-            image.resize(Jimp.AUTO,height)
-                 .cover(width,height,Jimp.HORIZONTAL_ALIGN_CENTER,Jimp.VERTICAL_ALIGN_MIDDLE)
-                 .scan(0,0,bgWidth,bgHeight,blueBackground)
-                 .print(font,margin,margin,caption,bgWidth-2*margin)
+            image.resize(Jimp.AUTO,spec.height)
+                 .cover(spec.width,spec.height,Jimp.HORIZONTAL_ALIGN_CENTER,Jimp.VERTICAL_ALIGN_MIDDLE)
+                 .scan(0,0,spec.bgWidth,spec.bgHeight,blueBackground)
+                 .print(font,spec.margin,spec.margin,caption,spec.bgWidth-2*spec.margin)
                  .write(filepath);
             return Promise.resolve(filename)
         })

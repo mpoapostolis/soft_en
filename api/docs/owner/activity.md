@@ -16,7 +16,8 @@ The request **body** contains the following as `form-data`:
 | Key | Value |
 | - | - |
 | ActivityName | The activity name |
-| AgeGroups | **TODO** Impement age groups. Send `null` for now |
+| MinAge | The minimum age allowed for the activity |
+| MaxAge | The maximum age allowed for the activity |
 | Description | Activity description |
 | image | Up to 8 image files uploaded with the key `image` will be forwarded to the media service for processing and then saved to our image volume.<br><br>**Max total request size must be less than `20M`** |
 | Long | Activity location longitude |

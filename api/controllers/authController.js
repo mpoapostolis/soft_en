@@ -71,14 +71,12 @@ function authController(app,db) {
         })
     }
 
-    // TODO Update according to schema.
     function registerOwner(req,res,user) {
         db.owner.create({
             OwnerID: user.get('UserID'),
             CompanyName: req.body.CompanyName,
             TaxNumber: req.body.TaxNumber,
             Address: req.body.Address,
-            Coordinates: req.body.Coordinates,
             IBAN: req.body.IBAN,
             SWIFT: req.body.SWIFT,
             BIC: req.body.BIC,
@@ -95,59 +93,63 @@ function authController(app,db) {
 
     // User registration route.
     app.post('/register', (req,res) => {
-        bcrypt.hash(req.body.Password,saltRounds).then( (hash) => {
-            db.user.create({
-                // TODO Set Email to unique.
-                Email: req.body.Email,
-                Password: hash,
-                // TODO Refuse Admin registration from web client.
-                Role: req.body.Role,
-                Status: 'Active'
+        if (['Parent','Owner'].includes(req.body.Role)) {
+            bcrypt.hash(req.body.Password,saltRounds).then( (hash) => {
+                db.user.create({
+                    Email: req.body.Email,
+                    Password: hash,
+                    Role: req.body.Role,
+                    Status: 'Active'
+                })
+                .then( (user) => {
+                    if (req.body.Role === 'Parent') {
+                        registerParent(req,res,user)
+                    } else {
+                        registerOwner(req,res,user)
+                    }
+                })
+                .catch( (err) => {
+                    console.error(err)
+                    res.status(400).send('User not created')
+                })
             })
-            .then( (user) => {
-                if (req.body.Role === 'Parent') {
-                    registerParent(req,res,user)
-                } else {
-                    registerOwner(req,res,user)
-                }
-            })
-            .catch( (err) => {
-                console.error(err)
-                res.status(400).send('User not created')
-            })
-        })
+        } else {
+            res.status(400).send('Unsupported user role.')
+        }
     })
 
+    // TODO Check user status.
     // User login route. Return a jwt token upon successful login.
     app.post('/login', (req,res) => {
         db.user.findOne({where: {Email: req.body.Email}})
                .then( (us) => {
                    let sentPass = req.body.Password
                    if(!us) {
-                       // TODO Send appropriate response code to client.
                        res.status(404).send('User not found')
                    }
                    // If we have a user, verify that the passwords match.
-                   else bcrypt.compare(req.body.Password, us.Password)
-                              .then( (result) => {
-                                  if (result) {
-                                      jwt.sign(
-                                          { UserID: us.UserID, Role: us.Role},
-                                          secret,
-                                          (err,token) => {
-                                              if (err) {
-                                                  res.status(500).send('Error creating token.')
-                                              }
-                                              else {
-                                                  res.status(200).send(token)
-                                              }
-                                          }
-                                      )
+                   else {
+                       bcrypt.compare(req.body.Password, us.Password)
+                      .then( (result) => {
+                          if (result) {
+                              jwt.sign(
+                                  { UserID: us.UserID, Role: us.Role},
+                                  secret,
+                                  (err,token) => {
+                                      if (err) {
+                                          res.status(500).send('Error creating token.')
+                                      }
+                                      else {
+                                          res.status(200).send(token)
+                                      }
                                   }
-                                  else {
-                                      res.status(401).send('Wrong Password')
-                                  }
-                              })
+                              )
+                          }
+                          else {
+                              res.status(401).send('Wrong Password')
+                          }
+                      })
+                  }
                })
                .catch( (err) => {
                    res.status(404).send('Not found')
