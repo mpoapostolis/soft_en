@@ -24,7 +24,7 @@ const styles = theme => {
   return {
     card: {
       margin: '20px',
-      maxWidth: 350,
+      maxWidth: 365,
     },
     media: {
       height: 194,

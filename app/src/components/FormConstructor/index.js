@@ -16,9 +16,10 @@ class FormConstructor extends Component {
   handleEnter = evt => (evt.key === 'Enter' ? this.handleSubmit() : null);
 
   handleSubmit = () => {
-    const {callToLogin, history: {push}} = this.props;
+    const {action, history: {push}} = this.props;
     const {username, password} = this.state;
-    console.log(username, password);
+    const body = JSON.stringify(this.props.tmpData);
+    action(body);
   };
 
   render() {
@@ -66,7 +67,9 @@ class FormConstructor extends Component {
             </div>
           </div>
           <div className={footer}>
-            <button className={btn}>{btnMsg}</button>
+            <button onClick={this.handleSubmit} className={btn}>
+              {btnMsg}
+            </button>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import {css} from 'emotion';
+import {mq} from '../../css.js';
 
 export const container = css`
   position: fixed;
@@ -43,7 +44,26 @@ export const redirect = css`
   margin: 10px;
   user-select: none;
   transition: all 0.15s;
-  &:hover {
-    border-bottom: solid 4px white;
-  }
+`;
+
+export const input = css`
+  width: 50%;
+  outline: none;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.10);
+  border: solid 1px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  color: rgba(139, 139, 139, 1);
+  transition: 0.125s;
+  font-size: large;
+  padding: 5px;
+  margin-left: 25px;
+  ${mq.medium(css`
+    display: none;
+  `)};
+`;
+
+export const rightSide = css`
+  display: flex;
+  align-items: center;
+  width: 50%;
 `;

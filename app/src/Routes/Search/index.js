@@ -31,9 +31,7 @@ class Search extends Component {
       container,
       filter,
       main,
-      inputCont,
       outCont,
-      input,
       mapCont,
       activityCont,
     } = styles;
@@ -46,9 +44,6 @@ class Search extends Component {
           </div>
           <div className={main}>
             <div className={outCont}>
-              <div className={inputCont}>
-                <input className={input} placeholder="Search 🔎" type="text" />
-              </div>
               <div className={activityCont}>
                 <Card />
                 <Card />

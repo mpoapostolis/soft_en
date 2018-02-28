@@ -8,6 +8,7 @@
     "material-ui": "^1.0.0-beta.27",
     "material-ui-icons": "^1.0.0-beta.17",
     "ramda": "^0.25.0",
+    "rc-slider": "^8.6.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
@@ -23,5 +24,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8888"
+  "proxy": "https://191.232.161.178:4001/api/"
 }
