@@ -125,7 +125,7 @@ function authController(app,db) {
                .then( (us) => {
                    let sentPass = req.body.Password
                    if(!us) {
-                       res.status(404).send('User not found')
+                       res.status(401).send('User not found')
                    }
                    // If we have a user, verify that the passwords match.
                    else {
@@ -152,7 +152,7 @@ function authController(app,db) {
                   }
                })
                .catch( (err) => {
-                   res.status(404).send('Not found')
+                   res.status(401).send('Not found')
                })
     })
 }
