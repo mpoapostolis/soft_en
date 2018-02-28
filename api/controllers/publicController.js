@@ -94,7 +94,7 @@ function publicController(app, db) {
                 "ActivityID",
                 "Price",
                 "Pictures",
-                "Coordinates"
+                "Coordinates",
                 [db.sequelize.col('CompanyName'),"CompanyName"]
             ],
             include: [
