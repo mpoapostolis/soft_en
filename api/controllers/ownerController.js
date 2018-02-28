@@ -72,7 +72,7 @@ function ownerController(app,db) {
                 include: [
                     {
                         model: db.activity,
-                        attributes: [["Name","ActivityName"],"Price","Pictures"]
+                        attributes: ["ActivityID",["Name","ActivityName"],"Price","Pictures"]
                     }
                 ]
             }

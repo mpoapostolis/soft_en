@@ -55,11 +55,11 @@ services:
             - media
             - mail
 
-    app:
-        build: ./app
-        restart: on-failure
-        # volumes:
-            # - ./app/build:/app/build
-        depends_on:
-            - db
-            - media
+    # app:
+    #     build: ./app
+    #     restart: on-failure
+    #     # volumes:
+    #         # - ./app/build:/app/build
+    #     depends_on:
+    #         - db
+    #         - media
