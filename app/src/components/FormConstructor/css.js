@@ -3,7 +3,9 @@ import {mq} from '../../css.js';
 
 export const container = css`
   width: 100vw;
-  height: calc(100vh - 80px);
+  background: url("https://a0.muscache.com/airbnb/growth/magic_carpet/hero4_large.jpg");
+  background-size: cover;
+  height: calc(100vh - 70px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +28,7 @@ export const loginBox = css`
   width: 450px;
   height: 550px;
   padding: 15px 0 15px 0;
-  background: white;
+  background: rgba(255, 255, 255, 0.90);
   box-shadow: 0px 2px 2px 2px rgba(163, 163, 163, 0.5);
   ${mq.large(css`
     width: 50vw;

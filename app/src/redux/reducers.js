@@ -1,14 +1,14 @@
-import assoc from 'ramda/src/assoc';
-import merge from 'ramda/src/merge';
-import {combineReducers} from 'redux';
+import assoc from "ramda/src/assoc";
+import merge from "ramda/src/merge";
+import { combineReducers } from "redux";
 
 const tmpDataInit = {};
 
-const tmpData = (state = tmpDataInit, {type, payload}) => {
+const tmpData = (state = tmpDataInit, { type, payload }) => {
   switch (type) {
-    case 'SET_TMP_DATA':
+    case "SET_TMP_DATA":
       return merge(state, payload);
-    case 'CLEAR_TMP':
+    case "CLEAR_TMP":
       return tmpDataInit;
     default:
       return state;
@@ -16,31 +16,33 @@ const tmpData = (state = tmpDataInit, {type, payload}) => {
 };
 
 const initAccount = {
-  access_token: '',
-  refresh_token: '',
+  access_token: "",
+  refresh_token: "",
   coords: {},
   expires_in: 0,
-  role: 'Admin',
-  status: 'ACTIVE',
+  Role: "Admin",
+  status: "ACTIVE",
   error: false,
-  lang: 'En',
-  address: '',
+  lang: "En",
+  address: ""
 };
 
-const account = (state = initAccount, {type, payload}) => {
+const account = (state = initAccount, { type, payload }) => {
   switch (type) {
-    case 'LOGIN':
-      return payload;
-    case 'CHANGE_LANGUAGE':
-      return assoc('lang', payload, state);
+    case "LOGIN":
+      return merge(state, payload);
+    case "CHANGE_LANGUAGE":
+      return assoc("lang", payload, state);
 
-    case 'UPDATE_COORDS':
-      return assoc('coords', payload, state);
-    case 'UPDATE_ADDRESS':
-      return assoc('address', payload, state);
+    case "UPDATE_COORDS":
+      return assoc("coords", payload, state);
+    case "UPDATE_ADDRESS":
+      return assoc("address", payload, state);
+    case "SET_TOKEN":
+      return assoc("access_token", payload, state);
 
-    case 'SET_ERROR':
-      return assoc('error', payload, state);
+    case "SET_ERROR":
+      return assoc("error", payload, state);
     default:
       return state;
   }
@@ -48,11 +50,11 @@ const account = (state = initAccount, {type, payload}) => {
 
 const appReducer = combineReducers({
   account,
-  tmpData,
+  tmpData
 });
 
 const rootReducer = (state, action) => {
-  if (action.type === 'LOGOUT') {
+  if (action.type === "LOGOUT") {
     state = undefined;
   }
 

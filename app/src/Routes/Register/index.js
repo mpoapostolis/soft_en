@@ -85,9 +85,9 @@ const extraOwnerInfo = [
 ];
 
 const Register = props => {
-  const {type} = props.tmpData;
+  const {Role} = props.tmpData;
   const schema =
-    type === 'owner' ? [...parrentSchema, ...extraOwnerInfo] : parrentSchema;
+    Role === 'Owner' ? [...parrentSchema, ...extraOwnerInfo] : parrentSchema;
   return (
     <FormConstructor
       action={props.register}

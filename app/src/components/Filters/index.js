@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Slider, {Range} from 'rc-slider';
 import * as styles from './css';
 
 class Filters extends Component {

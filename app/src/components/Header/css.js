@@ -1,17 +1,18 @@
-import {css} from 'emotion';
-import {mq} from '../../css.js';
+import { css } from "emotion";
+import { mq } from "../../css.js";
 
 export const container = css`
   position: fixed;
+  color: white;
+  font-weight: 900;
   width: 100%;
   height: 56px;
   top: 0;
   left: 0;
-  background: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 11px 4px -10px rgba(0, 0, 0, 0.4);
+  border: solid 1px #00000026;
   z-index: 100;
 `;
 
@@ -49,10 +50,9 @@ export const redirect = css`
 export const input = css`
   width: 50%;
   outline: none;
-  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.10);
+  border: solid 1px #00000026;
   border: solid 1px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
-  color: rgba(139, 139, 139, 1);
   transition: 0.125s;
   font-size: large;
   padding: 5px;

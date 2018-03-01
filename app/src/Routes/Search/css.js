@@ -1,5 +1,5 @@
-import {css} from 'emotion';
-import {mq} from '../../css.js';
+import { css } from "emotion";
+import { mq } from "../../css.js";
 
 export const container = css`
   width: 100%;
@@ -8,7 +8,7 @@ export const container = css`
 
 export const main = css`
   display: flex;
-  height: calc(100vh - 126px);
+  height: calc(100vh - 130px);
 `;
 
 export const filter = css`
@@ -16,14 +16,14 @@ export const filter = css`
   width: 100;
   padding: 5px;
   margin: 10px 10px 0 10px;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
+  border: solid 1px #00000026;
 `;
 
 export const outCont = css`
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
   margin: 10px;
   width: 65%;
   display: flex;
+  border-radius: 5px;
   background: rgba(0, 0, 0, 0.05);
   ${mq.medium(css`
     width: 100%;
@@ -34,12 +34,11 @@ export const activityCont = css`
   &::-webkit-scrollbar {
     width: 5px;
     border-left: solid 1px rgba(0, 0, 0, 0.1);
-    background-color: white;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 1px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #dddddd;
+    background-color: #c2c2c2;
   }
   display: flex;
   justify-content: center;
@@ -52,7 +51,7 @@ export const activityCont = css`
 export const mapCont = css`
   width: 35%;
   margin: 10px;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.35);
+  border: solid 1px #00000026;
   ${mq.medium(css`
     display: none;
   `)};

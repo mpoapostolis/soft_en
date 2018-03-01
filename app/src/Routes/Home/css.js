@@ -1,5 +1,5 @@
-import {css} from 'emotion';
-import {mq} from '../../css.js';
+import { css } from "emotion";
+import { mq } from "../../css.js";
 
 export const container = css`
   width: 100%;
@@ -11,48 +11,55 @@ export const container = css`
 
 export const mainCont = css`
   width: 100%;
-  height: 500px;
-  background: rgba(20, 0, 240, 0.10);
+  height: 600px;
+  background: url("https://a0.muscache.com/airbnb/growth/magic_carpet/hero4_large.jpg");
+  background-size: cover;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+`;
+
+export const boxCont = css`
+  display: flex;
+  flex-direction: column;
+  align-items: Center;
+  justify-content: space-around;
+  padding: 30px;
+  height: 400px;
+  width: 45vw;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 5px;
+  color: #ffffffbf;
   ${mq.small(css`
-    height: 100vh;
+    width: 80%;
+    background: none;
+    align-items: center;
   `)};
 `;
 
 export const inputCont = css`
   display: flex;
-  justify-content: center;
-  padding: 10px;
-  width: 75%;
-  background: rgba(0, 0, 0, 0.55);
-  ${mq.small(css`
-    background: none;
-    align-items: center;
-    flex-direction: column;
-  `)};
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
 
-export const logo = css`
-  width: 300px;
-  margin: 20px;
-  ${mq.small(css`
-    margin: 0px;
-  `)};
+export const title = css`
+  font-size: xx-large;
+  color: #ffffffbf;
+  font-weight: 900;
 `;
 
 export const item = css`
-  color: #000000bf;
   font-weight: 600;
-  border: 1px solid grey;
+  margin: 20px;
+  border: 1px solid #0000001f;
   text-align: center;
-  width: 100%;
   border-radius: 5px;
   height: 40px;
   font-size: large;
-  margin-right: 10px;
+  width: 75%;
   ${mq.small(css`
     width: 80%;
     margin: 15px;
@@ -60,5 +67,11 @@ export const item = css`
 `;
 
 export const btn = css`
-  color: #000000bf !important;
+  margin: 10px !important;
+  height: 50px !important;
+  width: 75% !important;
+  font-size: large !important;
+  font-weight: 900 !important;
+  background: #ff5a5f !important;
+  color: white !important;
 `;
