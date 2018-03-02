@@ -18,6 +18,42 @@ function adminController(app,db) {
         })
     })
 
+    app.put('/admin/user/:UserID', app.loggedIn, app.isAdmin, (req,res) => {
+        db.sequelize.transaction((t) => {
+            return db.user.findById(
+                req.params.UserID,
+                {
+                    transaction: t,
+                    lock: t.LOCK.UPDATE
+                }
+            )
+            .then((user) => {
+                user.Status = req.body.Status || user.Status
+                return user.save({transaction: t}).then(() => {
+                    res.status(200).send('User status updated')
+                })
+            })
+            .catch((err) => {
+                res.status(404).send('User not found')
+                throw new Error()
+            })
+        })
+    })
+
+    app.delete('/admin/user/:UserID', app.loggedIn, app.isAdmin, (req,res) => {
+        db.user.findById(req.params.UserID)
+        .then((user) => {
+            user.destroy()
+            .then(() => {
+                res.status(200).send('Successful user deletion')
+            })
+        })
+    })
+
+    app.post('/admin/user/', app.loggedIn, app.isAdmin, (req,res) => {
+        res.send('TODO')
+    })
+
     app.get('/admin/activity/', app.loggedIn, app.isAdmin, (req,res) => {
         db.activity.findAll()
         .then( (activities) => {
