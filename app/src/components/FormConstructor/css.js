@@ -3,8 +3,8 @@ import {mq} from '../../css.js';
 
 export const container = css`
   width: 100vw;
-  background: url("https://a0.muscache.com/airbnb/growth/magic_carpet/hero4_large.jpg");
-  background-size: cover;
+  /* background: url("https://a0.muscache.com/airbnb/growth/magic_carpet/hero4_large.jpg"); */
+  /* background-size: cover; */
   height: calc(100vh - 70px);
   display: flex;
   justify-content: center;

@@ -3,7 +3,7 @@ import { mq } from "../../css.js";
 
 export const container = css`
   position: fixed;
-  color: white;
+  color: #000000A0;
   font-weight: 900;
   width: 100%;
   height: 56px;

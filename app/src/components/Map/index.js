@@ -3,8 +3,9 @@ import * as styles from "./css";
 
 class Map extends Component {
   componentDidMount() {
-    const { account: { coords }, updateCoords } = this.props;
+    const { filters: { Lat, Long }, updateCoords } = this.props;
 
+    const coords = { lat: Lat, lng: Long };
     const map = new window.google.maps.Map(document.getElementById("map"), {
       center: coords,
       zoom: 15
@@ -16,10 +17,10 @@ class Map extends Component {
       title: "Click to zoom"
     });
 
-    map.addListener("center_changed", () => {
+    map.addListener("dragend", () => {
       const lat = map.center.lat();
       const lng = map.center.lng();
-      updateCoords({ lat, lng });
+      updateCoords({ Lat: lat, Long: lng });
     });
   }
 

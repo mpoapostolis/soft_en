@@ -13,7 +13,6 @@ class FormConstructor extends Component {
     this.props.clearTmp();
   }
 
-  handleEnter = evt => (evt.key === "Enter" ? this.handleSubmit() : null);
 
   handleSubmit = () => {
     const { action, history: { push } } = this.props;

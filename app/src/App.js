@@ -16,9 +16,8 @@ class App extends Component {
     const { updateCoords } = this.props;
     const lng = position.coords.longitude;
     const lat = position.coords.latitude;
-    console.log(lng, lat);
 
-    updateCoords({ lat, lng });
+    updateCoords({Lat:lat, Long: lng });
     this.codeLatLng(lat, lng);
   };
 

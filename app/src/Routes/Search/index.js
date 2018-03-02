@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
-import Button from 'material-ui/Button';
-import Map from '../../components/Map';
-import Card from '../../components/Card';
-import TextField from '../../components/TextField';
-import Filters from '../../components/Filters';
-import * as styles from './css';
+import React, { Component } from "react";
+import Button from "material-ui/Button";
+import Map from "../../components/Map";
+import Card from "../../components/Card";
+import TextField from "../../components/TextField";
+import Filters from "../../components/Filters";
+import Dialog from "../../components/Dialog";
+import * as styles from "./css";
 
 class Search extends Component {
   componentDidMount() {}
@@ -12,55 +13,34 @@ class Search extends Component {
     this.props.clearTmp;
   }
 
-  handleChange = ({currentTarget}) => {
-    this.setState({value: currentTarget.value});
+  handleChange = ({ currentTarget }) => {
+    this.setState({ value: currentTarget.value });
   };
 
   handleSubmit = () => {
-    const {setTmpData, push} = this.props;
+    const { setTmpData, push } = this.props;
     setTmpData(this.state);
-    push('/search');
+    push("/search");
   };
 
-  clearValue = ({currentTarget}) => {
-    currentTarget.value = '';
+  clearValue = ({ currentTarget }) => {
+    currentTarget.value = "";
   };
 
   render() {
-    const {
-      container,
-      filter,
-      main,
-      outCont,
-      mapCont,
-      activityCont,
-    } = styles;
-
+    const { container, filter, main, outCont, mapCont, activityCont } = styles;
+    const { data = [] } = this.props.activities;
+    console.log(data);
     return (
       <div>
         <div className={container}>
           <div className={filter}>
-            <Filters />
+            <Filters {...this.props} />
           </div>
           <div className={main}>
             <div className={outCont}>
               <div className={activityCont}>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {data.map((obj, key) => <Card {...obj} key={key} />)}
               </div>
             </div>
             <div className={mapCont}>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import Menu, { MenuItem } from "material-ui/Menu";
+import Button from "material-ui/Button";
 import * as styles from "./css";
 
 class Header extends Component {
@@ -22,6 +23,11 @@ class Header extends Component {
     push(value);
   };
 
+  handleEnter = evt => {
+    const { getActivities } = this.props;
+    if (evt.key === "Enter") return getActivities();
+  };
+
   goHome = () => {
     const { push } = this.props.history;
     push("/");
@@ -31,12 +37,12 @@ class Header extends Component {
     const { info, redirect } = styles;
     return (
       <div className={info}>
-        <div className={redirect} onClick={this.changePath}>
+        <Button className={redirect} onClick={this.changePath}>
           Register
-        </div>
-        <div className={redirect} onClick={this.changePath}>
+        </Button>
+        <Button className={redirect} onClick={this.changePath}>
           Login
-        </div>
+        </Button>
       </div>
     );
   };
@@ -70,7 +76,7 @@ class Header extends Component {
 
   render() {
     const { container, input, logo, info, redirect, rightSide } = styles;
-    const { access_token } = this.props.account;
+    const { account: { access_token }, updateSearch } = this.props;
     const showSearch = window.location.pathname !== "/";
     return (
       <div className={container}>
@@ -82,7 +88,13 @@ class Header extends Component {
             alt=":)"
           />
           {showSearch && (
-            <input className={input} placeholder="🔎 Search" type="text" />
+            <input
+              className={input}
+              onChange={e => updateSearch(e.target.value)}
+              onKeyDown={this.handleEnter}
+              placeholder="🔎 Search"
+              type="text"
+            />
           )}
         </div>
         {access_token ? this.accountInfo() : this.guest()}

@@ -3,6 +3,7 @@ import Button from "material-ui/Button";
 import * as styles from "./css";
 
 class Home extends Component {
+  state = { value: "" };
   componentDidMount() {
     const { lat, lng } = this.props.account.coords;
     this.setState({ lat, lng, value: "" });
@@ -41,12 +42,15 @@ class Home extends Component {
     const {
       setTmpData,
       history: { push },
-      account: { access_token }
+      account: { access_token },
+      updateCoords,
+      getActivities
     } = this.props;
     const { lat, lng, value } = this.state;
+    if (lat && lng) updateCoords({ Lat: lat, Long: lng });
     setTmpData(this.state);
-    const url = `/search?tag=${value}&lat=${lat}&lng=${lng}`;
-    push(url);
+    const url = `/search`;
+    Promise.resolve(getActivities()).then(push(url))
   };
 
   clearValue = ({ currentTarget }) => {
@@ -54,8 +58,17 @@ class Home extends Component {
   };
 
   render() {
-    const { container, mainCont, btn, item, title, boxCont, inputCont } = styles;
-    const { address } = this.props.account;
+    const {
+      container,
+      mainCont,
+      btn,
+      item,
+      title,
+      boxCont,
+      inputCont
+    } = styles;
+    const { account: { address }, updateSearch } = this.props;
+    const { value } = this.state;
 
     return (
       <div className={container}>
@@ -66,6 +79,7 @@ class Home extends Component {
               <input
                 placeholder="Searh something"
                 className={item}
+                onBlur={() => updateSearch(value)}
                 onChange={this.handleChange}
               />
               <input

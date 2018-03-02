@@ -15,10 +15,44 @@ const tmpData = (state = tmpDataInit, { type, payload }) => {
   }
 };
 
+const initActivities = {data:[]};
+
+const activities = (state = tmpDataInit, { type, payload }) => {
+  switch (type) {
+    case "SET_ACTIVITIES":
+    
+    return assoc("data", payload, state);
+    default:
+      return state;
+  }
+};
+const initFilters = {
+  Date: Date.now(),
+  Max_price: 999,
+  Min_price: 0,
+  Distance: 5,
+  Lat: 37.98381,
+  Long: 23.727539,
+  Search: ""
+};
+
+const filters = (state = initFilters, { type, payload }) => {
+  switch (type) {
+    case "UPDATE_FILTERS":
+      return merge(state, payload);
+    case "UPDATE_SEARCH":
+      return assoc("Search", payload, state);
+    case "UPDATE_COORDS":
+      return merge(state, payload);
+
+    default:
+      return state;
+  }
+};
+
 const initAccount = {
   access_token: "",
   refresh_token: "",
-  coords: {},
   expires_in: 0,
   Role: "Admin",
   status: "ACTIVE",
@@ -34,8 +68,6 @@ const account = (state = initAccount, { type, payload }) => {
     case "CHANGE_LANGUAGE":
       return assoc("lang", payload, state);
 
-    case "UPDATE_COORDS":
-      return assoc("coords", payload, state);
     case "UPDATE_ADDRESS":
       return assoc("address", payload, state);
     case "SET_TOKEN":
@@ -50,7 +82,9 @@ const account = (state = initAccount, { type, payload }) => {
 
 const appReducer = combineReducers({
   account,
-  tmpData
+  tmpData,
+  activities,
+  filters
 });
 
 const rootReducer = (state, action) => {
