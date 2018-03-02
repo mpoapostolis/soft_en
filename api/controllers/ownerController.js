@@ -5,6 +5,8 @@ const FormData = require('form-data')
 const mediaOptions = require('../config/mediaService.json')
 const tags = require('../config/tagValues.json')
 
+const imagepath = '/opt/images/'
+
 function ownerController(app,db) {
 
     app.get('/owner/calendar', app.loggedIn, app.isOwner, (req,res) => {
@@ -78,6 +80,11 @@ function ownerController(app,db) {
             }
         )
         .then( (o) => {
+            if(o.Pictures) {
+                o.Pictures = o.Pictures.split(',').map((x) => {
+                    return imagepath + x
+                })
+            }
             res.status(200).send(o)
         })
         .catch( (err) => {

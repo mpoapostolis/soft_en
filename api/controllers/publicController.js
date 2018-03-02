@@ -1,5 +1,7 @@
 const pageSize = 20
 
+const imagepath = '/opt/images/'
+
 function publicController(app, db) {
 
     // Geoquery builder function. Distance must be supplied in kilometers.
@@ -139,6 +141,13 @@ function publicController(app, db) {
                 let _tags = a.dataValues.tags
                 _tags = _tags.map( (t) => { return t.Tag })
                 a.dataValues.tags = _tags
+
+                if(a.dataValues.Pictures) {
+                    a.dataValues.Pictures = a.dataValues.Pictures.split(',').map((x) => {
+                        return imagepath + x
+                    })
+                }
+
                 return a.dataValues
             })
             res.status(200).send(response)
