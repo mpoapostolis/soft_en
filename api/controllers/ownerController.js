@@ -248,7 +248,7 @@ function ownerController(app,db) {
     // Register a new activity as an owner.
     app.post('/activity', app.loggedIn, app.isOwner, upload.array('image',8), (req,res) => {
 
-        let point = { type: 'Point', coordinates: [req.body.long, req.body.lat]}
+        let point = { type: 'Point', coordinates: [req.body.lat, req.body.long]}
         let _tags = (req.body.Tag || [])
 
         // For now, ignore duplicate or unaccepted tags.
