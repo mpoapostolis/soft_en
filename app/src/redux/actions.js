@@ -23,7 +23,9 @@ export const getActivities = () => (dispatch, getState) => {
   } = state.filters;
 
   return fetch(
-    `/activity?Search=${Search}&Max_price=${Max_price}&Min_price=${Min_price}&Distance=${Distance*1000}&Lat=${Lat}&Long=${Long}`
+    `/activity?search=${Search}&MaxPrice=${Max_price *
+      10}&MinPrice=${Min_price * 10}&Distance=${Distance *
+      100000}&Lat=${Lat}&Long=${Long}`
   )
     .then(res => res.json())
     .then(arr => dispatch(setActivities(arr)));
@@ -45,7 +47,7 @@ export const createActivity = (obj, push) => (dispatch, getState) => {
   const formData = new FormData();
   const state = getState();
   const { access_token } = state.account;
-  
+
   for (let key in obj) {
     formData.append(key, obj[key]);
   }
@@ -55,6 +57,18 @@ export const createActivity = (obj, push) => (dispatch, getState) => {
       Authorization: `Bearer ${access_token}`
     },
     body: formData
+  });
+};
+
+export const getWallet = (obj, push) => (dispatch, getState) => {
+  const state = getState();
+  const { access_token } = state.account;
+
+  return fetch("/wallet", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`
+    }
   });
 };
 

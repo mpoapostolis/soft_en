@@ -6,6 +6,7 @@ import Login from "./Login";
 import Register from "./Register";
 import CreateActivity from "./CreateActivity";
 import Search from "./Search";
+import Profile from "./Profile";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 
@@ -38,7 +39,10 @@ const Routes = props => {
             render={routeProps => <CreateActivity {...routeProps} {...props} />}
           />
 
-
+          <Route
+            path="/profile"
+            render={routeProps => <Profile {...routeProps} {...props} />}
+          />
         </Switch>
       </main>
     </Router>

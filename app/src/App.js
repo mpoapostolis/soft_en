@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "./redux/actions";
+import 'react-table/react-table.css'
 
 class App extends Component {
   componentDidMount() {

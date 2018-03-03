@@ -32,8 +32,8 @@ class Map extends Component {
         console.log(obj);
         
         const coords = {
-          lng: obj.Coordinates.coordinates[0],
-          lat: obj.Coordinates.coordinates[1]
+          lat: obj.Coordinates.coordinates[0],
+          lng: obj.Coordinates.coordinates[1]
         };
         let marker = new window.google.maps.Marker({
           position: coords,

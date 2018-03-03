@@ -45,7 +45,7 @@ class TextField extends Component {
 
   handleChange = ({ currentTarget }) => {
     const { setTmpData, type } = this.props;
-    if (type === "file") setTmpData({image: currentTarget.files});
+    if (type === "file") setTmpData({image: currentTarget.files[0]});
     else this.setState({ value: currentTarget.value });
   };
 
@@ -78,7 +78,6 @@ class TextField extends Component {
             list={list}
             accept="image/*"
             value={undefined}
-            multiple
             min={min}
             max={max}
             id={id}

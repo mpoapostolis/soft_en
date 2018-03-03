@@ -25,7 +25,7 @@ const schema = [
     min: 0,
     max: 60,
     validator: "no-empty",
-    field: "Max Age",
+    field: "MaxAge",
     label: "Max Age"
   },
   {
