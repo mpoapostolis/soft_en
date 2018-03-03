@@ -25,7 +25,6 @@ class Filters extends Component {
         ? new Date(currentTarget.value).getTime()
         : parseInt(currentTarget.value);
     this.setState({ [key]: value });
-    updateFilters({ [key]: value });
   };
 
   isVisible = name => {
@@ -34,8 +33,8 @@ class Filters extends Component {
   };
 
   handleSubmit = () => {
-    const { updateFilters } = this.props;
-    updateFilters(this.state);
+    const { updateFilters, getActivities } = this.props;
+    Promise.resolve(updateFilters(this.state)).then(getActivities());
   };
 
   render() {
@@ -64,11 +63,12 @@ class Filters extends Component {
             <div className={col}>
               <p>Distance:</p> {Distance}
               <input
+                defaultValue={5}
                 name="Distance"
                 onChange={this.handleChange}
                 type="range"
                 min={1}
-                max={100}
+                max={20}
               />
             </div>
           </div>

@@ -24,7 +24,8 @@ const styles = theme => {
   return {
     card: {
       margin: "20px",
-      maxWidth: 365
+      maxWidth: 365,
+      minWidth: 365
     },
     media: {
       height: 194
@@ -71,15 +72,15 @@ class RecipeReviewCard extends React.Component {
               </IconButton>
             }
             title={ActivityName}
-            subheader={CompanyName}
+            subheader={`${CompanyName}`}
           />
           <CardMedia
             className={classes.media}
-            image={Pictures[0]}
+            image={`https://191.232.161.178:4001${Pictures[0]}`}
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography component="p" />
+            <Typography component="p" >{Price}€</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton aria-label="Add to favorites">
@@ -88,9 +89,9 @@ class RecipeReviewCard extends React.Component {
             <IconButton aria-label="Share">
               <Favorite />
             </IconButton>
-            <IconButton aria-label="Share"></IconButton>
+            <IconButton aria-label="Share" />
             <Button className={classes.expand} mini variant="raised">
-              {Price}€
+              BOOK
             </Button>
           </CardActions>
         </Card>

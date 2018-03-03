@@ -8,7 +8,10 @@ import Dialog from "../../components/Dialog";
 import * as styles from "./css";
 
 class Search extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const { getActivities } = this.props;
+    getActivities();
+  }
   componentWillUnmount() {
     this.props.clearTmp;
   }
@@ -30,7 +33,6 @@ class Search extends Component {
   render() {
     const { container, filter, main, outCont, mapCont, activityCont } = styles;
     const { data = [] } = this.props.activities;
-    console.log(data);
     return (
       <div>
         <div className={container}>

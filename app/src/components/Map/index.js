@@ -1,27 +1,48 @@
 import React, { Component } from "react";
 import * as styles from "./css";
 
+let map;
+let gmarkers = [];
+
 class Map extends Component {
   componentDidMount() {
-    const { filters: { Lat, Long }, updateCoords } = this.props;
-
+    const { filters: { Lat, Long }, updateCoords, activities } = this.props;
+    const { getActivities } = this.props;
     const coords = { lat: Lat, lng: Long };
-    const map = new window.google.maps.Map(document.getElementById("map"), {
+    map = new window.google.maps.Map(document.getElementById("map"), {
       center: coords,
       zoom: 15
-    });
-
-    var marker = new window.google.maps.Marker({
-      position: coords,
-      map: map,
-      title: "Click to zoom"
     });
 
     map.addListener("dragend", () => {
       const lat = map.center.lat();
       const lng = map.center.lng();
-      updateCoords({ Lat: lat, Long: lng });
+      Promise.resolve(updateCoords({ Lat: lat, Long: lng })).then(
+        getActivities()
+      );
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const nextActivities = nextProps.activities.data;
+    const activities = this.props.activities.data;
+    if (nextActivities !== activities && nextActivities) {
+      // gmarkers.map((m, i) => gmarkers[i].setMap(null));
+      nextActivities.map(obj => {
+        console.log(obj);
+        
+        const coords = {
+          lng: obj.Coordinates.coordinates[0],
+          lat: obj.Coordinates.coordinates[1]
+        };
+        let marker = new window.google.maps.Marker({
+          position: coords,
+          map: map,
+          title: obj.ActivityName
+        });
+        gmarkers.push(marker);
+      });
+    }
   }
 
   render() {

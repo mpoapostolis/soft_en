@@ -1,4 +1,4 @@
-import {css} from 'emotion';
+import { css } from "emotion";
 
 export const input = css`
   border: none;
@@ -10,6 +10,8 @@ export const input = css`
   background: transparent;
   border-bottom: solid 0.08em rgba(66, 133, 244, 0.55);
   width: 100%;
+  &.upload{
+  }
   &:hover {
     border-bottom: solid 0.08em rgba(66, 133, 244, 0.8);
   }

@@ -13,12 +13,13 @@ class FormConstructor extends Component {
     this.props.clearTmp();
   }
 
-
   handleSubmit = () => {
-    const { action, history: { push } } = this.props;
+    const { action, history: { push }, upload } = this.props;
     const { username, password } = this.state;
-    const body = JSON.stringify(this.props.tmpData);
-    action(body,push);
+    const body = upload
+      ? this.props.tmpData
+      : JSON.stringify(this.props.tmpData);
+    action(body, push);
   };
 
   render() {

@@ -5,7 +5,7 @@ import * as styles from "./css";
 class Home extends Component {
   state = { value: "" };
   componentDidMount() {
-    const { lat, lng } = this.props.account.coords;
+    const { lat, lng } = this.props.filters;
     this.setState({ lat, lng, value: "" });
     const input = document.getElementById("autocomplete");
     const options = {
@@ -50,7 +50,7 @@ class Home extends Component {
     if (lat && lng) updateCoords({ Lat: lat, Long: lng });
     setTmpData(this.state);
     const url = `/search`;
-    Promise.resolve(getActivities()).then(push(url))
+    push(url);
   };
 
   clearValue = ({ currentTarget }) => {

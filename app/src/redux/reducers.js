@@ -15,13 +15,12 @@ const tmpData = (state = tmpDataInit, { type, payload }) => {
   }
 };
 
-const initActivities = {data:[]};
+const initActivities = { data: [] };
 
 const activities = (state = tmpDataInit, { type, payload }) => {
   switch (type) {
     case "SET_ACTIVITIES":
-    
-    return assoc("data", payload, state);
+      return assoc("data", payload, state);
     default:
       return state;
   }

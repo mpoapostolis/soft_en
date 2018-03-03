@@ -3,7 +3,8 @@ import { mq } from "../../css.js";
 
 export const container = css`
   position: fixed;
-  color: #000000A0;
+  color: #000000a0;
+  background: #ffffffDF;
   font-weight: 900;
   width: 100%;
   height: 56px;
@@ -15,6 +16,8 @@ export const container = css`
   border: solid 1px #00000026;
   z-index: 100;
 `;
+
+export const btn = css``;
 
 export const logo = css`
   cursor: pointer;
@@ -42,7 +45,6 @@ export const account = css`
 
 export const redirect = css`
   cursor: pointer;
-  margin: 10px;
   user-select: none;
   transition: all 0.15s;
 `;

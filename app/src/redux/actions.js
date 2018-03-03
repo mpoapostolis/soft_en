@@ -10,7 +10,7 @@ export const updateFilters = createAction("UPDATE_FILTERS");
 export const updateSearch = createAction("UPDATE_SEARCH");
 export const setActivities = createAction("SET_ACTIVITIES");
 
-export const getActivities = (obj, push) => (dispatch, getState) => {
+export const getActivities = () => (dispatch, getState) => {
   const state = getState();
   const {
     Date = Date.now(),
@@ -23,7 +23,7 @@ export const getActivities = (obj, push) => (dispatch, getState) => {
   } = state.filters;
 
   return fetch(
-    `/activity?Search=${Search}&Max_price=${Max_price}&Min_price=${Min_price}&Distance=${3000}&Lat=${Lat}&Long=${Long}`
+    `/activity?Search=${Search}&Max_price=${Max_price}&Min_price=${Min_price}&Distance=${Distance*1000}&Lat=${Lat}&Long=${Long}`
   )
     .then(res => res.json())
     .then(arr => dispatch(setActivities(arr)));
@@ -38,6 +38,23 @@ export const register = (obj, push) => (dispatch, getState) => {
     body: obj
   }).then(res => {
     if (res.status === 201) push("/");
+  });
+};
+
+export const createActivity = (obj, push) => (dispatch, getState) => {
+  const formData = new FormData();
+  const state = getState();
+  const { access_token } = state.account;
+  
+  for (let key in obj) {
+    formData.append(key, obj[key]);
+  }
+  return fetch("/activity", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${access_token}`
+    },
+    body: formData
   });
 };
 

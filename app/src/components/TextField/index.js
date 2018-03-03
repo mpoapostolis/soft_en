@@ -16,8 +16,9 @@ class TextField extends Component {
       field,
       list,
       changeParrentState,
-      allField: { password1 }
+      id
     } = this.props;
+    if (id || type === "file") return;
     const value = currentTarget.value;
     const options = list || [];
     switch (validator) {
@@ -28,12 +29,6 @@ class TextField extends Component {
 
       case "no-empty":
         isValid = value.length > 0;
-        break;
-
-      case "password":
-        if (value && !password1) isValid = false;
-        else if (password1 && value && password1 !== value) isValid = false;
-        else isValid = true;
         break;
 
       case "select":
@@ -48,29 +43,47 @@ class TextField extends Component {
     else this.setState({ errorClass: "" });
   };
 
-  handleChange = ({ currentTarget }) =>
-    this.setState({ value: currentTarget.value });
+  handleChange = ({ currentTarget }) => {
+    const { setTmpData, type } = this.props;
+    if (type === "file") setTmpData({image: currentTarget.files});
+    else this.setState({ value: currentTarget.value });
+  };
 
   render() {
-    const { errmsg, type, list, label, field } = this.props;
+    const { errmsg, type, list, label, field, min, max, id } = this.props;
     const { inputCont, input } = styles;
     const _id = list ? Date.now() : undefined;
     const { errorClass, value } = this.state;
     const labelExtraClass = value ? "notEmpty" : "";
+    const upload = type === "file" ? "upload" : "";
 
     return (
       <div className={inputCont}>
         <label className={`inputLabel ${labelExtraClass} ${errorClass}`}>
           {errorClass ? errmsg : label}
         </label>
-        <input
-          className={`${input} ${errorClass}`}
-          onChange={this.handleChange}
-          onBlur={this.isValid}
-          type={type}
-          list={list}
-          value={value}
-        />
+        {type === "textarea" ? (
+          <textarea
+            className={`${input} textArea ${errorClass}`}
+            onChange={this.handleChange}
+            onBlur={this.isValid}
+            value={value}
+          />
+        ) : (
+          <input
+            className={`${input} ${upload} ${errorClass}`}
+            onChange={this.handleChange}
+            onBlur={this.isValid}
+            type={type}
+            list={list}
+            accept="image/*"
+            value={undefined}
+            multiple
+            min={min}
+            max={max}
+            id={id}
+          />
+        )}
         {list && (
           <datalist id={list}>
             {list.map((opt, key) => <option key={key} value={opt} />)}

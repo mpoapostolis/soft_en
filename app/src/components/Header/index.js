@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import Menu, { MenuItem } from "material-ui/Menu";
 import Button from "material-ui/Button";
+import Avatar from "material-ui/Avatar";
 import * as styles from "./css";
 
 class Header extends Component {
@@ -24,8 +25,10 @@ class Header extends Component {
   };
 
   handleEnter = evt => {
+    const { push } = this.props.history;
     const { getActivities } = this.props;
-    if (evt.key === "Enter") return getActivities();
+    if (evt.key === "Enter")
+      return Promise.resolve(push("/search")).then(getActivities());
   };
 
   goHome = () => {
@@ -50,7 +53,27 @@ class Header extends Component {
   accountInfo = () => {
     const { account } = styles;
     const { anchorEl } = this.state;
-    const { account: { name }, logout } = this.props;
+    const {
+      account: { name },
+      logout,
+      history: { push },
+      account: { Role }
+    } = this.props;
+    const items = [
+      {
+        name: "Profile",
+        action: () => push("/profile")
+      },
+      {
+        name: "Logout",
+        action: () => Promise.resolve(logout()).then(push("/"))
+      }
+    ];
+    if (Role === "Owner")
+      items.splice(1, 0, {
+        name: "New Activity",
+        action: () => push("/new-activity")
+      });
     return (
       <div className={account}>
         <img
@@ -66,9 +89,17 @@ class Header extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-          <MenuItem onClick={this.handleClose}>My account</MenuItem>
-          <MenuItem onClick={logout}>Logout</MenuItem>
+          {items.map((obj, key) => (
+            <MenuItem
+              key={key}
+              onClick={() => {
+                obj.action();
+                this.handleClose();
+              }}
+            >
+              {obj.name}
+            </MenuItem>
+          ))}
         </Menu>
       </div>
     );

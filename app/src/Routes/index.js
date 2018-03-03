@@ -4,6 +4,7 @@ import Home from "./Home";
 import Private from "./Private";
 import Login from "./Login";
 import Register from "./Register";
+import CreateActivity from "./CreateActivity";
 import Search from "./Search";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
@@ -31,6 +32,12 @@ const Routes = props => {
             path="/search"
             render={routeProps => <Search {...routeProps} {...props} />}
           />
+
+          <Route
+            path="/new-activity"
+            render={routeProps => <CreateActivity {...routeProps} {...props} />}
+          />
+
 
         </Switch>
       </main>
