@@ -6,6 +6,14 @@ const mediaOptions = require('../config/mediaService.json')
 const tags = require('../config/tagValues.json')
 
 const imagepath = '/opt/images/'
+function parsePictures(pictures) {
+    if(pictures) {
+        return pictures.split(',').map((x) => {
+            return imagepath + x
+        })
+    }
+    else { return [] }
+}
 
 function ownerController(app,db) {
 
@@ -80,11 +88,9 @@ function ownerController(app,db) {
             }
         )
         .then( (o) => {
-            if(o.Pictures) {
-                o.Pictures = o.Pictures.split(',').map((x) => {
-                    return imagepath + x
-                })
-            }
+            o.activities.map((act) => {
+                act.Pictures = parsePictures(act.Pictures)
+            })
             res.status(200).send(o)
         })
         .catch( (err) => {

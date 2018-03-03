@@ -1,6 +1,14 @@
 const pageSize = 20
 
 const imagepath = '/opt/images/'
+function parsePictures(pictures) {
+    if(pictures) {
+        return pictures.split(',').map((x) => {
+            return imagepath + x
+        })
+    }
+    else { return [] }
+}
 
 function publicController(app, db) {
 
@@ -141,12 +149,7 @@ function publicController(app, db) {
                 let _tags = a.dataValues.tags
                 _tags = _tags.map( (t) => { return t.Tag })
                 a.dataValues.tags = _tags
-
-                if(a.dataValues.Pictures) {
-                    a.dataValues.Pictures = a.dataValues.Pictures.split(',').map((x) => {
-                        return imagepath + x
-                    })
-                }
+                a.dataValues.Pictures = parsePictures(a.dataValues.Pictures)
 
                 return a.dataValues
             })
@@ -165,7 +168,8 @@ function publicController(app, db) {
                 ["Name","ActivityName"],
                 "Description",
                 "Price",
-                "Duration"
+                "Duration",
+                "Pictures"
             ],
             include: [
                 {
@@ -178,6 +182,7 @@ function publicController(app, db) {
                 }
             ]
         }).then( (result) => {
+            result.dataValues.Pictures = parsePictures(result.dataValues.Pictures)
             Object.assign(response, result.dataValues)
             response.tags = response.tags.map( (t) => { return t.Tag } )
 
