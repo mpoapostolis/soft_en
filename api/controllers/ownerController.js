@@ -276,29 +276,31 @@ function ownerController(app,db) {
         .then( (act) => {
             // Upon creation of basic details, forward pictures to the media
             // service.
-            let form = new FormData()
-
-            console.log(req.files)
-            console.log(req.body)
+            var form = new FormData({
+                maxDataSize: 20 * 1024 * 1024
+            })
 
             // Include the activity name first.
             form.append('activityName',req.body.Name)
 
-            // Append all images to the data form.
-            req.files.map(
-                (f) => form.append(
+            for (let i=0, l=req.files.length; i<l; i++) {
+                form.append(
                     'image',
-                    f.buffer,
-                    {filename: f.originalname }
+                    req.files[i].buffer,
+                    { filename: req.files[i].originalname }
                 )
+            }
+
+            let options = Object.assign(
+                { headers: form.getHeaders() },
+                mediaOptions
             )
 
-	    console.log(form)
-
             // Submit them to the media service.
-            form.submit(mediaOptions, (err,result) => {
+            form.submit(options, (err,result) => {
                 if (err) {
                     console.error(err)
+                    result.resume()
                     res.status(500).send('Pictures not saved')
                 } else {
                     // Parse response body, an array of image names.
@@ -306,11 +308,11 @@ function ownerController(app,db) {
                     result.setEncoding('utf8');
 
                     // Manually parse body response.
-                    result.on('data', function(chunk) {
-                        body += chunk;
-                    });
-                    result.on('end', function() {
+                    result.on('data', (chunk) => { body += chunk });
+
+                    result.on('end', () => {
                         // Store image names in the database.
+                        result.resume()
                         body = JSON.parse(body);
                         act.Pictures = body.join(',')
                         act.save().then( () => {
