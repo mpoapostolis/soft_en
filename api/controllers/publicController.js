@@ -12,7 +12,7 @@ function publicController(app, db) {
                 db.sequelize.col('Coordinates'),
                 db.sequelize.fn(
                     'ST_GeogFromText',
-                    `SRID=4326;POINT(${long} ${lat})`
+                    `SRID=4326;POINT(${lat} ${long})`
                 )
             ), {[db.sequelize.Op.lte]: distance*1000}
         )
