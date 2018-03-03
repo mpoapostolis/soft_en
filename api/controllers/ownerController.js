@@ -278,6 +278,9 @@ function ownerController(app,db) {
             // service.
             let form = new FormData()
 
+            console.log(req.files)
+            console.log(req.body)
+
             // Include the activity name first.
             form.append('activityName',req.body.Name)
 
@@ -289,6 +292,8 @@ function ownerController(app,db) {
                     {filename: f.originalname }
                 )
             )
+
+	    console.log(form)
 
             // Submit them to the media service.
             form.submit(mediaOptions, (err,result) => {
@@ -309,7 +314,7 @@ function ownerController(app,db) {
                         body = JSON.parse(body);
                         act.Pictures = body.join(',')
                         act.save().then( () => {
-                            res.status(201).send('Pictures saved')
+                            res.status(201).send(act.ActivityID)
                         })
                     })
                 }

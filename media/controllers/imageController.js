@@ -66,6 +66,8 @@ function process(destination, filename ,caption) {
 function imageController(app) {
     app.post('/images', upload.array('image',8), (req,res) => {
         console.log('Received request')
+        console.log(req.body)
+        console.log(req.files)
         ops = []
         for(var i=0, k=req.files.length; i<k; i++) {
             ops.push(process(req.files[i].destination,
