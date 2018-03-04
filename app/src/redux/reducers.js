@@ -17,6 +17,36 @@ const tmpData = (state = tmpDataInit, { type, payload }) => {
 
 const initActivities = { data: [] };
 
+const initOwner = {
+  "Monthly Balance": 0,
+  activities: []
+};
+
+const owner = (state = initOwner, { type, payload }) => {
+  switch (type) {
+    case "UPDATE_OWNER":
+      return merge(state, payload);
+    default:
+      return state;
+  }
+};
+
+const initParent = {
+  "Monthly Balance": 0,
+  activities: []
+};
+
+const parent = (state = initParent, { type, payload }) => {
+  switch (type) {
+    case "UPDATE_PARENT":
+      console.log(payload);
+
+      return merge(state, payload);
+    default:
+      return state;
+  }
+};
+
 const activities = (state = tmpDataInit, { type, payload }) => {
   switch (type) {
     case "SET_ACTIVITIES":
@@ -83,7 +113,9 @@ const appReducer = combineReducers({
   account,
   tmpData,
   activities,
-  filters
+  filters,
+  owner,
+  parent
 });
 
 const rootReducer = (state, action) => {

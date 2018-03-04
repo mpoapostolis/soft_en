@@ -1,12 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import Private from "./Private";
 import Login from "./Login";
 import Register from "./Register";
 import CreateActivity from "./CreateActivity";
 import Search from "./Search";
-import Profile from "./Profile";
+import Booking from "./Booking";
+import OwnerProfile from "./OwnerProfile";
+import Listing from "./Listing";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 
@@ -40,9 +41,22 @@ const Routes = props => {
           />
 
           <Route
-            path="/profile"
-            render={routeProps => <Profile {...routeProps} {...props} />}
+            path="/owner-profile"
+            render={routeProps => <OwnerProfile {...routeProps} {...props} />}
           />
+
+          <Route
+            path="/listing-activity"
+            render={routeProps => <Listing {...routeProps} {...props} />}
+          />
+
+                  <Route
+            path="/booking"
+            render={routeProps => <Booking {...routeProps} {...props} />}
+          />
+
+
+
         </Switch>
       </main>
     </Router>

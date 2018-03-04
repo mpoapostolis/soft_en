@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "./redux/actions";
 import 'react-table/react-table.css'
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 class App extends Component {
   componentDidMount() {

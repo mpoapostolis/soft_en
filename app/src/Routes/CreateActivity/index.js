@@ -104,7 +104,7 @@ class CreateActivity extends Component {
         upload={true}
         firstMsg="Create new Activity"
         secondMsg=""
-        btnMsg="Create"
+        btnMsg="NEXT"
         schema={schema}
         {...this.props}
       />

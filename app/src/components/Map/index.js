@@ -29,7 +29,6 @@ class Map extends Component {
     if (nextActivities !== activities && nextActivities) {
       // gmarkers.map((m, i) => gmarkers[i].setMap(null));
       nextActivities.map(obj => {
-        console.log(obj);
         
         const coords = {
           lat: obj.Coordinates.coordinates[0],

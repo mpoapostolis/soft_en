@@ -10,7 +10,13 @@ export const input = css`
   background: transparent;
   border-bottom: solid 0.08em rgba(66, 133, 244, 0.55);
   width: 100%;
-  &.upload{
+  &.date {
+    width: 150px;
+  }
+  &.second {
+    margin-left: 15px;
+  }
+  &.upload {
   }
   &:hover {
     border-bottom: solid 0.08em rgba(66, 133, 244, 0.8);
@@ -23,6 +29,11 @@ export const input = css`
     color: red;
     border-bottom: solid 0.08em #ff0000;
   }
+`;
+
+export const mpla = css`
+  display: flex;
+  justify-content: space-around;
 `;
 
 export const hide = css`

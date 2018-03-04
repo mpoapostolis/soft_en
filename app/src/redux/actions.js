@@ -9,6 +9,8 @@ export const logout = createAction("LOGOUT");
 export const updateFilters = createAction("UPDATE_FILTERS");
 export const updateSearch = createAction("UPDATE_SEARCH");
 export const setActivities = createAction("SET_ACTIVITIES");
+export const updateOwner = createAction("UPDATE_OWNER");
+export const updateParent = createAction("UPDATE_PARENT");
 
 export const getActivities = () => (dispatch, getState) => {
   const state = getState();
@@ -43,6 +45,34 @@ export const register = (obj, push) => (dispatch, getState) => {
   });
 };
 
+export const setListing = (obj, push) => (dispatch, getState) => {
+  const tmpObj = JSON.parse(obj);
+  const state = getState();
+  const { account: { access_token }, filters: { activityId } } = state;
+  console.log(tmpObj);
+  let tmp = [];
+  for (let i = 0; i < 10; i++) {
+    if (tmpObj[`Remaining${i + 1}`] && tmpObj[`Date${i + 1}`]) {
+      tmp.push({
+        Remaining: tmpObj[`Remaining${i + 1}`],
+        EventDate: new Date(tmpObj[`Date${i + 1}`]).getTime()
+      });
+    }
+  }
+
+  // return fetch(`/activity/7ea8c5f2-f779-4e75-be97-b200b793ef91`, {
+  return fetch(`/activity/${activityId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${access_token}`
+    },
+    body: JSON.stringify({ Listings: tmp })
+  }).then(res => {
+    if (res.status === 201) push("/");
+  });
+};
+
 export const createActivity = (obj, push) => (dispatch, getState) => {
   const formData = new FormData();
   const state = getState();
@@ -57,19 +87,41 @@ export const createActivity = (obj, push) => (dispatch, getState) => {
       Authorization: `Bearer ${access_token}`
     },
     body: formData
-  });
+  })
+    .then(res => res.text())
+    .then(id =>
+      Promise.resolve(dispatch(updateFilters({ activityId: id }))).then(
+        push(`/listing-activity`)
+      )
+    );
 };
 
-export const getWallet = (obj, push) => (dispatch, getState) => {
+export const getOwnerWallet = (obj, push) => (dispatch, getState) => {
   const state = getState();
   const { access_token } = state.account;
 
-  return fetch("/wallet", {
+  return fetch("/owner/wallet", {
     method: "GET",
     headers: {
       Authorization: `Bearer ${access_token}`
     }
-  });
+  })
+    .then(res => res.json())
+    .then(data => dispatch(updateOwner(data)));
+};
+
+export const getStatistics = (id, push) => (dispatch, getState) => {
+  const state = getState();
+  const { access_token } = state.account;
+
+  return fetch(`/statistics/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => dispatch(updateOwner(data)));
 };
 
 export const callToLogin = (obj, push) => (dispatch, getState) => {

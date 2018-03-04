@@ -11,3 +11,17 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px black inset;
   -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
 }
+
+.react-datepicker__time-container
+  .react-datepicker__time
+  .react-datepicker__time-box
+  ul.react-datepicker__time-list {
+  list-style: none;
+  margin: 0;
+  height: calc(195px + (1.7rem / 2));
+  overflow-y: scroll;
+  margin-left: -30px;
+  width: 100%;
+  /* -webkit-box-sizing: content-box; */
+  box-sizing: content-box;
+}

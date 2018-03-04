@@ -42,7 +42,7 @@ class Search extends Component {
           <div className={main}>
             <div className={outCont}>
               <div className={activityCont}>
-                {data.map((obj, key) => <Card {...obj} key={key} />)}
+                {data.map((obj, key) => <Card updateParent={this.props.updateParent} history={this.props.history} {...obj} key={key} />)}
               </div>
             </div>
             <div className={mapCont}>

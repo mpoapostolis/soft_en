@@ -55,8 +55,18 @@ class RecipeReviewCard extends React.Component {
   };
 
   render() {
-    const { classes, ActivityName, Pictures, CompanyName, Price } = this.props;
-
+    const {
+      classes,
+      ActivityName = "",
+      Pictures,
+      CompanyName = "",
+      Price,
+      owner,
+      history: { push },
+      updateParent,
+      ActivityID
+    } = this.props;
+    
     return (
       <div>
         <Card className={classes.card} style={{ zIndex: 0 }}>
@@ -80,20 +90,42 @@ class RecipeReviewCard extends React.Component {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography component="p" >{Price}€</Typography>
+            <Typography component="p">{Price}€</Typography>
           </CardContent>
-          <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <Pindrop />
-            </IconButton>
-            <IconButton aria-label="Share">
-              <Favorite />
-            </IconButton>
-            <IconButton aria-label="Share" />
-            <Button className={classes.expand} mini variant="raised">
-              BOOK
-            </Button>
-          </CardActions>
+          {!owner ? (
+            <CardActions className={classes.actions} disableActionSpacing>
+              <IconButton aria-label="Add to favorites">
+                <Pindrop />
+              </IconButton>
+              <IconButton aria-label="Share">
+                <Favorite />
+              </IconButton>
+              <IconButton aria-label="Share" />
+              <Button
+                onClick={() => {
+                  Promise.resolve(updateParent({ ActivityID })).then(
+                    push(`/booking?${ActivityID}`)
+                  );
+                }}
+                className={classes.expand}
+                mini
+                variant="raised"
+              >
+                BOOK
+              </Button>
+            </CardActions>
+          ) : (
+            <CardActions className={classes.actions} disableActionSpacing>
+              <Button
+                onClick={() => this.props.getStatistics(ActivityID, push)}
+                className={classes.expand}
+                mini
+                variant="raised"
+              >
+                STATISTICS
+              </Button>
+            </CardActions>
+          )}
         </Card>
       </div>
     );

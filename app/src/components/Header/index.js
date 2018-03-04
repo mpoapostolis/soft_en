@@ -62,7 +62,7 @@ class Header extends Component {
     const items = [
       {
         name: "Profile",
-        action: () => push("/profile")
+        action: () => push( Role ==='Owner' ? "/owner-profile" : "/parrent-profile")
       },
       {
         name: "Logout",
