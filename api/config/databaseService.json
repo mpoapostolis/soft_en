@@ -1,0 +1,14 @@
+{
+    "username": "hipster",
+    "password": "notsostrong",
+    "database": "GoKiddo",
+    "options": {
+        "host": "db",
+        "dialect": "postgres",
+        "define": {
+            "timestamps": false,
+            "freezeTableName": true
+        },
+        "operatorsAliases": false
+    }
+}

@@ -2,17 +2,17 @@
 
 ### for **goKiddo**
 
-#### 7/1/18 - Version 0.2 prepared by **TeamRocket**
+#### 7/1/18 - Version 0.4 prepared by **TeamRocket**
 
 <!-- TOC depthFrom:3 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
-- [1. Introduction](#1-introduction)
+- [1.	 Introduction](#1-introduction)
 	- [1.1	Purpose](#11-purpose)
-	- [1.2 Document Conventions](#12-document-conventions)
+	- [1.2 	Document Conventions](#12-document-conventions)
 	- [1.3	Intended Audience and Reading Suggestions](#13-intended-audience-and-reading-suggestions)
 	- [1.4 	Product Scope](#14-product-scope)
 	- [1.5 	References](#15-references)
-- [2. 	Overall Description](#2-overall-description)
+- [2.		Overall Description](#2-overall-description)
 	- [2.1 	Product Perspective](#21-product-perspective)
 	- [2.2 	Product Functions](#22-product-functions)
 	- [2.3 	User Classes and Characteristics](#23-user-classes-and-characteristics)
@@ -20,32 +20,50 @@
 	- [2.5 	Design and Implementation Constraints](#25-design-and-implementation-constraints)
 	- [2.6 	User Documentation](#26-user-documentation)
 	- [2.7 	Assumptions and Dependencies](#27-assumptions-and-dependencies)
-- [3. 	External Interface Requirements](#3-external-interface-requirements)
+- [3.		External Interface Requirements](#3-external-interface-requirements)
 	- [3.1 	User Interfaces](#31-user-interfaces)
 	- [3.2 	Hardware Interfaces](#32-hardware-interfaces)
 	- [3.3 	Software Interfaces](#33-software-interfaces)
-		- [3.3.1 Auth service](#331-auth-service)
-		- [3.3.2 Database](#332-database)
-		- [3.3.3 Media service](#333-media-service)
-		- [3.3.4 Main service](#334-main-service)
-		- [3.3.5 API gateway](#335-api-gateway)
+		- [3.3.1		Mail service](#331-mail-service)
+		- [3.3.2		Database](#332-database)
+		- [3.3.3		Media service](#333-media-service)
+		- [3.3.4		Api service](#334-api-service)
+		- [3.3.5 	Nginx server](#335-nginx-server)
+		- [3.3.6 	App service](#336-app-service)
 	- [3.4 	Communications Interfaces](#34-communications-interfaces)
+		- [3.4.1	Public Endpoints](#341-public-endpoints)
+		- [3.4.2	Parent Protected Endpoints](#342-parent-protected-endpoints)
+		- [3.4.3	Owner Protected Endpoints](#343-owner-protected-endpoints)
+		- [3.4.3	Admin Protected Endpoints](#343-admin-protected-endpoints)
 - [4. 	System Features](#4-system-features)
-	- [4.1 User authentication](#41-user-authentication)
-		- [4.1.1 Description](#411-description)
+	- [4.1 	User authentication](#41-user-authentication)
+		- [4.1.1	Description](#411-description)
 		- [4.1.2 Stimulus/Response sequence](#412-stimulusresponse-sequence)
-	- [4.2 Activity search](#42-activity-search)
-	- [4.3 Activity booking](#43-activity-booking)
-	- [4.4 Venue registration](#44-venue-registration)
-	- [4.5 Activity registration](#45-activity-registration)
-	- [4.6 System administration](#46-system-administration)
+	- [4.2	Activity search](#42-activity-search)
+	- [4.2.1 	Description](#421-description)
+		- [4.2.2 Stimulus/Response sequence](#422-stimulusresponse-sequence)
+	- [4.3 	Activity booking](#43-activity-booking)
+	- [4.3.1 	Description](#431-description)
+		- [4.3.2 Stimulus/Response sequence](#432-stimulusresponse-sequence)
+	- [4.4	Currency management](#44-currency-management)
+	- [4.4.1	Description](#441-description)
+	- [4.4.2 Stimulus/Response sequence](#442-stimulusresponse-sequence)
+	- [4.5	Venue and activity registration](#45-venue-and-activity-registration)
+	- [4.5.1 	Venue registration](#451-venue-registration)
+	- [4.5.1.1 Description](#4511-description)
+	- [4.5.2	Activity registration](#452-activity-registration)
+	- [4.5.2.1	Description](#4521-description)
+	- [4.5.3 Stimulus/Response sequence](#453-stimulusresponse-sequence)
+	- [4.6	System administration](#46-system-administration)
+	- [4.6.1 	Description](#461-description)
+	- [4.6.2	Stimulus/Response sequence](#462-stimulusresponse-sequence)
 - [5. 	Other Nonfunctional Requirements](#5-other-nonfunctional-requirements)
-	- [5.1     Performance Requirements](#51-performance-requirements)
+	- [5.1	Performance Requirements](#51-performance-requirements)
 	- [5.2 	Safety Requirements](#52-safety-requirements)
 	- [5.3 	Security Requirements](#53-security-requirements)
 	- [5.4 	Software Quality Attributes](#54-software-quality-attributes)
 	- [5.5 	Business Rules](#55-business-rules)
-		- [5.5.1 Digital wallet](#551-digital-wallet)
+		- [5.5.1	Digital wallet](#551-digital-wallet)
 		- [5.5.1 Ticket policy](#551-ticket-policy)
 		- [5.5.1 Revenue model](#551-revenue-model)
 - [6. 	Other Requirements](#6-other-requirements)
@@ -255,12 +273,15 @@ The architecture is detailed below:
 
 ![](SRS_images/architecture.png)
 
-##### 3.3.1		Auth service
-A `node.js` implementation of the [OAuth2](https://oauth.net/2/) protocol using
-[JSON Web Tokens](https://jwt.io/). To accomplish this, the service utilizes the
-`simple-OAuth2` node module to generate and maintain an authentication token once
-the user is logged in and use it to determine if any privileged data should be
-served.
+##### 3.3.1		Mail service
+A service that handles the e-mail submission of purchased tickets, using an
+`html` template of a receipt, compiling it with `handlebars` package according
+to the purchase details, parsing it through the `html-pdf` package and finally
+sending it using the `nodemailer` package. The host mail service is to be
+determined.
+
+Special care has been taken to minimize the load on the disk, as both
+html-to-pdf conversion and attachment submission are implemented using streams.
 
 ##### 3.3.2		Database
 We opt for a relational database, since our data model is rather aligned with
@@ -275,28 +296,70 @@ An initial version of the database schema is presented below:
 As described in the exercise requirements, we must implement a separate services
 tasked with applying a watermark to all submitted venue images. The proposed
 service runs on `node.js` and utilizes node module `image-watermark` to apply
-the watermark to a submitted image and then return it to be stored in our main
-server.
+the watermark to a submitted image, store it in our static image volume and then
+return the name it has assigned to it.
 
-##### 3.3.4		Main service
-Our main service is written in `node.js` to handle user requests and distribute
-them to the corresponding services. It uses the `node-postgre` driver to
-communicate with the Database.
+##### 3.3.4		Api service
+Our main service is written in `node.js` to handle and authenticate user
+requests, using `JasonWebTokens`.
 
-##### 3.3.5 	API gateway
+The responsibilities include making database queries, using the `sequelize`
+Object-relational mapping package, along with the `pg` PostgreSQL client, and
+relaying client requests to the corresponding services.
+
+##### 3.3.5 	Nginx server
 We aim to create a single access point for calls to our application. To this end
-we will design a simple Nginx server to handle all incoming load.
+we will design a simple Nginx server to handle all incoming load. The service
+has also been tasked with serving static application files and images.
 
 The Nginx service is also set to implement communication encryption via a
 self-signed certificate.
 
 We opted for this additional `nginx` layer to reduce the load on the `node.js`
-main service.
+api service.
+
+##### 3.3.6 	App service
+The application front-end is developed using the `ReactJS` framework. It is to
+be bundled along in the app folder, only to be built from source by a node
+docker image and linked to the `Nginx` service as a static file.
 
 #### 3.4 	Communications Interfaces
-The current document refrains from providing details on inter-system
-communication, as it is utilized by either the operating system or the
-conventional internet transfer protocols.
+We have determined the following endpoints that our public API exposes to every
+application client. Endpoints between services are to be determined in the next
+iteration.
+
+##### 3.4.1	Public Endpoints
+
+| Method | Endpoint | Parameters | Description |
+| - | - | - | - |
+| GET | `/api/activity` | `urlencoded`<br><br>date, lat, long, distance, max_price, min_price, tag, search | The endpoint for searching for activities. The `search` field contains the search string and the rest are the filters to be applied to the results. |
+| GET | `/images/:file` | - | Get a static image, named `file`. |
+| GET | `/api/activity/:id` | - | Get details for the activity `id`, along with all active and available listings. |
+| POST | `/api/register` | `body:text/json` <br><br> Email, Password, Role, {Parent,Owner} details | Register a new user with the supplied Email, Password and Role. |
+| POST | `/api/login` | `body:text/json` <br><br> Email, Password | Attempt to login to our service.</br></br>Upon success, the call returns a JWT access token. |
+
+##### 3.4.2	Parent Protected Endpoints
+| Method | Endpoint | Parameters | Description |
+| - | - | - | - |
+| GET | `/api/wallet` | `body:text/json` <br><br> AccessToken, Page, Offset | Get an overview of the parent digital wallet.</br></br>Get paginated results of the purchase history. |
+| POST | `/api/wallet` | `body:text/json` <br><br> AccessToken, Card, Expiry, Security | Top up digital wallet.</br></br>In the scope of this implementation, this call is guaranteed to succeed. |
+| POST | `/api/booking/:id` | `body:text/json` <br><br> AccessToken, Quantity | Attempt to book `Quantity` number of tickets for the listing with `ListingID = id`. <br><br> The transaction is atomic and takes into account the user available funds and the available tickets. |
+| POST | `/api/rating/:id` | `body:text/json` <br><br> AccessToken, Score, Complaints | After the activity is finished, receive an email linking to the review page of the activity associated with the booking with `BookingID = id`.</br></br>The parent must be logged in, as the review page access will be validated against their ticket purchase. |
+
+##### 3.4.3	Owner Protected Endpoints
+| Method | Endpoint | Parameters | Description |
+| - | - | - | - |
+| POST | `/api/activity` | `body:text/json` <br><br> AccessToken, Name, AgeGroups, Description, Pictures, Coordinates, Tags | Create a new activity. <br><br> All submitted images must be sent as files with the name `image`. |
+| PUT, DELETE | `/api/activity/:id` | `body:text/json` <br><br> AccessToken, Name, AgeGroups, Description, Pictures, Coordinates, Tags | Alter, delete an existing activity. For simplicity, it is impossible to delete or alter an activity with active listings. |
+| POST | `/api/activity/:id/listings` | `body:text/json` <br><br> AccessToken, Listings | Create listings (tuples of Date, Duration, Quantity and Price) for the activity with `ActivityID = id` |
+| PUT, DELETE | `/api/activity/:id/listings` | `body:text/json` <br><br> AccessToken, Listings | Alter or delete the submitted listings. |
+| GET | `/api/statistics` | `body:text/json` <br><br> AccessToken | Get a statistical overview of ticket sales by month and by activity. |
+| GET | `/api/wallet` | `body:text/json` <br><br> AccessToken | Get a detailed overview of the account balance. |
+
+##### 3.4.3	Admin Protected Endpoints
+| Method | Endpoint | Parameters | Description |
+| - | - | - | - |
+| GET, PUT, DELETE | `/api/admin/*` | `body:text/json` <br><br> AccessToken | The admin has universal access to create, edit and delete entities. |
 
 ### 4. 	System Features
 This section includes the requirements that specify the fundamental actions of the software system.

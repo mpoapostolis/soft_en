@@ -1,3 +1,2 @@
 # Ignore installed node packages.
 node_modules/
-images/
