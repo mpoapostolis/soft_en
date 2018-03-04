@@ -226,7 +226,10 @@ function ownerController(app,db) {
     // TODO Contemplate strict validations for listing overlap.
     app.post('/activity/:activityID', app.loggedIn, app.isOwner, (req,res) => {
 
-        let list = JSON.parse(req.body.Listings) || []
+        let list = req.body.Listings || []
+        if (typeof list === 'string') {
+            list = JSON.parse(list) || []
+        }
 
         // Transform received data to database specs.
         let inserted = list.filter((x) => { return x.EventDate >= Date.now() })
