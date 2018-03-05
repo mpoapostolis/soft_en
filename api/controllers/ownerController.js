@@ -133,7 +133,7 @@ function ownerController(app,db) {
                                     db.sequelize.col('"books"."Quantity"').col
                                 } * ${
                                     db.sequelize.col('"activity"."Price"').col
-                                }`
+                                } / 10`
                             )
                         ),
                         0
