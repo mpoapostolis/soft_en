@@ -144,7 +144,7 @@ function parentController(app, db) {
 
     })
 
-    app.post('/wallet', app.loggedIn, (req, res) => {
+    app.post('/wallet', app.loggedIn, app.isParent, (req, res) => {
 
         let amount = parseInt(req.body.Amount)
 
@@ -187,7 +187,7 @@ function parentController(app, db) {
         }
     })
 
-    app.get('/wallet', app.loggedIn, (req,res) => {
+    app.get('/wallet', app.loggedIn, app.isParent, (req,res) => {
         var response = {}
         db.parent.findById(
             req.headers.UserID, {
