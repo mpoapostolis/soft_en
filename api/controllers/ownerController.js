@@ -258,7 +258,7 @@ function ownerController(app,db) {
     app.post('/activity', app.loggedIn, app.isOwner, upload.array('image',8), (req,res) => {
 
         let point = { type: 'Point', coordinates: [req.body.lat, req.body.long]}
-        let _tags = (req.body.Tag || [])
+        let _tags = (req.body.Tag || '').split(',')
 
         // For now, ignore duplicate or unaccepted tags.
         _tags = [...new Set(_tags)].filter(x => new Set(tags).has(x));
