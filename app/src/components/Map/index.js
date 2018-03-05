@@ -27,9 +27,8 @@ class Map extends Component {
     const nextActivities = nextProps.activities.data;
     const activities = this.props.activities.data;
     if (nextActivities !== activities && nextActivities) {
-      // gmarkers.map((m, i) => gmarkers[i].setMap(null));
+      gmarkers.map((m, i) => gmarkers[i].setMap(null));
       nextActivities.map(obj => {
-        
         const coords = {
           lat: obj.Coordinates.coordinates[0],
           lng: obj.Coordinates.coordinates[1]

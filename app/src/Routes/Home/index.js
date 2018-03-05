@@ -67,14 +67,14 @@ class Home extends Component {
       boxCont,
       inputCont
     } = styles;
-    const { account: { address }, updateSearch } = this.props;
+    const { account: { address }, updateSearch, t } = this.props;
     const { value } = this.state;
 
     return (
       <div className={container}>
         <div className={mainCont}>
           <div className={boxCont}>
-            <h1 className={title}>FIND ACTIVITIES</h1>
+            <h1 className={title}>{t("FIND ACTIVITIES")}</h1>
             <div className={inputCont}>
               <input
                 placeholder="Searh something"
@@ -94,7 +94,7 @@ class Home extends Component {
               onClick={this.handleSubmit}
               variant="raised"
             >
-              Search
+              {t("Search")}
             </Button>
           </div>
         </div>

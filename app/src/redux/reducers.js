@@ -39,8 +39,6 @@ const initParent = {
 const parent = (state = initParent, { type, payload }) => {
   switch (type) {
     case "UPDATE_PARENT":
-      console.log(payload);
-
       return merge(state, payload);
     default:
       return state;

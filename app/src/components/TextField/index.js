@@ -49,7 +49,6 @@ class TextField extends Component {
     const { setTmpData, type, field } = this.props;
     if (type === "file") setTmpData({ image: evt.currentTarget.files[0] });
     else if (type === "date") {
-      console.log(evt.unix())            
       this.setState({ value: evt.utc().format("LLL") });
       setTmpData({ [field]: evt.utc().format("LLL") });
     } else this.setState({ value: evt.currentTarget.value });

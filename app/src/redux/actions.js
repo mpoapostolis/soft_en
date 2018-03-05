@@ -26,8 +26,8 @@ export const getActivities = () => (dispatch, getState) => {
 
   return fetch(
     `/activity?search=${Search}&MaxPrice=${Max_price *
-      10}&MinPrice=${Min_price * 10}&Distance=${Distance *
-      100000}&Lat=${Lat}&Long=${Long}`
+      10}&MinPrice=${Min_price *
+      10}&Distance=${Distance}&Lat=${Lat}&Long=${Long}`
   )
     .then(res => res.json())
     .then(arr => dispatch(setActivities(arr)));
@@ -110,6 +110,56 @@ export const getOwnerWallet = (obj, push) => (dispatch, getState) => {
     .then(data => dispatch(updateOwner(data)));
 };
 
+export const topUp = Amount => (dispatch, getState) => {
+  const state = getState();
+  const { access_token } = state.account;
+  fetch(`/wallet`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${access_token}`
+    },
+    body: JSON.stringify({ Amount })
+  })
+    .then(res => res.json())
+    .then(data => dispatch(updateParent(data)));
+};
+
+export const booking = obj => (dispatch, getState) => {
+  const state = getState();
+  const { access_token } = state.account;
+  let tmp = [];
+  for (let key in obj) {
+    tmp.push(key);
+  }
+  Promise.all(
+    tmp.map(id =>
+      fetch(`/booking/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`
+        },
+        body: JSON.stringify({ Quantity: obj[id] })
+      })
+    )
+  );
+};
+
+export const getParentWallet = (obj, push) => (dispatch, getState) => {
+  const state = getState();
+  const { access_token } = state.account;
+
+  return fetch("/wallet", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => dispatch(updateParent(data)));
+};
+
 export const getStatistics = (id, push) => (dispatch, getState) => {
   const state = getState();
   const { access_token } = state.account;
@@ -121,7 +171,7 @@ export const getStatistics = (id, push) => (dispatch, getState) => {
     }
   })
     .then(res => res.json())
-    .then(data => dispatch(updateOwner(data)));
+    .then(data => dispatch(updateOwner({ statistics: data })));
 };
 
 export const callToLogin = (obj, push) => (dispatch, getState) => {

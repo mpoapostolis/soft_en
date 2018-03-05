@@ -7,7 +7,9 @@ import CreateActivity from "./CreateActivity";
 import Search from "./Search";
 import Booking from "./Booking";
 import OwnerProfile from "./OwnerProfile";
+import ParentProfile from "./ParentProfile";
 import Listing from "./Listing";
+import Statistics from "./Statistics";
 import AuthWrapper from "../components/AuthWrapper";
 import Header from "../components/Header";
 
@@ -46,17 +48,24 @@ const Routes = props => {
           />
 
           <Route
+            path="/parent-profile"
+            render={routeProps => <ParentProfile {...routeProps} {...props} />}
+          />
+
+          <Route
             path="/listing-activity"
             render={routeProps => <Listing {...routeProps} {...props} />}
           />
 
-                  <Route
+          <Route
             path="/booking"
             render={routeProps => <Booking {...routeProps} {...props} />}
           />
 
-
-
+          <Route
+            path="/statistics"
+            render={routeProps => <Statistics {...routeProps} {...props} />}
+          />
         </Switch>
       </main>
     </Router>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.2",
     "emotion": "^8.0.10",
     "express": "^4.16.2",
     "material-ui": "^1.0.0-beta.27",
@@ -10,12 +11,14 @@
     "moment": "^2.21.0",
     "ramda": "^0.25.0",
     "react": "^16.0.0",
+    "react-chartjs-2": "^2.7.0",
     "react-datepicker": "^1.2.2",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "react-table": "^6.8.0",
+    "recharts": "^1.0.0-beta.10",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0"

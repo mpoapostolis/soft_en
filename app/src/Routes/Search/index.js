@@ -10,6 +10,9 @@ import * as styles from "./css";
 class Search extends Component {
   componentDidMount() {
     const { getActivities } = this.props;
+    const {account:{Role}, getParentWallet, getOwnerWallet } = this.props
+    if(Role === 'Parent') getParentWallet()
+    else getOwnerWallet();
     getActivities();
   }
   componentWillUnmount() {

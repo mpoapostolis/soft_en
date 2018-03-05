@@ -29,6 +29,10 @@ export const imageCont = css`
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #c2c2c2;
   }
+  ${mq.small(css`
+    min-height: 50vh;
+    margin-bottom: 50vh;
+  `)};
   img {
     margin: 1px;
   }
@@ -52,7 +56,7 @@ export const info = css`
   border-radius: 5px;
   border: solid 1px rgba(0, 0, 0, 0.25);
   ${mq.small(css`
-    margin-top: 100px;
+    /* margin-top: 35vh; */
     width: 90%;
   `)};
 

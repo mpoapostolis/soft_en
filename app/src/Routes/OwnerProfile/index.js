@@ -22,19 +22,24 @@ class Profile extends Component {
   render() {
     const { container, outCont, activityCont, item, balance } = styles;
     const { activities } = this.props.owner;
+    const { t } = this.props;
 
     return (
       <div className={container}>
         <div className={balance}>
-          <h3>Monthly Balance: {this.props.owner[`Monthly Balance`]}</h3>
+          <h3>
+            {t("Monthly Balance")}: {this.props.owner[`Monthly Balance`]}
+          </h3>
           <div />
         </div>
 
         <div className={item}>
-          <h3>My Activities</h3>
+          <h3>{t("My Activities")}</h3>
           <div className={outCont}>
             <div className={activityCont}>
-              {activities.map((obj, key) => <Card owner {...obj} {...this.props} key={key} />)}
+              {activities.map((obj, key) => (
+                <Card owner {...obj} {...this.props} key={key} />
+              ))}
             </div>
           </div>
         </div>

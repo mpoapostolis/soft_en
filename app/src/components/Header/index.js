@@ -38,13 +38,14 @@ class Header extends Component {
 
   guest = () => {
     const { info, redirect } = styles;
+    const { t } = this.props
     return (
       <div className={info}>
         <Button className={redirect} onClick={this.changePath}>
-          Register
+          {t("Register")}
         </Button>
         <Button className={redirect} onClick={this.changePath}>
-          Login
+          {t("Login")}
         </Button>
       </div>
     );
@@ -62,7 +63,7 @@ class Header extends Component {
     const items = [
       {
         name: "Profile",
-        action: () => push( Role ==='Owner' ? "/owner-profile" : "/parrent-profile")
+        action: () => push( Role ==='Owner' ? "/owner-profile" : "/parent-profile")
       },
       {
         name: "Logout",
@@ -74,6 +75,12 @@ class Header extends Component {
         name: "New Activity",
         action: () => push("/new-activity")
       });
+    if (Role === "Owner") items.push({
+      name: "Statistics",
+      action: () => push("/statistics")
+    
+    })
+      
     return (
       <div className={account}>
         <img

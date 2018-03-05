@@ -7,21 +7,43 @@ import Button from "material-ui/Button";
 import Typography from "material-ui/Typography";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import Alert from "../../components/Alert";
 
 class Booking extends Component {
-  state = {};
+  state = { bookingInf: {} };
   componentDidMount() {
     const { ActivityID } = this.props.parent;
     const param = window.location.search.split(/\?|&/)[1];
     const id = ActivityID || param || "";
+    const { account: { Role }, getParentWallet, getOwnerWallet } = this.props;
+    if (Role === "Parent") getParentWallet();
+    else getOwnerWallet();
     fetch(`/activity/${id}`)
       .then(e => e.json())
       .then(activity => this.setState(activity));
   }
 
-  handleChange = e => {
-    this.setState({ value: e.utc().format("LLL") });
+  componentWillUnmount() {
+    this.props.clearTmp();
+  }
+
+  handleChange = ({ currentTarget }, ListingID) => {
+    const { setTmpData } = this.props;
+    this.setState({
+      dialog: false,
+      bookingInf: { [ListingID]: parseInt(currentTarget.value) }
+    });
   };
+
+  handleSubmit = () => {
+    const { Balance } = this.props.parent;
+    const { Price } = this.state;
+    const { push } = this.props.history;
+    if (Balance < Price) return this.setState({ dialog: true });
+    this.props.booking(this.state.bookingInf);
+  };
+
+  close = () => this.setState({ dialog: false });
 
   render() {
     const {
@@ -35,6 +57,7 @@ class Booking extends Component {
       booking,
       btn
     } = styles;
+    const { t } = this.props;
     const {
       ActivityName,
       Description,
@@ -46,7 +69,6 @@ class Booking extends Component {
       value = ""
     } = this.state;
     const availableDate = Listings.map(o => o.availableDate);
-    console.log(this.state);
     return (
       <div className={container}>
         <div className={imageCont}>
@@ -72,7 +94,9 @@ class Booking extends Component {
             <p>
               <br /> {Description}
             </p>
-            <p>Duration: {Duration} minutes</p>
+            <p>
+              {t("Duration")}: {Duration} {t("minutes")}
+            </p>
           </div>
           <div className={booking}>
             <h1 htmlFor="">{Price} ¥</h1>
@@ -80,6 +104,7 @@ class Booking extends Component {
               <div key={key} className={inputCont}>
                 <div>{moment(obj.EventDate).format("LLL")}</div>
                 <input
+                  onChange={e => this.handleChange(e, obj.ListingID)}
                   className={input}
                   placeholder={`max ${obj.Remaining}`}
                   type="number"
@@ -92,10 +117,16 @@ class Booking extends Component {
               onClick={this.handleSubmit}
               variant="raised"
             >
-              BOOK
+              {t("BOOK")}
             </Button>
           </div>
         </div>
+        <Alert
+          close={this.close}
+          open={this.state.dialog}
+          push={this.props.history.push}
+          t={this.props.t}
+        />
       </div>
     );
   }

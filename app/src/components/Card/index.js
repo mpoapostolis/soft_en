@@ -66,7 +66,7 @@ class RecipeReviewCard extends React.Component {
       updateParent,
       ActivityID
     } = this.props;
-    
+
     return (
       <div>
         <Card className={classes.card} style={{ zIndex: 0 }}>
@@ -117,7 +117,7 @@ class RecipeReviewCard extends React.Component {
           ) : (
             <CardActions className={classes.actions} disableActionSpacing>
               <Button
-                onClick={() => this.props.getStatistics(ActivityID, push)}
+                onClick={() => push(`/statistics?${ActivityID}`)}
                 className={classes.expand}
                 mini
                 variant="raised"
